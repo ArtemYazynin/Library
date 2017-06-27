@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Library.Web.Utils;
 
 namespace Library.Web
 {
@@ -11,6 +12,7 @@ namespace Library.Web
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
+			DependencyResolver.SetResolver(new NinjectDependencyResolver());
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);

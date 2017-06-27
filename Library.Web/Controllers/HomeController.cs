@@ -1,10 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
+using Library.Services;
 
 namespace Library.Web.Controllers
 {
 	public class HomeController : Controller
 	{
-		public ActionResult Index()
+		public async Task<ActionResult> Index()
 		{
 			return View();
 		}

@@ -1,0 +1,11 @@
+MyProj.rar
+.vs/config/applicationhost.config
+Library.ObjectModel/bin/
+Library.ObjectModel/obj/
+Library.Services.Impls/bin/
+Library.Services.Impls/obj/
+Library.Services/obj/
+Library.Tests/bin/
+Library.Tests/obj/
+Library.Web/bin/
+Library.Web/obj/

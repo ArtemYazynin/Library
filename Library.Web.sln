@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.ObjectModel", "Libr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Services", "Library.Services\Library.Services.csproj", "{075F1D33-C463-430F-981F-30BCF37ACE73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Services.Impls", "Library.Services.Impls\Library.Services.Impls.csproj", "{337647FC-32A5-44C9-9DE2-EAEAF107D02A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{075F1D33-C463-430F-981F-30BCF37ACE73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{075F1D33-C463-430F-981F-30BCF37ACE73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{075F1D33-C463-430F-981F-30BCF37ACE73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{337647FC-32A5-44C9-9DE2-EAEAF107D02A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{337647FC-32A5-44C9-9DE2-EAEAF107D02A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{337647FC-32A5-44C9-9DE2-EAEAF107D02A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{337647FC-32A5-44C9-9DE2-EAEAF107D02A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

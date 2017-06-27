@@ -13,6 +13,8 @@ namespace Library.ObjectModel.Models
 
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public long Id { get; set; }
+
+		[ConcurrencyCheck]
 		public DateTime Version { get; set; }
 	}
 }

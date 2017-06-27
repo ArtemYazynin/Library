@@ -8,12 +8,15 @@ namespace Library.ObjectModel.Models
 		{
 			Authors = new List<Author>();
 			Publishers = new List<Publisher>();
-			Editions = new List<Edition>();
 		}
 
 		public string Name { get; set; }
-		public ICollection<Author> Authors { get; set; }
-		public ICollection<Publisher> Publishers { get; set; }
-		public ICollection<Edition> Editions { get; set; }
+
+		public virtual Edition Edition { get; set; }
+		public long EditionId { get; set; }
+
+		public virtual ICollection<Author> Authors { get; set; }
+		public virtual ICollection<Publisher> Publishers { get; set; }
+		
 	}
 }
