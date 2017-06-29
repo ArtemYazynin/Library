@@ -7,12 +7,12 @@ namespace Library.Services.DTO
 	{
 		public AuthorDto()
 		{
-			Books = new List<Book>();
+			Books = new List<BookDto>();
 		}
 
 		public string Lastname { get; set; }
 		public string Firstname { get; set; }
 		public string Middlename { get; set; }
-		public IEnumerable<Book> Books { get; set; }
+		public IEnumerable<BookDto> Books { get; set; }
 	}
 }

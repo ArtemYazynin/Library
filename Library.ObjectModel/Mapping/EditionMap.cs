@@ -9,8 +9,8 @@ namespace Library.ObjectModel.Mapping
 		{
 			Property(x => x.Name).HasMaxLength(1000).IsRequired();
 			Property(x => x.Year).IsRequired();
-			Property(x => x.EditionType).IsRequired();
 
+			HasMany(x => x.EditionTypes).WithMany(x => x.Editions);
 			HasMany(x => x.Books).WithRequired(x => x.Edition);
 		}
 	}

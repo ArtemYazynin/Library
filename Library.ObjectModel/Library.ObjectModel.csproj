@@ -52,11 +52,13 @@
     <Compile Include="Mapping\AuthorMap.cs" />
     <Compile Include="Mapping\BookMap.cs" />
     <Compile Include="Mapping\EditionMap.cs" />
+    <Compile Include="Mapping\EditionTypeMap.cs" />
     <Compile Include="Mapping\PublisherMap.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\EditionType.cs" />
+    <Compile Include="Models\EditionTypeEnum.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\IPerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,11 +7,12 @@ namespace Library.ObjectModel.Models
 		public Edition()
 		{
 			Books = new List<Book>();
+			EditionTypes = new List<EditionType>();
 		}
 
 		public string Name { get; set; }
 		public int Year { get; set; }
-		public EditionType EditionType { get; set; }
+		public virtual ICollection<EditionType> EditionTypes { get; set; }
 
 		public virtual ICollection<Book> Books { get; set; }
 	}

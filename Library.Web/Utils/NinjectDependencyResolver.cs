@@ -26,6 +26,7 @@ namespace Library.Web.Utils
 		private void AddBindings()
 		{
 			_kernel.Bind<IAuthorsService>().To<AuthorsService>();
+			_kernel.Bind<IBooksService>().To<BooksService>();
 		}
 	}
 }
