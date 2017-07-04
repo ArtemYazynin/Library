@@ -4,6 +4,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Library.Web.Utils;
+using Ninject;
+using Ninject.Modules;
 
 namespace Library.Web
 {
@@ -12,7 +14,20 @@ namespace Library.Web
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
-			DependencyResolver.SetResolver(new NinjectDependencyMvcResolver());
+
+
+			#region ninject registration
+
+			NinjectModule registrations = new NinjectRegistrations();
+			var kernel = new StandardKernel(registrations);
+			var ninjectResolver = new NinjectDependencyResolver(kernel);
+			DependencyResolver.SetResolver(ninjectResolver); // MVC
+			GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver; // Web API
+
+			#endregion
+
+
+
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
