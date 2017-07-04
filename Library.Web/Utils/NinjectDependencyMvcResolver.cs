@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+
 using Library.Services;
 using Library.Services.Impls;
 using Ninject;
 
 namespace Library.Web.Utils
 {
-	public class NinjectDependencyResolver:IDependencyResolver
+	public class NinjectDependencyMvcResolver:IDependencyResolver
 	{
 		private readonly IKernel _kernel;
-		public NinjectDependencyResolver()
+		public NinjectDependencyMvcResolver()
 		{
 			_kernel = new StandardKernel();
 			AddBindings();

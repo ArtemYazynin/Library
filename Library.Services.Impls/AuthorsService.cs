@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Library.ObjectModel.Models;
 using Library.Services.DTO;
 
 namespace Library.Services.Impls
@@ -14,8 +13,21 @@ namespace Library.Services.Impls
 		{
 			using (var db = new LibraryContext())
 			{
-				var books = await db.Books.ToListAsync();
-				var result = books.Select(x => new BookDto() {Name = x.Name});
+				var books = await db.Books.Include(x=>x.Authors).ToListAsync();
+
+				var result = books.Select(x => new BookDto()
+				{
+					Name = x.Name,
+					Authors = x.Authors.SelectMany(y=> new List<AuthorDto>()
+					{
+						new AuthorDto()
+						{
+							Lastname = y.Lastname,
+							Firstname = y.Firstname,
+							Middlename = y.Middlename
+						}
+					})
+				});
 				return result;
 			}
 		}

@@ -1,4 +1,4 @@
-﻿namespace Library.ObjectModel.Models
+﻿namespace Library.ObjectModel.Models.Base
 {
 	public interface IPerson
 	{

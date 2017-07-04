@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Library.ObjectModel.Models.Base;
 
 namespace Library.ObjectModel.Models
 {

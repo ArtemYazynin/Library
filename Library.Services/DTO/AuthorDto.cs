@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Library.ObjectModel.Models;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Library.Services.DTO
 {
@@ -14,5 +14,10 @@ namespace Library.Services.DTO
 		public string Firstname { get; set; }
 		public string Middlename { get; set; }
 		public IEnumerable<BookDto> Books { get; set; }
+
+		public override string ToString()
+		{
+			return $"{Lastname} {Firstname} {Middlename?? string.Empty}";
+		}
 	}
 }

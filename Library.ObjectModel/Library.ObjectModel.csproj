@@ -59,8 +59,8 @@
     <Compile Include="Models\Edition.cs" />
     <Compile Include="Models\EditionType.cs" />
     <Compile Include="Models\EditionTypeEnum.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\IPerson.cs" />
+    <Compile Include="Models\Base\Entity.cs" />
+    <Compile Include="Models\Base\IPerson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Publisher.cs" />
   </ItemGroup>

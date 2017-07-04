@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Library.ObjectModel.Models.Base;
 
 namespace Library.ObjectModel.Models
 {
@@ -11,6 +12,8 @@ namespace Library.ObjectModel.Models
 		}
 
 		public string Name { get; set; }
+
+		public string Isbn { get; set; }
 
 		public virtual Edition Edition { get; set; }
 		public long EditionId { get; set; }

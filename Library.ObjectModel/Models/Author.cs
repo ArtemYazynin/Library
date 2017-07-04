@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Library.ObjectModel.Models.Base;
 
 namespace Library.ObjectModel.Models
 {
@@ -14,5 +15,10 @@ namespace Library.ObjectModel.Models
 		public string Middlename { get; set; }
 
 		public ICollection<Book> Books { get; set; }
+
+		public override string ToString()
+		{
+			return $"{Lastname} {Firstname} {Middlename ?? string.Empty}";
+		}
 	}
 }

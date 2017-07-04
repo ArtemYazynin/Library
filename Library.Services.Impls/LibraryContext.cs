@@ -24,5 +24,6 @@ namespace Library.Services.Impls
 		public IDbSet<Author> Authors { get; set; }
 		public IDbSet<Publisher> Publishers { get; set; }
 		public IDbSet<Edition> Editions { get; set; }
+		public IDbSet<EditionType> EditionTypes { get; set; }
 	}
 }

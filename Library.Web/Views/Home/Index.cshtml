@@ -1,4 +1,7 @@
-﻿<div>
+﻿@using Library.Services.DTO
+@model IEnumerable<BookDto>
+
+<div>
 	<h1>HOME PAGE</h1>
 </div>
 
@@ -6,15 +9,21 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 		<tr>
-			<th>Фамилия</th>
-			<th>Имя</th>
-			<th>Отчество</th>
+			<th>Название</th>
+			<th>Авторы</th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr>
-			<td></td>
-		</tr>
+			@foreach (BookDto book in Model)
+			{
+				<tr>
+					<td>@book.Name</td>
+					<td>
+						@string.Join(", ",book.Authors)
+					</td>
+				</tr>
+			}
+
 		</tbody>
 	</table>
 </div>

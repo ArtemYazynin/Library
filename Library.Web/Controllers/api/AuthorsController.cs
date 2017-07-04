@@ -8,6 +8,10 @@ namespace Library.Web.Controllers.api
 	{
 		private readonly IAuthorsService _authorsService;
 
+		protected AuthorsController()
+		{
+		}
+
 		public AuthorsController(IAuthorsService authorsService)
 		{
 			_authorsService = authorsService;
