@@ -18,6 +18,9 @@ namespace Library.Services.Impls
 			modelBuilder.Configurations.Add(new PublisherMap());
 			modelBuilder.Configurations.Add(new AuthorMap());
 			modelBuilder.Configurations.Add(new BookMap());
+			modelBuilder.Configurations.Add(new SubscriberMap());
+			modelBuilder.Configurations.Add(new RentMap());
+			modelBuilder.Configurations.Add(new InvoiceMap());
 		}
 
 		public IDbSet<Book> Books { get; set; }
@@ -25,5 +28,8 @@ namespace Library.Services.Impls
 		public IDbSet<Publisher> Publishers { get; set; }
 		public IDbSet<Edition> Editions { get; set; }
 		public IDbSet<EditionType> EditionTypes { get; set; }
+		public IDbSet<Subscriber> Subscribers { get; set; }
+		public IDbSet<Rent> Rents { get; set; }
+		public IDbSet<Invoice> Invoices { get; set; }
 	}
 }
