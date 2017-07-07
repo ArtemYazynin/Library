@@ -7,10 +7,9 @@ namespace Library.ObjectModel.Mapping
 	{
 		public EditionMap()
 		{
-			Property(x => x.Name).HasMaxLength(1000).IsRequired();
+			Property(x => x.Name).HasMaxLength(300).IsRequired();
 			Property(x => x.Year).IsRequired();
 
-			HasMany(x => x.EditionTypes).WithMany(x => x.Editions);
 			HasMany(x => x.Books).WithRequired(x => x.Edition);
 		}
 	}

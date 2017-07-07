@@ -52,7 +52,8 @@
     <Compile Include="Mapping\AuthorMap.cs" />
     <Compile Include="Mapping\BookMap.cs" />
     <Compile Include="Mapping\EditionMap.cs" />
-    <Compile Include="Mapping\EditionTypeMap.cs" />
+    <Compile Include="Mapping\File.cs" />
+    <Compile Include="Mapping\GenreMap.cs" />
     <Compile Include="Mapping\InvoiceMap.cs" />
     <Compile Include="Mapping\PublisherMap.cs" />
     <Compile Include="Mapping\RentMap.cs" />
@@ -60,10 +61,10 @@
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Edition.cs" />
-    <Compile Include="Models\EditionType.cs" />
     <Compile Include="Models\EditionTypeEnum.cs" />
     <Compile Include="Models\Base\Entity.cs" />
     <Compile Include="Models\Base\IPerson.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Rent.cs" />
     <Compile Include="Models\Subscriber.cs" />

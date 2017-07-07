@@ -1,17 +1,40 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls
 {
 	class LibraryContextInitializer:DropCreateDatabaseAlways<LibraryContext>
 	{
+		#region Genres
+
+		private static readonly Genre ComputersAndTecnology = new Genre() {Name = "Computers & Technology"};
+		private static readonly Genre Programming = new Genre() {Name = "Programming", Parent = ComputersAndTecnology};
+
+		private static readonly Genre WebProgramming = new Genre() {Name = "Web Programming", Parent = Programming};
+		private static readonly Genre JavaScript = new Genre() {Name = "JavaScript", Parent = WebProgramming};
+
+
+		private static readonly Genre MicrosoftProgramming = new Genre()
+		{
+			Name = "Microsoft Programming",
+			Parent = Programming
+		};
+
+		private static readonly Genre DotNet = new Genre() {Name = ".NET", Parent = MicrosoftProgramming};
+
+		private static readonly Genre LanguageAndTools = new Genre() {Name = "Languages & Tools", Parent = Programming};
+		private static readonly Genre CSharp = new Genre() {Name = "C#", Parent = LanguageAndTools};
+
+		#endregion
+
 		#region Publishers
 
 		private static readonly Publisher Viliams = new Publisher() {Name = "Вильямс"};
+		private static readonly Publisher Self = new Publisher() { Name = "Язынин Артем Дмитриевич" };
 		private static readonly Publisher Piter = new Publisher() {Name = "Питер"};
 		private static readonly Publisher DmkPress = new Publisher() {Name = "ДМК Пресс"};
+		private static readonly Publisher SymbolPlus = new Publisher() { Name = "Символ-Плюс" };
 
 		#endregion
 
@@ -49,21 +72,28 @@ namespace Library.Services.Impls
 
 		#region Books
 
+		private readonly Book _myEvernoteNotes = new Book()
+		{
+			Name = "Мои заметки в Evernote",
+			Genres = new List<Genre>() { CSharp, JavaScript, DotNet },
+			Publisher = Self,
+			Edition = new Edition() { Name = "1-е издание", Year = 2017 },
+			Isbn = "-",
+			//Count = 10
+		};
+
 		private readonly Book _jsPocketGuide = new Book()
 		{
 			Count = 13,
 			Authors = new List<Author>() {new Author() {Lastname = "Флэнаган", Firstname = "Дэвид"}},
 			Name = "JavaScript. Карманный справочник",
+			Genres = new List<Genre>() { JavaScript },
 			Isbn = "978-1-449-31685-3",
-			Publishers = new List<Publisher>() {Viliams},
+			Publisher = Viliams,
 			Edition = new Edition()
 			{
 				Name = "3-е издание.",
 				Year = 2015,
-				EditionTypes = new List<EditionType>()
-				{
-					Printed
-				}
 			}
 		};
 
@@ -75,17 +105,14 @@ namespace Library.Services.Impls
 				new Author() {Lastname = "Резиг", Firstname = "Джон"},
 				new Author() {Lastname = "Фергюсон", Firstname = "Расс"}
 			},
+			Genres = new List<Genre>() { JavaScript },
 			Name = "JavaScript для профессионалов",
 			Isbn = "9781430263913",
-			Publishers = new List<Publisher>() {Viliams},
+			Publisher = Viliams,
 			Edition = new Edition()
 			{
 				Name = "2-е издание.",
 				Year = 2017,
-				EditionTypes = new List<EditionType>()
-				{
-					Printed
-				}
 			}
 		};
 
@@ -93,17 +120,14 @@ namespace Library.Services.Impls
 		{
 			Count = 34,
 			Authors = new List<Author>() {new Author() {Lastname = "Закас", Firstname = "Николас"}},
+			Genres = new List<Genre>() { JavaScript },
 			Name = "JavaScript. Оптимизация производительности",
 			Isbn = "978-5-93286-213-1",
-			Publishers = new List<Publisher>() {new Publisher() {Name = "Символ-Плюс"}},
+			Publisher = SymbolPlus,
 			Edition = new Edition()
 			{
 				Name = "1-е издание.",
 				Year = 2012,
-				EditionTypes = new List<EditionType>()
-				{
-					Printed
-				}
 			}
 		};
 
@@ -111,17 +135,14 @@ namespace Library.Services.Impls
 		{
 			Count = 18,
 			Authors = new List<Author>() {new Author() {Lastname = "Симпсон", Firstname = "Кайл"}},
+			Genres = new List<Genre>() { JavaScript },
 			Name = "ES6 и не только",
 			Isbn = " 9781491904244",
-			Publishers = new List<Publisher>() {Piter},
+			Publisher = Piter,
 			Edition = new Edition()
 			{
 				Name = "1-е издание.",
 				Year = 2017,
-				EditionTypes = new List<EditionType>()
-				{
-					Printed
-				}
 			}
 		};
 
@@ -129,18 +150,14 @@ namespace Library.Services.Impls
 		{
 			Count = 56,
 			Authors = new List<Author>() {new Author() {Lastname = "Рихтер", Firstname = "Джеффри"}},
+			Genres = new List<Genre>() { DotNet },
 			Name = "CLR via C#. Программирование на платформе Microsoft.NET Framework 4.5 на языке C#",
 			Isbn = "978-5-496-00433-6",
-			Publishers = new List<Publisher>() {Piter},
+			Publisher = Piter,
 			Edition = new Edition()
 			{
 				Name = "4-е издание.",
 				Year = 2017,
-				EditionTypes = new List<EditionType>()
-				{
-					Printed,
-					Electronic
-				}
 			}
 		};
 
@@ -148,17 +165,14 @@ namespace Library.Services.Impls
 		{
 			Count = 33,
 			Authors = new List<Author>() {new Author() {Lastname = "Шилдт", Firstname = "Герберт"}},
+			Genres = new List<Genre>() { CSharp},
 			Name = "C# 4.0. Полное руководство",
 			Isbn = "978-5-8459-1684-6",
-			Publishers = new List<Publisher>() {Viliams},
+			Publisher = Viliams,
 			Edition = new Edition()
 			{
 				Name = "1-е издание.",
 				Year = 2015,
-				EditionTypes = new List<EditionType>()
-				{
-					Printed
-				}
 			}
 		};
 
@@ -167,20 +181,17 @@ namespace Library.Services.Impls
 			Count = 20,
 			Name = "Язык программирования C# 6.0 и платформа .NET 4.6",
 			Isbn = "978-5-8459-2099-7, 978-1-4842-1333-9",
-			Publishers = new List<Publisher>() {Viliams},
+			Publisher = Viliams,
 			Authors = new List<Author>()
 			{
 				new Author() {Lastname = "Троелсен", Firstname = "Эндрю"},
 				new Author() {Lastname = "Джепикс", Firstname = "Филипп"}
 			},
+			Genres = new List<Genre>() { CSharp, DotNet},
 			Edition = new Edition()
 			{
 				Name = "7-е издание",
-				Year = 2016,
-				EditionTypes = new List<EditionType>()
-				{
-					Printed
-				}
+				Year = 2016
 			}
 		};
 
@@ -189,42 +200,46 @@ namespace Library.Services.Impls
 			Count = 62,
 			Name = "Асинхронное программирование в C# 5.0",
 			Isbn = "978-5-97060-281-2, 978-1449-33716-2",
-			Publishers = new List<Publisher>() {DmkPress},
+			Publisher = DmkPress,
 			Authors = new List<Author>()
 			{
 				new Author() {Lastname = "Дэвис", Firstname = "Алекс"}
 			},
+			Genres = new List<Genre>() { CSharp},
 			Edition = new Edition()
 			{
 				Name = "1-е издание",
 				Year = 2015,
-				EditionTypes = new List<EditionType>()
-				{
-					Printed
-				}
 			}
 		};
 
 		#endregion
 
-		#region Edition types
-
-		private static readonly EditionType Printed = new EditionType(EditionTypeEnum.Printed);
-		private static readonly EditionType Electronic = new EditionType(EditionTypeEnum.Electronic);
-
-		#endregion
-
-
 		protected override void Seed(LibraryContext context)
 		{
-			EditionTypes(context);
+			Genres(context);
 			Books(context);
 			Invoices(context);
 			Subscribers(context);
-
 			Rents(context);
 
 			context.SaveChanges();
+		}
+
+		private static void Genres(LibraryContext context)
+		{
+			var genres = new List<Genre>()
+			{
+				CSharp,
+				LanguageAndTools,
+				DotNet,
+				MicrosoftProgramming,
+				JavaScript,
+				WebProgramming,
+				Programming,
+				ComputersAndTecnology
+			};
+			genres.ForEach(x => context.Genres.Add(x));
 		}
 
 		private void Rents(LibraryContext context)
@@ -291,12 +306,6 @@ namespace Library.Services.Impls
 			rents.ForEach(x => context.Rents.Add(x));
 		}
 
-		private static void EditionTypes(LibraryContext context)
-		{
-			List<EditionType> editionTypes = new List<EditionType>() {Printed, Electronic};
-			editionTypes.ForEach(x => context.EditionTypes.Add(x));
-		}
-
 		private void Subscribers(LibraryContext context)
 		{
 			List<Subscriber> subscribers = new List<Subscriber>()
@@ -331,7 +340,8 @@ namespace Library.Services.Impls
 				_clrVia,
 				_cSharpCompleteGuide,
 				_cSharp6AndNetPlatform,
-				_asyncProgrammingCSharp5
+				_asyncProgrammingCSharp5,
+				_myEvernoteNotes
 			};
 			books.ForEach(x => context.Books.Add(x));
 		}
