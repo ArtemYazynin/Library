@@ -30,7 +30,7 @@ namespace Library.ObjectModel.Models
 		public virtual Publisher Publisher { get; set; }
 		public long PublisherId { get; set; }
 
-		//public virtual File Cover { get; set; }
+		public virtual File Cover { get; set; }
 		public long? CoverId { get; set; }
 
 		public virtual ICollection<Genre> Genres { get; set; }

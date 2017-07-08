@@ -53,6 +53,7 @@
     <Compile Include="Mapping\BookMap.cs" />
     <Compile Include="Mapping\EditionMap.cs" />
     <Compile Include="Mapping\File.cs" />
+    <Compile Include="Mapping\FileMap.cs" />
     <Compile Include="Mapping\GenreMap.cs" />
     <Compile Include="Mapping\InvoiceMap.cs" />
     <Compile Include="Mapping\PublisherMap.cs" />

@@ -20,23 +20,11 @@ namespace Library.ObjectModel.Mapping
 
 			HasRequired(x => x.Edition).WithMany(x => x.Books);
 			HasRequired(x => x.Publisher).WithMany(x => x.Books);
-			//HasOptional(x => x.Cover).WithRequired(x => (Book)x.Entity);
+			HasOptional(x => x.Cover).WithRequired(x => x.Book);
 
 			HasMany(x => x.Authors).WithMany(x => x.Books);
 			HasMany(x => x.Rents).WithRequired(x => x.Book);
 			HasMany(x => x.Genres).WithMany(x => x.Books);
 		}
 	}
-
-	//public class FileMap: EntityTypeConfiguration<File>
-	//{
-	//	public FileMap()
-	//	{
-	//		Property(x => x.Name).HasMaxLength(255).IsRequired();
-	//		Property(x => x.ContentType).HasMaxLength(100).IsRequired();
-	//		Property(x => x.Content).HasColumnType("image");
-
-	//		HasRequired(x => x.Entity).WithMany().HasForeignKey(x => x.EntityId);
-	//	}
-	//}
 }
