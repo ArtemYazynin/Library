@@ -51,9 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorsService.cs" />
+    <Compile Include="BooksService.cs" />
+    <Compile Include="GenericRepository.cs" />
     <Compile Include="LibraryContext.cs" />
     <Compile Include="LibraryContextInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library.ObjectModel\Library.ObjectModel.csproj">

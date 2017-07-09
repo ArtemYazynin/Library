@@ -8,18 +8,22 @@
 			<table class="table table-bordered table-condensed table-hover">
 				<thead>
 					<tr>
-						<th>Название</th>
-						<th>Авторы</th>
+					    <th>Название</th>
+                        <th>Жанры</th>
+					    <th>Авторы</th>
+                        <th>Издатель</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach (BookDto book in Model)
 					{
 					<tr>
-						<td>@book.Name</td>
-						<td>
-							@string.Join(", ", book.Authors)
-						</td>
+					    <td>@book.Name</td>
+					    <td>@string.Join(", ", @book.Genres)</td>
+					    <td>
+					        @string.Join(", ", book.Authors)
+					    </td>
+					    <td>@book.Publisher.Name</td>
 					</tr>
 					}
 				</tbody>

@@ -4,7 +4,7 @@ namespace Library.Services.DTO
 {
 	public class EntityDto
 	{
-		public Guid Id { get; set; }
+		public long Id { get; set; }
 		public DateTime Version { get; set; }
 	}
 }
