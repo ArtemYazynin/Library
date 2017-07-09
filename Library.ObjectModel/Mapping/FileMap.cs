@@ -1,4 +1,5 @@
 using System.Data.Entity.ModelConfiguration;
+using Library.ObjectModel.Models;
 
 namespace Library.ObjectModel.Mapping
 {

@@ -41,6 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\BookDto.cs" />
+    <Compile Include="DTO\EditionDto.cs" />
+    <Compile Include="DTO\EntityDto.cs" />
+    <Compile Include="DTO\FileDto.cs" />
+    <Compile Include="DTO\GenreDto.cs" />
+    <Compile Include="DTO\InvoiceDto.cs" />
+    <Compile Include="DTO\PublisherDto.cs" />
+    <Compile Include="DTO\RentDto.cs" />
+    <Compile Include="DTO\SubscriberDto.cs" />
     <Compile Include="IAuthorsService.cs" />
     <Compile Include="IBooksService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

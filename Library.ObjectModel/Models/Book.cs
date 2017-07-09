@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Library.ObjectModel.Mapping;
 using Library.ObjectModel.Models.Base;
 
 namespace Library.ObjectModel.Models
 {
-	public class Book: Entity
+	public class Book: Entity, IBook<Edition,Publisher,Genre,Author,Rent,Invoice,File>
 	{
 		public Book()
 		{

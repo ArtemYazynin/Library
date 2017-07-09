@@ -52,7 +52,7 @@
     <Compile Include="Mapping\AuthorMap.cs" />
     <Compile Include="Mapping\BookMap.cs" />
     <Compile Include="Mapping\EditionMap.cs" />
-    <Compile Include="Mapping\File.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Mapping\FileMap.cs" />
     <Compile Include="Mapping\GenreMap.cs" />
     <Compile Include="Mapping\InvoiceMap.cs" />
@@ -66,7 +66,16 @@
     <Compile Include="Models\Base\Entity.cs" />
     <Compile Include="Models\Base\IPerson.cs" />
     <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\Base\IEdition.cs" />
+    <Compile Include="Models\Base\IAuthor.cs" />
+    <Compile Include="Models\Base\IGenre.cs" />
+    <Compile Include="Models\Base\IInvoice.cs" />
+    <Compile Include="Models\Base\IBook.cs" />
+    <Compile Include="Models\Base\IFile.cs" />
     <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\Base\ISubscriber.cs" />
+    <Compile Include="Models\Base\IRent.cs" />
+    <Compile Include="Models\Base\IPublisher.cs" />
     <Compile Include="Models\Rent.cs" />
     <Compile Include="Models\Subscriber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

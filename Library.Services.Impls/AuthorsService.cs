@@ -26,7 +26,7 @@ namespace Library.Services.Impls
 							Firstname = y.Firstname,
 							Middlename = y.Middlename
 						}
-					})
+					}).ToList()
 				});
 				return result;
 			}

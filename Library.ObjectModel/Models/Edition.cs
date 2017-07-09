@@ -3,7 +3,7 @@ using Library.ObjectModel.Models.Base;
 
 namespace Library.ObjectModel.Models
 {
-	public class Edition: Entity
+	public class Edition: Entity, IEdition<Book>
 	{
 		public Edition()
 		{

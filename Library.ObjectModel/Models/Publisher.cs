@@ -3,7 +3,7 @@ using Library.ObjectModel.Models.Base;
 
 namespace Library.ObjectModel.Models
 {
-	public class Publisher: Entity
+	public class Publisher: Entity, IPublisher<Book>
 	{
 		public Publisher()
 		{
@@ -11,6 +11,6 @@ namespace Library.ObjectModel.Models
 		}
 
 		public string Name { get; set; }
-		public ICollection<Book> Books { get; set; }
+		public virtual ICollection<Book> Books { get; set; }
 	}
 }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Library.ObjectModel.Models.Base;
 
 namespace Library.Services.DTO
 {
-	public class AuthorDto
+	public class AuthorDto: EntityDto, IAuthor<BookDto>
 	{
 		public AuthorDto()
 		{
@@ -13,7 +13,7 @@ namespace Library.Services.DTO
 		public string Lastname { get; set; }
 		public string Firstname { get; set; }
 		public string Middlename { get; set; }
-		public IEnumerable<BookDto> Books { get; set; }
+		public ICollection<BookDto> Books { get; set; }
 
 		public override string ToString()
 		{

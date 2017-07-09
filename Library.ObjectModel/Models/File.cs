@@ -1,9 +1,8 @@
-using Library.ObjectModel.Models;
 using Library.ObjectModel.Models.Base;
 
-namespace Library.ObjectModel.Mapping
+namespace Library.ObjectModel.Models
 {
-	public class File : Entity
+	public class File : Entity, IFile<Book>
 	{
 		public string Name { get; set; }
 		public string ContentType { get; set; }

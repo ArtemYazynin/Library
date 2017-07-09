@@ -3,7 +3,7 @@ using Library.ObjectModel.Models.Base;
 
 namespace Library.ObjectModel.Models
 {
-	public class Author: Entity, IPerson
+	public class Author: Entity, IAuthor<Book>
 	{
 		public Author()
 		{
@@ -14,7 +14,7 @@ namespace Library.ObjectModel.Models
 		public string Firstname { get; set; }
 		public string Middlename { get; set; }
 
-		public ICollection<Book> Books { get; set; }
+		public virtual ICollection<Book> Books { get; set; }
 
 		public override string ToString()
 		{

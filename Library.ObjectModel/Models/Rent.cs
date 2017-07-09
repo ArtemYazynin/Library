@@ -3,7 +3,7 @@ using Library.ObjectModel.Models.Base;
 
 namespace Library.ObjectModel.Models
 {
-	public class Rent:Entity
+	public class Rent:Entity, IRent<Book, Subscriber>
 	{
 		public Rent()
 		{
