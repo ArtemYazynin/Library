@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Library.ObjectModel.Models.Base
+namespace Library.Common
 {
 	public interface IBook<TEdition,TPublisher, TGenre, TAuthor, TRent, TInvoice, TFile>
 	{

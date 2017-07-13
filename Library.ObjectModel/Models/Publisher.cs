@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Library.ObjectModel.Models.Base;
+using Library.Common;
 
 namespace Library.ObjectModel.Models
 {
-	public class Publisher: Entity, IPublisher<Book>
+	public class Publisher : Entity, IPublisher<Book>
 	{
 		public Publisher()
 		{

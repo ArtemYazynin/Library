@@ -137,7 +137,7 @@ namespace Library.Services.Impls
 			Authors = new List<Author>() {new Author() {Lastname = "Симпсон", Firstname = "Кайл"}},
 			Genres = new List<Genre>() { JavaScript },
 			Name = "ES6 и не только",
-			Isbn = " 9781491904244",
+			Isbn = "9781491904244",
 			Publisher = Piter,
 			Edition = new Edition()
 			{

@@ -1,4 +1,4 @@
-﻿using Library.ObjectModel.Models.Base;
+﻿using Library.Common;
 
 namespace Library.Services.DTO
 {

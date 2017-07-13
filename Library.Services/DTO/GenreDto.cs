@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Library.ObjectModel.Models.Base;
+using Library.Common;
 
 namespace Library.Services.DTO
 {
@@ -15,5 +15,10 @@ namespace Library.Services.DTO
 		public GenreDto Parent { get; set; }
 		public ICollection<BookDto> Books { get; set; }
 		public ICollection<GenreDto> Children { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

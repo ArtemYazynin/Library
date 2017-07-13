@@ -7,11 +7,9 @@ namespace Library.Web.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly IAuthorsService _authorsService;
 		private readonly IBooksService _booksService;
-		public HomeController(IAuthorsService authorsService, IBooksService booksService)
+		public HomeController(IBooksService booksService)
 		{
-			_authorsService = authorsService;
 			_booksService = booksService;
 		}
 

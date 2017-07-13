@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Library.ObjectModel.Models.Base
+namespace Library.Common
 {
 	public interface IInvoice<TBook>
 	{

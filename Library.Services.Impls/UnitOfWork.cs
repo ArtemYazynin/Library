@@ -3,9 +3,12 @@ using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls
 {
-	public class UnitOfWork:IDisposable
+	public class UnitOfWork: IUnitOfWork
 	{
+
+		#region private fields
 		private readonly LibraryContext _context = new LibraryContext();
+
 		private GenericRepository<Author> _authorRepository;
 		private GenericRepository<Book> _bookRepository;
 		private GenericRepository<Edition> _editionRepository;
@@ -16,15 +19,18 @@ namespace Library.Services.Impls
 		private GenericRepository<Rent> _rentRepository;
 		private GenericRepository<Subscriber> _subscriberRepository;
 
-		public GenericRepository<Author> AuthoRepository => _authorRepository ?? (_authorRepository = new GenericRepository<Author>(_context));
-		public GenericRepository<Book> BookRepository => _bookRepository ?? (_bookRepository = new GenericRepository<Book>(_context));
-		public GenericRepository<Edition> EditionRepository => _editionRepository ?? (_editionRepository = new GenericRepository<Edition>(_context));
-		public GenericRepository<File> FileRepository => _fileRepository ?? (_fileRepository = new GenericRepository<File>(_context));
-		public GenericRepository<Genre> GenreRepository => _genreRepository ?? (_genreRepository = new GenericRepository<Genre>(_context));
-		public GenericRepository<Invoice> InvoiceRepository => _invoiceRepository ?? (_invoiceRepository = new GenericRepository<Invoice>(_context));
-		public GenericRepository<Publisher> PublisherRepository => _publisherRepository ?? (_publisherRepository = new GenericRepository<Publisher>(_context));
-		public GenericRepository<Rent> RentRepository => _rentRepository ?? (_rentRepository = new GenericRepository<Rent>(_context));
-		public GenericRepository<Subscriber> SubscriberRepository => _subscriberRepository ?? (_subscriberRepository = new GenericRepository<Subscriber>(_context));
+		#endregion
+
+
+		public IGenericRepository<Author> AuthorRepository => _authorRepository ?? (_authorRepository = new GenericRepository<Author>(_context));
+		public IGenericRepository<Book> BookRepository => _bookRepository ?? (_bookRepository = new GenericRepository<Book>(_context));
+		public IGenericRepository<Edition> EditionRepository => _editionRepository ?? (_editionRepository = new GenericRepository<Edition>(_context));
+		public IGenericRepository<File> FileRepository => _fileRepository ?? (_fileRepository = new GenericRepository<File>(_context));
+		public IGenericRepository<Genre> GenreRepository => _genreRepository ?? (_genreRepository = new GenericRepository<Genre>(_context));
+		public IGenericRepository<Invoice> InvoiceRepository => _invoiceRepository ?? (_invoiceRepository = new GenericRepository<Invoice>(_context));
+		public IGenericRepository<Publisher> PublisherRepository => _publisherRepository ?? (_publisherRepository = new GenericRepository<Publisher>(_context));
+		public IGenericRepository<Rent> RentRepository => _rentRepository ?? (_rentRepository = new GenericRepository<Rent>(_context));
+		public IGenericRepository<Subscriber> SubscriberRepository => _subscriberRepository ?? (_subscriberRepository = new GenericRepository<Subscriber>(_context));
 
 		public void Save()
 		{

@@ -1,5 +1,5 @@
 ﻿using System;
-using Library.ObjectModel.Models.Base;
+using Library.Common;
 
 namespace Library.ObjectModel.Models
 {

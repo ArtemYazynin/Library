@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Library.ObjectModel.Models.Base
+namespace Library.Common
 {
 	public interface IRent<TBook, TSubscriber>
 	{

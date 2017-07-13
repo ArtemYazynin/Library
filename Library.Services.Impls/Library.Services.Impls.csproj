@@ -59,6 +59,10 @@
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Library.Common\Library.Common.csproj">
+      <Project>{647C22B5-E119-492E-B725-4C1149D93971}</Project>
+      <Name>Library.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library.ObjectModel\Library.ObjectModel.csproj">
       <Project>{7f35242b-fe3e-4c92-a08e-770a2523acff}</Project>
       <Name>Library.ObjectModel</Name>

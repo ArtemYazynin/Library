@@ -8,6 +8,8 @@ namespace Library.Web.Utils
 	{
 		public override void Load()
 		{
+			
+			Bind<IUnitOfWork>().To<UnitOfWork>();
 			Bind<IAuthorsService>().To<AuthorsService>();
 			Bind<IBooksService>().To<BooksService>();
 		}

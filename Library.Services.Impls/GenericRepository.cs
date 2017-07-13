@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using Library.ObjectModel.Models.Base;
+using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls
 {
-	public class GenericRepository<TEntity> where TEntity : Entity
+	public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : Entity
 	{
 		private readonly LibraryContext _context;
 		private readonly IDbSet<TEntity> _dbSet;

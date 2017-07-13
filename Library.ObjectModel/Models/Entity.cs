@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Library.ObjectModel.Models.Base
+namespace Library.ObjectModel.Models
 {
 	public class Entity
 	{
