@@ -5,9 +5,9 @@ namespace Library.Services
 {
 	public interface IBooksService
 	{
-		IEnumerable<BookDto> Get();
+		IEnumerable<BookDto> GetAll();
 
-		IEnumerable<BookDto> GetById();
+		BookDto Get(long id);
 
 		EntityDto Create(BookDto bookDto);
 

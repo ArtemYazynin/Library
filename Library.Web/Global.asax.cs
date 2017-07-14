@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Library.Services.Impls;
 using Library.Web.Utils;
 using Ninject;
 using Ninject.Modules;
@@ -13,8 +14,9 @@ namespace Library.Web
 	{
 		protected void Application_Start()
 		{
-			AreaRegistration.RegisterAllAreas();
+			AutoMapperConfig.Initialize();
 
+			AreaRegistration.RegisterAllAreas();
 
 			#region ninject registration
 
@@ -25,8 +27,6 @@ namespace Library.Web
 			GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver; // Web API
 
 			#endregion
-
-
 
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

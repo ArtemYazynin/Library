@@ -12,8 +12,5 @@ namespace Library.Services.DTO
 		public bool IsActive { get; set; }
 
 		public DateTime Date { get; set; }
-
-		public BookDto BookDto { get; set; }
-		public SubscriberDto SubscriberDto { get; set; }
 	}
 }

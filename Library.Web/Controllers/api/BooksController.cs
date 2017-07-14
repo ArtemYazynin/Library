@@ -21,7 +21,7 @@ namespace Library.Web.Controllers.api
 		[HttpGet]
 		public IEnumerable<BookDto> Get()
 		{
-			var books = _booksService.Get();
+			var books = _booksService.GetAll();
 			return books;
 		}
 	}
