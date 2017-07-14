@@ -21,25 +21,6 @@ namespace Library.Services.Impls
 			var books = _unitOfWork.BookRepository.GetAll();
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;
-			//var result = books.Select(x => new BookDto()
-			//{
-			//	Name = x.Name,
-			//	Publisher = new PublisherDto() { Id = x.Publisher.Id, Version = x.Publisher.Version, Name = x.Publisher.Name},
-			//	Genres = x.Genres.SelectMany(g=> new List<GenreDto>()
-			//	{
-			//		new GenreDto() { Id = g.Id, Version = g.Version, Name = g.Name }
-			//	}).ToList(),
-			//	Authors = x.Authors.SelectMany(y => new List<AuthorDto>()
-			//	{
-			//		new AuthorDto()
-			//		{
-			//			Lastname = y.Lastname,
-			//			Firstname = y.Firstname,
-			//			Middlename = y.Middlename
-			//		}
-			//	}).ToList()
-			//});
-			//return result;
 		}
 
 		public BookDto Get(long id)
@@ -51,7 +32,13 @@ namespace Library.Services.Impls
 
 		public EntityDto Create(BookDto bookDto)
 		{
-			throw new System.NotImplementedException();
+			var book = Mapper.Map<Book>(bookDto);
+			_unitOfWork.BookRepository.Create(book);
+			return new EntityDto()
+			{
+				Id = book.Id,
+				Version = book.Version
+			};
 		}
 
 		public EntityDto Update(long id, BookDto bookDto)
