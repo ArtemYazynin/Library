@@ -8,7 +8,7 @@ namespace Library.Services.Impls
 	{
 		public LibraryContext() : base("DBConnection")
 		{
-			Database.SetInitializer<LibraryContext>(new LibraryContextInitializer());
+			Database.SetInitializer(new LibraryContextInitializer());
 		}
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)

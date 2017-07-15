@@ -1,13 +1,18 @@
 using System;
+using System.Data.Entity;
 using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls
 {
 	public class UnitOfWork: IUnitOfWork
 	{
-
+		public UnitOfWork(DbContext context)
+		{
+			_context = (LibraryContext) context;
+		}
 		#region private fields
-		private readonly LibraryContext _context = new LibraryContext();
+
+		private readonly LibraryContext _context;
 
 		private GenericRepository<Author> _authorRepository;
 		private GenericRepository<Book> _bookRepository;

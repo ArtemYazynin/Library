@@ -42,7 +42,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorsService.cs" />
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="BooksService.cs" />
     <Compile Include="GenericRepository.cs" />

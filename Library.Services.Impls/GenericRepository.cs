@@ -42,32 +42,41 @@ namespace Library.Services.Impls
 			return _dbSet.Find(id);
 		}
 
-		public void Create(TEntity entity)
+		public bool Create(TEntity entity)
 		{
+			if (entity == null) return false;
 			_dbSet.Add(entity);
+			return true;
 		}
 
-		public void Delete(long id)
+		public bool Delete(long id)
 		{
 			var entity = _dbSet.Find(id);
-			if (entity == null) return;
+			if (entity == null) return false;
 
 			_dbSet.Remove(entity);
+			return true;
 		}
 
-		public void Delete(TEntity entity)
+		public bool Delete(TEntity entity)
 		{
+			if (entity == null) return false;
+
 			if (_context.Entry(entity).State == EntityState.Detached)
 			{
 				_dbSet.Attach(entity);
 			}
 			_dbSet.Remove(entity);
+			return true;
 		}
 
-		public void Update(TEntity entity)
+		public bool Update(TEntity entity)
 		{
+			if (entity == null) return false;
+
 			_dbSet.Attach(entity);
 			_context.Entry(entity).State = EntityState.Modified;
+			return true;
 		}
 	}
 }

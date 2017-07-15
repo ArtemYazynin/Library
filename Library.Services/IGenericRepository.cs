@@ -12,9 +12,9 @@ namespace Library.Services
 			string includeProperties = "");
 
 		TEntity Get(long id);
-		void Create(TEntity entity);
-		void Delete(long id);
-		void Delete(TEntity entity);
-		void Update(TEntity entity);
+		bool Create(TEntity entity);
+		bool Delete(long id);
+		bool Delete(TEntity entity);
+		bool Update(TEntity entity);
 	}
 }

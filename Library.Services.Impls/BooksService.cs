@@ -33,6 +33,7 @@ namespace Library.Services.Impls
 		{
 			var book = Mapper.Map<Book>(bookDto);
 			_unitOfWork.BookRepository.Create(book);
+			_unitOfWork.Save();
 			return new EntityDto()
 			{
 				Id = book.Id,
@@ -43,11 +44,14 @@ namespace Library.Services.Impls
 		public EntityDto Update(long id, BookDto bookDto)
 		{
 			throw new System.NotImplementedException();
+			//_unitOfWork.Save();
 		}
 
 		public EntityDto Delete(long id)
 		{
-			throw new System.NotImplementedException();
+			_unitOfWork.BookRepository.Delete(id);
+			_unitOfWork.Save();
+			return new EntityDto() {Id = id};
 		}
 	}
 }
