@@ -6,17 +6,15 @@ namespace Library.Tests.Controllers
 	[TestFixture]
 	public class BooksControllerTest
 	{
-		[Test]
-		public async void Get()
-		{
-			var bookController = new BooksController();
-
-		}
-
 		[SetUp]
 		public void SetUp()
 		{
-			
+		}
+
+		[Test]
+		public void Get()
+		{
+			var bookController = new BooksController();
 		}
 	}
 }

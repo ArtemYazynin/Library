@@ -29,7 +29,7 @@ namespace Library.Services.Impls
 				query = query.Where(filter);
 			}
 
-			foreach (var includeProperty in includeProperties.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+			foreach (var includeProperty in includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries))
 			{
 				query = query.Include(includeProperty);
 			}
