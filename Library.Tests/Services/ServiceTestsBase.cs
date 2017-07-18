@@ -5,6 +5,12 @@ namespace Library.Tests.Services
 {
 	abstract class ServiceTestsBase
 	{
+		protected const string ClrViaCsharpName =
+			"CLR via C#. Программирование на платформе Microsoft.NET Framework 4.5 на языке C#";
+		protected const string ClrViaCsharpIsbn = "978-5-496-00433-6";
+		protected const string ClrViaCsharpPublisherName = "Питер";
+
+
 		protected Book JsPocketGuide = Mock.Of<Book>(b => b.Id == 2125
 		                                                  && b.Name == "JavaScript. Карманный справочник"
 		                                                  && b.Isbn == "978-1-449-31685-3"
@@ -14,8 +20,8 @@ namespace Library.Tests.Services
 		                                                  && b.Isbn == "9781491904244"
 		                                                  && b.Publisher == Mock.Of<Publisher>());
 		protected Book ClrVia = Mock.Of<Book>(b => b.Id == 10
-		                                           && b.Name == "CLR via C#. Программирование на платформе Microsoft.NET Framework 4.5 на языке C#"
-		                                           && b.Isbn == "978-5-496-00433-6"
-		                                           && b.Publisher == Mock.Of<Publisher>());
+		                                           && b.Name == ClrViaCsharpName
+												   && b.Isbn == ClrViaCsharpIsbn
+												   && b.Publisher == Mock.Of<Publisher>(x=>x.Name == ClrViaCsharpPublisherName));
 	}
 }

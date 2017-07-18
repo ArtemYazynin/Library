@@ -14,6 +14,8 @@ namespace Library.Tests.Services.Books
 	[TestFixture]
 	internal sealed class BookServiceTest : ServiceTestsBase
 	{
+		private IBooksService _booksService;
+
 		[SetUp]
 		public void SetUp()
 		{
@@ -24,20 +26,20 @@ namespace Library.Tests.Services.Books
 				ClrVia
 			};
 
-			var stub = new Mock<IGenericRepository<Book>>();
-			stub.Setup(
+			var stubBookRepository = new Mock<IGenericRepository<Book>>();
+			stubBookRepository.Setup(
 				x =>
 					x.GetAll(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
 						It.IsAny<string>()))
 				.Returns(books);
-			stub.Setup(x => x.Get(It.IsAny<long>())).Returns<long>(id => books.SingleOrDefault(x => x.Id == id));
-			stub.Setup(x => x.Create(It.IsAny<Book>()))
+			stubBookRepository.Setup(x => x.Get(It.IsAny<long>())).Returns<long>(id => books.SingleOrDefault(x => x.Id == id));
+			stubBookRepository.Setup(x => x.Create(It.IsAny<Book>()))
 				.Returns((Book x) =>
 				{
 					books.Add(x);
 					return true;
 				});
-			stub.Setup(x => x.Delete(It.IsAny<long>()))
+			stubBookRepository.Setup(x => x.Delete(It.IsAny<long>()))
 				.Returns((long id) =>
 				{
 					var book = books.SingleOrDefault(x => x.Id == id);
@@ -48,23 +50,48 @@ namespace Library.Tests.Services.Books
 					books.Remove(book);
 					return true;
 				});
-			stub.Setup(x => x.Delete(It.IsAny<Book>()))
+			stubBookRepository.Setup(x => x.Delete(It.IsAny<Book>()))
 				.Returns<Book>(x =>
 				{
 					books.Add(x);
 					return true;
 				});
-			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stub.Object);
+			stubBookRepository.Setup(x => x.Update(It.IsAny<Book>())).Returns<BookDto>(x => true);
+			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object);
 
 			_booksService = new BooksService(unitOfWork);
 		}
-
-		private IBooksService _booksService;
 
 		[TestFixtureSetUp]
 		public void FixtureSetUp()
 		{
 			AutoMapperConfig.Initialize();
+		}
+
+		[Test]
+		public void Update_ShouldUpdated()
+		{
+			Assert.That(ClrVia.Name, Is.EqualTo(ClrViaCsharpName));
+			Assert.That(ClrVia.Isbn, Is.EqualTo(ClrViaCsharpIsbn));
+			Assert.That(ClrVia.Publisher.Name, Is.EqualTo(ClrViaCsharpPublisherName));
+
+			const string newName = "Test Driven Development";
+			const string newIsbn = "111-111-111-12";
+			const string newPublisherName = "Daria Doncova";
+			var bookDto = new BookDto()
+			{
+				Name = newName,
+				Isbn = newIsbn,
+				Publisher = new PublisherDto()
+				{
+					Name = newPublisherName
+				}
+			};
+			_booksService.Update(ClrVia.Id, bookDto);
+
+			Assert.That(ClrVia.Name, Is.EqualTo(newName));
+			Assert.That(ClrVia.Isbn, Is.EqualTo(newIsbn));
+			Assert.That(ClrVia.Publisher.Name, Is.EqualTo(newPublisherName));
 		}
 
 		[Test]

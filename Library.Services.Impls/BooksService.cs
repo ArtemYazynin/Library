@@ -43,8 +43,14 @@ namespace Library.Services.Impls
 
 		public EntityDto Update(long id, BookDto bookDto)
 		{
-			throw new System.NotImplementedException();
-			//_unitOfWork.Save();
+			var book = _unitOfWork.BookRepository.Get(id);
+			book.Name = bookDto.Name;
+			book.Isbn = bookDto.Isbn;
+			return new EntityDto()
+			{
+				Id = id,
+				Version = book.Version
+			};
 		}
 
 		public EntityDto Delete(long id)
