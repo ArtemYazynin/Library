@@ -46,6 +46,27 @@ namespace Library.Services.Impls
 			var book = _unitOfWork.BookRepository.Get(id);
 			book.Name = bookDto.Name;
 			book.Isbn = bookDto.Isbn;
+			book.Description = bookDto.Description;
+			book.Count = bookDto.Count;
+			book.CountAvailable = bookDto.CountAvailable;
+			if (book.EditionId != bookDto.Edition.Id 
+			 || book.Edition.Name != bookDto.Edition.Name)
+			{
+				book.Edition = new Edition()
+				{
+					Name = bookDto.Edition.Name,
+					Year = bookDto.Edition.Year
+				};
+			}
+			if (book.PublisherId != bookDto.Publisher.Id)
+			{
+				book.Publisher = new Publisher()
+				{
+					Name = bookDto.Publisher.Name
+				};
+			}
+
+			_unitOfWork.Save();
 			return new EntityDto()
 			{
 				Id = id,

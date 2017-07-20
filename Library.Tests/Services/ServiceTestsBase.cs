@@ -1,27 +1,70 @@
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Linq.Expressions;
 using Library.ObjectModel.Models;
+using Library.Services;
+using Library.Services.DTO;
+using Library.Services.Impls;
 using Moq;
+using NUnit.Framework;
 
 namespace Library.Tests.Services
 {
 	abstract class ServiceTestsBase
 	{
-		protected const string ClrViaCsharpName =
-			"CLR via C#. Программирование на платформе Microsoft.NET Framework 4.5 на языке C#";
-		protected const string ClrViaCsharpIsbn = "978-5-496-00433-6";
-		protected const string ClrViaCsharpPublisherName = "Питер";
+		protected IBooksService BooksService;
 
+		[SetUp]
+		public void SetUp()
+		{
+			var books = new Collection<Book>
+			{
+				DefaultData.Books.JsPocketGuide,
+				DefaultData.Books.Es6AndNotOnly,
+				DefaultData.Books.ClrVia
+			};
 
-		protected Book JsPocketGuide = Mock.Of<Book>(b => b.Id == 2125
-		                                                  && b.Name == "JavaScript. Карманный справочник"
-		                                                  && b.Isbn == "978-1-449-31685-3"
-		                                                  && b.Publisher == Mock.Of<Publisher>());
-		protected Book Es6AndNotOnly = Mock.Of<Book>(b => b.Id == 113
-		                                                  && b.Name == "ES6 и не только"
-		                                                  && b.Isbn == "9781491904244"
-		                                                  && b.Publisher == Mock.Of<Publisher>());
-		protected Book ClrVia = Mock.Of<Book>(b => b.Id == 10
-		                                           && b.Name == ClrViaCsharpName
-												   && b.Isbn == ClrViaCsharpIsbn
-												   && b.Publisher == Mock.Of<Publisher>(x=>x.Name == ClrViaCsharpPublisherName));
+			var stubBookRepository = new Mock<IGenericRepository<Book>>();
+			stubBookRepository.Setup(
+				x =>
+					x.GetAll(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
+						It.IsAny<string>()))
+				.Returns(books);
+			stubBookRepository.Setup(x => x.Get(It.IsAny<long>())).Returns<long>(id => books.SingleOrDefault(x => x.Id == id));
+			stubBookRepository.Setup(x => x.Create(It.IsAny<Book>()))
+				.Returns((Book x) =>
+				{
+					books.Add(x);
+					return true;
+				});
+			stubBookRepository.Setup(x => x.Delete(It.IsAny<long>()))
+				.Returns((long id) =>
+				{
+					var book = books.SingleOrDefault(x => x.Id == id);
+					if (book == null)
+					{
+						return false;
+					}
+					books.Remove(book);
+					return true;
+				});
+			stubBookRepository.Setup(x => x.Delete(It.IsAny<Book>()))
+				.Returns<Book>(x =>
+				{
+					books.Add(x);
+					return true;
+				});
+			stubBookRepository.Setup(x => x.Update(It.IsAny<Book>())).Returns<BookDto>(x => true);
+			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object);
+
+			BooksService = new BooksService(unitOfWork);
+		}
+
+		[TestFixtureSetUp]
+		public void FixtureSetUp()
+		{
+			AutoMapperConfig.Initialize();
+		}
 	}
 }

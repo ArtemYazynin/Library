@@ -27,7 +27,7 @@ namespace Library.ObjectModel.Models
 		public long EditionId { get; set; }
 
 		public virtual Publisher Publisher { get; set; }
-		public long PublisherId { get; set; }
+		public long PublisherId => Publisher.Id;
 
 		public virtual File Cover { get; set; }
 		public long? CoverId { get; set; }
