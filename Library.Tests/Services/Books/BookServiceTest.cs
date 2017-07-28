@@ -78,11 +78,6 @@ namespace Library.Tests.Services.Books
 		}
 
 		[Test]
-		public void Delete_ShouldDeleted()
-		{
-		}
-
-		[Test]
 		public void DeleteByid_ShouldDeleted()
 		{
 			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(3));

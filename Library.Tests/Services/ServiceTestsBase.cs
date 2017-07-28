@@ -26,12 +26,15 @@ namespace Library.Tests.Services
 			};
 
 			var stubBookRepository = new Mock<IGenericRepository<Book>>();
+
 			stubBookRepository.Setup(
 				x =>
 					x.GetAll(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
 						It.IsAny<string>()))
 				.Returns(books);
+
 			stubBookRepository.Setup(x => x.Get(It.IsAny<long>())).Returns<long>(id => books.SingleOrDefault(x => x.Id == id));
+
 			stubBookRepository.Setup(x => x.Create(It.IsAny<Book>()))
 				.Returns((Book x) =>
 				{

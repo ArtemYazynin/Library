@@ -14,5 +14,6 @@ namespace Library.Services
 		EntityDto Update(long id, BookDto bookDto);
 
 		EntityDto Delete(long id);
+
 	}
 }

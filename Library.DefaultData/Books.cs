@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using Library.ObjectModel.Models;
 
@@ -10,10 +10,10 @@ namespace Library.DefaultData
 		public static Book MyEvernoteNotes = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
-			Name = "Мои заметки в Evernote",
+			Name = "РњРѕРё Р·Р°РјРµС‚РєРё РІ Evernote",
 			Genres = new List<Genre>() { Genres.CSharp, Genres.JavaScript, Genres.DotNet },
 			Publisher = Publishers.Self,
-			Edition = new Edition() { Name = "1-е издание", Year = 2017 },
+			Edition = new Edition() { Name = "1-Рµ РёР·РґР°РЅРёРµ", Year = 2017 },
 			Isbn = "-",
 		};
 
@@ -21,14 +21,14 @@ namespace Library.DefaultData
 		{
 			Id= Rnd.Next(int.MaxValue),
 			Count = 13,
-			Authors = new List<Author>() { new Author() { Lastname = "Флэнаган", Firstname = "Дэвид" } },
-			Name = "JavaScript. Карманный справочник",
+			Authors = new List<Author>() { new Author() { Lastname = "Р¤Р»СЌРЅР°РіР°РЅ", Firstname = "Р”СЌРІРёРґ" } },
+			Name = "JavaScript. РљР°СЂРјР°РЅРЅС‹Р№ СЃРїСЂР°РІРѕС‡РЅРёРє",
 			Genres = new List<Genre>() { Genres.JavaScript },
 			Isbn = "978-1-449-31685-3",
 			Publisher = Publishers.Viliams,
 			Edition = new Edition()
 			{
-				Name = "3-е издание.",
+				Name = "3-Рµ РёР·РґР°РЅРёРµ.",
 				Year = 2015,
 			}
 		};
@@ -39,16 +39,16 @@ namespace Library.DefaultData
 			Count = 24,
 			Authors = new List<Author>()
 			{
-				new Author() {Lastname = "Резиг", Firstname = "Джон"},
-				new Author() {Lastname = "Фергюсон", Firstname = "Расс"}
+				new Author() {Lastname = "Р РµР·РёРі", Firstname = "Р”Р¶РѕРЅ"},
+				new Author() {Lastname = "Р¤РµСЂРіСЋСЃРѕРЅ", Firstname = "Р Р°СЃСЃ"}
 			},
 			Genres = new List<Genre>() { Genres.JavaScript },
-			Name = "JavaScript для профессионалов",
+			Name = "JavaScript РґР»СЏ РїСЂРѕС„РµСЃСЃРёРѕРЅР°Р»РѕРІ",
 			Isbn = "9781430263913",
 			Publisher = Publishers.Viliams,
 			Edition = new Edition()
 			{
-				Name = "2-е издание.",
+				Name = "2-Рµ РёР·РґР°РЅРёРµ.",
 				Year = 2017,
 			}
 		};
@@ -57,14 +57,14 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Count = 34,
-			Authors = new List<Author>() { new Author() { Lastname = "Закас", Firstname = "Николас" } },
+			Authors = new List<Author>() { new Author() { Lastname = "Р—Р°РєР°СЃ", Firstname = "РќРёРєРѕР»Р°СЃ" } },
 			Genres = new List<Genre>() { Genres.JavaScript },
-			Name = "JavaScript. Оптимизация производительности",
+			Name = "JavaScript. РћРїС‚РёРјРёР·Р°С†РёСЏ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЊРЅРѕСЃС‚Рё",
 			Isbn = "978-5-93286-213-1",
 			Publisher = Publishers.SymbolPlus,
 			Edition = new Edition()
 			{
-				Name = "1-е издание.",
+				Name = "1-Рµ РёР·РґР°РЅРёРµ.",
 				Year = 2012,
 			}
 		};
@@ -73,14 +73,14 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Count = 18,
-			Authors = new List<Author>() { new Author() { Lastname = "Симпсон", Firstname = "Кайл" } },
+			Authors = new List<Author>() { new Author() { Lastname = "РЎРёРјРїСЃРѕРЅ", Firstname = "РљР°Р№Р»" } },
 			Genres = new List<Genre>() { Genres.JavaScript },
-			Name = "ES6 и не только",
+			Name = "ES6 Рё РЅРµ С‚РѕР»СЊРєРѕ",
 			Isbn = "9781491904244",
 			Publisher = Publishers.Piter,
 			Edition = new Edition()
 			{
-				Name = "1-е издание.",
+				Name = "1-Рµ РёР·РґР°РЅРёРµ.",
 				Year = 2017,
 			}
 		};
@@ -89,14 +89,14 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Count = 56,
-			Authors = new List<Author>() { new Author() { Lastname = "Рихтер", Firstname = "Джеффри" } },
+			Authors = new List<Author>() { new Author() { Lastname = "Р РёС…С‚РµСЂ", Firstname = "Р”Р¶РµС„С„СЂРё" } },
 			Genres = new List<Genre>() { Genres.DotNet },
-			Name = "CLR via C#. Программирование на платформе Microsoft.NET Framework 4.5 на языке C#",
+			Name = "CLR via C#. РџСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ РЅР° РїР»Р°С‚С„РѕСЂРјРµ Microsoft.NET Framework 4.5 РЅР° СЏР·С‹РєРµ C#",
 			Isbn = "978-5-496-00433-6",
 			Publisher = Publishers.Piter,
 			Edition = new Edition()
 			{
-				Name = "4-е издание.",
+				Name = "4-Рµ РёР·РґР°РЅРёРµ.",
 				Year = 2017,
 			}
 		};
@@ -105,14 +105,14 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Count = 33,
-			Authors = new List<Author>() { new Author() { Lastname = "Шилдт", Firstname = "Герберт" } },
+			Authors = new List<Author>() { new Author() { Lastname = "РЁРёР»РґС‚", Firstname = "Р“РµСЂР±РµСЂС‚" } },
 			Genres = new List<Genre>() { Genres.CSharp },
-			Name = "C# 4.0. Полное руководство",
+			Name = "C# 4.0. РџРѕР»РЅРѕРµ СЂСѓРєРѕРІРѕРґСЃС‚РІРѕ",
 			Isbn = "978-5-8459-1684-6",
 			Publisher = Publishers.Viliams,
 			Edition = new Edition()
 			{
-				Name = "1-е издание.",
+				Name = "1-Рµ РёР·РґР°РЅРёРµ.",
 				Year = 2015,
 			}
 		};
@@ -121,18 +121,18 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Count = 20,
-			Name = "Язык программирования C# 6.0 и платформа .NET 4.6",
+			Name = "РЇР·С‹Рє РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ C# 6.0 Рё РїР»Р°С‚С„РѕСЂРјР° .NET 4.6",
 			Isbn = "978-5-8459-2099-7, 978-1-4842-1333-9",
 			Publisher = Publishers.Viliams,
 			Authors = new List<Author>()
 			{
-				new Author() {Lastname = "Троелсен", Firstname = "Эндрю"},
-				new Author() {Lastname = "Джепикс", Firstname = "Филипп"}
+				new Author() {Lastname = "РўСЂРѕРµР»СЃРµРЅ", Firstname = "Р­РЅРґСЂСЋ"},
+				new Author() {Lastname = "Р”Р¶РµРїРёРєСЃ", Firstname = "Р¤РёР»РёРїРї"}
 			},
 			Genres = new List<Genre>() { Genres.CSharp, Genres.DotNet },
 			Edition = new Edition()
 			{
-				Name = "7-е издание",
+				Name = "7-Рµ РёР·РґР°РЅРёРµ",
 				Year = 2016
 			}
 		};
@@ -141,17 +141,17 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Count = 62,
-			Name = "Асинхронное программирование в C# 5.0",
+			Name = "РђСЃРёРЅС…СЂРѕРЅРЅРѕРµ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ РІ C# 5.0",
 			Isbn = "978-5-97060-281-2, 978-1449-33716-2",
 			Publisher = Publishers.DmkPress,
 			Authors = new List<Author>()
 			{
-				new Author() {Lastname = "Дэвис", Firstname = "Алекс"}
+				new Author() {Lastname = "Р”СЌРІРёСЃ", Firstname = "РђР»РµРєСЃ"}
 			},
 			Genres = new List<Genre>() { Genres.CSharp },
 			Edition = new Edition()
 			{
-				Name = "1-е издание",
+				Name = "1-Рµ РёР·РґР°РЅРёРµ",
 				Year = 2015,
 			}
 		};
