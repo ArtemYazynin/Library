@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Library.Common;
 
 namespace Library.Services.DTO
@@ -11,6 +12,7 @@ namespace Library.Services.DTO
 			Books = new List<BookDto>();
 		}
 
+		[DataMember]
 		public DateTime Date { get; set; }
 		public ICollection<BookDto> Books { get; set; }
 	}

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Library.Common;
 
 namespace Library.Services.DTO
@@ -11,7 +12,9 @@ namespace Library.Services.DTO
 			Children = new List<GenreDto>();
 		}
 
+		[DataMember]
 		public string Name { get; set; }
+
 		public GenreDto Parent { get; set; }
 		public ICollection<BookDto> Books { get; set; }
 		public ICollection<GenreDto> Children { get; set; }

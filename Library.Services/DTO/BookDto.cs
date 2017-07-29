@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Library.Common;
 
 namespace Library.Services.DTO
@@ -13,18 +14,40 @@ namespace Library.Services.DTO
 			Invoices = new List<InvoiceDto>();
 		}
 
+		[DataMember]
 		public string Name { get; set; }
+
+		[DataMember]
 		public string Isbn { get; set; }
+
+		[DataMember]
 		public string Description { get; set; }
+
+		[DataMember]
 		public int Count { get; set; }
+
+		[DataMember]
 		public int CountAvailable { get; set; }
+
+		[DataMember]
 		public EditionDto Edition { get; set; }
+
+		[DataMember]
 		public PublisherDto Publisher { get; set; }
+
+		[DataMember]
 		public FileDto Cover { get; set; }
 
+		[DataMember]
 		public ICollection<GenreDto> Genres { get; set; }
+
+		[DataMember]
 		public ICollection<AuthorDto> Authors { get; set; }
+
+		[DataMember]
 		public ICollection<RentDto> Rents { get; set; }
+
+		[DataMember]
 		public ICollection<InvoiceDto> Invoices { get; set; }
 	}
 }

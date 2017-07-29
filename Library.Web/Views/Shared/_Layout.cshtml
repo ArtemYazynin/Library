@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="RootModule">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -17,6 +17,8 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/angular")
+	@Scripts.Render("~/bundles/viewScripts")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

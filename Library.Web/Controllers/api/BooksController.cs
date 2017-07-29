@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Library.Services;
-using Library.Services.DTO;
 
 namespace Library.Web.Controllers.api
 {
@@ -14,15 +12,11 @@ namespace Library.Web.Controllers.api
 			_booksService = booksService;
 		}
 
-		public BooksController()
-		{
-		}
-
 		[HttpGet]
-		public IEnumerable<BookDto> Get()
+		public IHttpActionResult Get()
 		{
 			var books = _booksService.GetAll();
-			return books;
+			return Ok(books);
 		}
 	}
 }
