@@ -18,5 +18,12 @@ namespace Library.Web.Controllers.api
 			var books = _booksService.GetAll();
 			return Ok(books);
 		}
+
+		[HttpGet]
+		[Route("api/Books/Search")]
+		public IHttpActionResult Search(string byName = null, string byAuthors = null, string byMultipleAuthors = null, string byAll = null, bool withoutAuthors = false)
+		{
+			return Ok();
+		}
 	}
 }
