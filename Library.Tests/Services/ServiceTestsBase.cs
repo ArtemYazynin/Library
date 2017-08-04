@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,12 +16,15 @@ namespace Library.Tests.Services
 	{
 		protected IBooksService BooksService;
 
+		protected Collection<Book> Books;
+
 		[SetUp]
 		public void SetUp()
 		{
-			var books = new Collection<Book>
+			Books = new Collection<Book>
 			{
 				DefaultData.Books.JsPocketGuide,
+				DefaultData.Books.JsForProfessionals,
 				DefaultData.Books.Es6AndNotOnly,
 				DefaultData.Books.ClrVia
 			};
@@ -29,33 +33,46 @@ namespace Library.Tests.Services
 
 			stubBookRepository.Setup(
 				x =>
-					x.GetAll(It.IsAny<Expression<Func<Book, bool>>>(), It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
+					x.GetAll(It.IsAny<IEnumerable<Expression<Func<Book, bool>>>>(), It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
 						It.IsAny<string>()))
-				.Returns(books);
+				.Returns((IEnumerable<Expression<Func<Book, bool>>> filters,
+						  Func<IQueryable<Book>, IOrderedQueryable<Book>> order,
+						  string includeProperties) =>
+				{
+					IEnumerable<Book> books = Books;
+					if (filters != null)
+					{
+						foreach (var expression in filters)
+						{
+							books = books.Where(expression.Compile());
+						}
+					}
+					return order?.Invoke(books.AsQueryable()) ?? books;
+				});
 
-			stubBookRepository.Setup(x => x.Get(It.IsAny<long>())).Returns<long>(id => books.SingleOrDefault(x => x.Id == id));
+			stubBookRepository.Setup(x => x.Get(It.IsAny<long>())).Returns<long>(id => Books.SingleOrDefault(x => x.Id == id));
 
 			stubBookRepository.Setup(x => x.Create(It.IsAny<Book>()))
 				.Returns((Book x) =>
 				{
-					books.Add(x);
+					Books.Add(x);
 					return true;
 				});
 			stubBookRepository.Setup(x => x.Delete(It.IsAny<long>()))
 				.Returns((long id) =>
 				{
-					var book = books.SingleOrDefault(x => x.Id == id);
+					var book = Books.SingleOrDefault(x => x.Id == id);
 					if (book == null)
 					{
 						return false;
 					}
-					books.Remove(book);
+					Books.Remove(book);
 					return true;
 				});
 			stubBookRepository.Setup(x => x.Delete(It.IsAny<Book>()))
 				.Returns<Book>(x =>
 				{
-					books.Add(x);
+					Books.Add(x);
 					return true;
 				});
 			stubBookRepository.Setup(x => x.Update(It.IsAny<Book>())).Returns<BookDto>(x => true);

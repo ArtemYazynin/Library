@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq.Expressions;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
+using Library.Services.VO;
 
 namespace Library.Services.Impls
 {
@@ -20,6 +24,25 @@ namespace Library.Services.Impls
 			var books = _unitOfWork.BookRepository.GetAll();
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;
+		}
+
+		public IEnumerable<BookDto> Search(Filters filters)
+		{
+			var expressions = BuildExpressions(filters);
+
+			var books = _unitOfWork.BookRepository.GetAll(expressions);
+			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
+			return booksDto;
+		}
+
+		private List<Expression<Func<Book, bool>>> BuildExpressions(Filters filters)
+		{
+			List<Expression<Func<Book, bool>>> expressions = new List<Expression<Func<Book, bool>>>();
+			if (!string.IsNullOrEmpty(filters.ByName))
+			{
+				expressions.Add(x => x.Name.ToLower().Contains(filters.ByName.ToLower()));
+			}
+			return expressions;
 		}
 
 		public BookDto Get(long id)

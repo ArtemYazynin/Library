@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Library.Services.DTO;
+using Library.Services.VO;
 using NUnit.Framework;
 
 namespace Library.Tests.Services.Books
@@ -7,6 +8,40 @@ namespace Library.Tests.Services.Books
 	[TestFixture]
 	internal sealed class BookServiceTest : ServiceTestsBase
 	{
+		[Test]
+		public void SearchByNameDifferentRegisters_ShouldReturnValidOneBook()
+		{
+			var filters = new Filters() { ByName = "clr" };
+			var books = BooksService.Search(filters);
+
+			Assert.That(books, Is.Not.Empty);
+			foreach (var book in books)
+			{
+				Assert.That(book.Name, Is.StringContaining(filters.ByName).IgnoreCase);
+			}
+		}
+
+		[Test]
+		public void SearchByName_ShouldReturnMultipleBooks()
+		{
+			var filters = new Filters() { ByName = "javasc"};
+			var books = BooksService.Search(filters);
+
+			foreach (var book in books)
+			{
+				Assert.That(book.Name, Is.StringContaining(filters.ByName).IgnoreCase);
+			}
+		}
+
+		[Test]
+		public void SearchByName_InvalidName_ShouldNotFoundAnything()
+		{
+			var filters = new Filters() {ByName = "!./*.,!"};
+			var books = BooksService.Search(filters);
+
+			Assert.That(books, Is.Empty);
+		}
+
 		[Test]
 		public void Update_ShouldUpdated()
 		{
@@ -49,7 +84,7 @@ namespace Library.Tests.Services.Books
 			var books = BooksService.GetAll();
 
 			Assert.That(books, Is.Not.Null);
-			Assert.That(books.Count(), Is.EqualTo(3));
+			Assert.That(books.Count(), Is.EqualTo(Books.Count));
 		}
 
 		[Test]
@@ -63,8 +98,9 @@ namespace Library.Tests.Services.Books
 		[Test]
 		public void Create_ShouldCreated()
 		{
-			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(3));
+			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(Books.Count));
 
+			var oldCount = Books.Count;
 			var bookDto = new BookDto
 			{
 				Id = 253,
@@ -73,18 +109,19 @@ namespace Library.Tests.Services.Books
 			};
 			BooksService.Create(bookDto);
 
-			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(4));
+			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(oldCount + 1));
 			Assert.That(BooksService.Get(bookDto.Id), Is.Not.Null);
 		}
 
 		[Test]
 		public void DeleteByid_ShouldDeleted()
 		{
-			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(3));
+			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(Books.Count));
 
+			int oldCount = Books.Count;
 			BooksService.Delete(DefaultData.Books.ClrVia.Id);
 
-			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(2));
+			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(oldCount - 1));
 			Assert.That(BooksService.Get(DefaultData.Books.ClrVia.Id), Is.Null);
 		}
 	}

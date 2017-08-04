@@ -18,15 +18,17 @@ namespace Library.Services.Impls
 			_dbSet = context.Set<TEntity>();
 		}
 
-		public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
-			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			string includeProperties = "")
+		public IEnumerable<TEntity> GetAll(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
 		{
 			IQueryable<TEntity> query = _dbSet;
 
-			if (filter != null)
+			if (filters != null)
 			{
-				query = query.Where(filter);
+				foreach (Expression<Func<TEntity, bool>> expression in filters)
+				{
+					query = query.Where(expression);
+				}
+				
 			}
 
 			foreach (var includeProperty in includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries))

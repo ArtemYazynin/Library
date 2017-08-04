@@ -7,9 +7,7 @@ namespace Library.Services
 {
 	public interface IGenericRepository<TEntity> where TEntity : class
 	{
-		IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
-			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-			string includeProperties = "");
+		IEnumerable<TEntity> GetAll(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
 
 		TEntity Get(long id);
 		bool Create(TEntity entity);

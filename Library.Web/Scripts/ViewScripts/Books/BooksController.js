@@ -5,7 +5,7 @@
 		function ($scope, bookService) {
 			$scope.search = function () {
 				bookService.search($scope.filters).then(function(data) {
-					
+					$scope.Books = data;
 				});
 			};
 			(function init() {
