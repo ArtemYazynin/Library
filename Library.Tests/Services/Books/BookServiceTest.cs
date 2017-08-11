@@ -9,6 +9,19 @@ namespace Library.Tests.Services.Books
 	internal sealed class BookServiceTest : ServiceTestsBase
 	{
 		[Test]
+		public void SearchByAuthor_ByPartName_ShouldReturnBook()
+		{
+			var filters = new Filters() {ByAuthor = "джо" };
+			var books = BooksService.Search(filters);
+
+			foreach (var book in books)
+			{
+				Assert.That(book.Authors.Any(x=>x.Lastname.ToLower().Contains(filters.ByAuthor.ToLower())
+											|| x.Firstname.ToLower().Contains(filters.ByAuthor.ToLower())
+											|| x.Middlename.ToLower().Contains(filters.ByAuthor.ToLower())));
+			}
+		}
+		[Test]
 		public void SearchByNameDifferentRegisters_ShouldReturnValidOneBook()
 		{
 			var filters = new Filters() { ByName = "clr" };

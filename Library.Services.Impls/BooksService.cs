@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using Library.ObjectModel.Models;
@@ -29,7 +30,6 @@ namespace Library.Services.Impls
 		public IEnumerable<BookDto> Search(Filters filters)
 		{
 			var expressions = BuildExpressions(filters);
-
 			var books = _unitOfWork.BookRepository.GetAll(expressions);
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;
@@ -41,6 +41,12 @@ namespace Library.Services.Impls
 			if (!string.IsNullOrEmpty(filters.ByName))
 			{
 				expressions.Add(x => x.Name.ToLower().Contains(filters.ByName.ToLower()));
+			}
+			if (!string.IsNullOrEmpty(filters.ByAuthor))
+			{
+				expressions.Add(x => x.Authors.Any(a => a.Lastname.ToLower().Contains(filters.ByAuthor.ToLower())
+												  || a.Firstname.ToLower().Contains(filters.ByAuthor.ToLower())
+												  /*|| a.Middlename.ToLower().Contains(filters.ByAuthor.ToLower())*/));
 			}
 			return expressions;
 		}

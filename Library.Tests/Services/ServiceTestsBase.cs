@@ -38,17 +38,17 @@ namespace Library.Tests.Services
 				.Returns((IEnumerable<Expression<Func<Book, bool>>> filters,
 						  Func<IQueryable<Book>, IOrderedQueryable<Book>> order,
 						  string includeProperties) =>
-				{
-					IEnumerable<Book> books = Books;
-					if (filters != null)
-					{
-						foreach (var expression in filters)
 						{
-							books = books.Where(expression.Compile());
-						}
-					}
-					return order?.Invoke(books.AsQueryable()) ?? books;
-				});
+							IEnumerable<Book> books = Books;
+							if (filters != null)
+							{
+								foreach (var expression in filters)
+								{
+									books = books.Where(expression.Compile());
+								}
+							}
+							return order?.Invoke(books.AsQueryable()) ?? books;
+						});
 
 			stubBookRepository.Setup(x => x.Get(It.IsAny<long>())).Returns<long>(id => Books.SingleOrDefault(x => x.Id == id));
 
