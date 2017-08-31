@@ -11,6 +11,7 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Name = "Мои заметки в Evernote",
+			Authors = new List<Author>() { new Author() {Lastname = "Язынин", Firstname = "Артем", Middlename = "Дмитриевич"} },
 			Genres = new List<Genre>() { Genres.CSharp, Genres.JavaScript, Genres.DotNet },
 			Publisher = Publishers.Self,
 			Edition = new Edition() { Name = "1-е издание", Year = 2017 },

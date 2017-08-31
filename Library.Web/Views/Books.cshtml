@@ -47,10 +47,8 @@
 				<tbody>
 					<tr ng-repeat="book in Books">
 						<td ng-bind="book.Name"></td>
-						<td>Genres</td>
-						<td>
-							Authors
-						</td>
+						<td ng-bind="book.GenresStr"></td>
+						<td ng-bind="book.AuthorsStr"></td>
 						<td ng-bind="book.Publisher.Name"></td>
 						<td ng-bind="book.Count">Count</td>
 						<td ng-bind="book.CountAvailable"></td>

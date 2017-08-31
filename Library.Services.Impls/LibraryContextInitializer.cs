@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
-using Library.DefaultData;
 using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls

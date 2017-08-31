@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Library.Common;
 
@@ -38,11 +39,27 @@ namespace Library.Services.DTO
 		[DataMember]
 		public FileDto Cover { get; set; }
 
+		#region Genres
+
 		[DataMember]
 		public ICollection<GenreDto> Genres { get; set; }
 
 		[DataMember]
+		public string GenresStr => string.Join(", ", Genres);
+
+		#endregion
+
+
+		#region Authors
+
+		[DataMember]
 		public ICollection<AuthorDto> Authors { get; set; }
+
+		[DataMember]
+		public string AuthorsStr => string.Join(", ", Authors);
+
+		#endregion
+
 
 		[DataMember]
 		public ICollection<RentDto> Rents { get; set; }
