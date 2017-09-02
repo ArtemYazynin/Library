@@ -44,9 +44,15 @@ namespace Library.Services.Impls
 			}
 			if (!string.IsNullOrEmpty(filters.ByAuthor))
 			{
-				expressions.Add(x => x.Authors.Any(a => a.Lastname.ToLower().Contains(filters.ByAuthor.ToLower())
-												  || a.Firstname.ToLower().Contains(filters.ByAuthor.ToLower())
-												  /*|| a.Middlename.ToLower().Contains(filters.ByAuthor.ToLower())*/));
+				var lastFirstMiddlenameSegments = filters.ByAuthor.ToLower().Split(' ');
+				foreach (var authorSegment in lastFirstMiddlenameSegments)
+				{
+					expressions.Add(x => x.Authors.Any(a => string.IsNullOrEmpty(a.Middlename) 
+					? a.Lastname.ToLower().Contains(authorSegment) || a.Firstname.ToLower().Contains(authorSegment)
+					: a.Lastname.ToLower().Contains(authorSegment) || a.Firstname.ToLower().Contains(authorSegment) 
+						|| a.Middlename.ToLower().Contains(authorSegment)));
+				}
+				
 			}
 			return expressions;
 		}
