@@ -12,7 +12,7 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Name = "Тестовая книга без авторов",
-			//Isbn = "Тестовый ISBN",
+			Isbn = "Тестовый ISBN",
 			Edition = new Edition() { Name = "Тестовое издание", Year = 2017 },
 			Publisher = Publishers.Self
 		};

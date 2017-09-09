@@ -45,8 +45,9 @@ namespace Library.Services.Impls
 			if (!string.IsNullOrEmpty(filters.ByAuthor))
 			{
 				var lastFirstMiddlenameSegments = filters.ByAuthor.ToLower().Split(' ');
-				foreach (var authorSegment in lastFirstMiddlenameSegments)
+				foreach (var segment in lastFirstMiddlenameSegments)
 				{
+					var authorSegment = segment.Replace(" ", "");
 					expressions.Add(x => x.Authors.Any(a => string.IsNullOrEmpty(a.Middlename) 
 					? a.Lastname.ToLower().Contains(authorSegment) || a.Firstname.ToLower().Contains(authorSegment)
 					: a.Lastname.ToLower().Contains(authorSegment) || a.Firstname.ToLower().Contains(authorSegment) 
@@ -57,6 +58,23 @@ namespace Library.Services.Impls
 			if (filters.WithoutAuthors)
 			{
 				expressions.Add(x=>!x.Authors.Any());
+			}
+			if (!string.IsNullOrEmpty(filters.ByMultipleAuthors))
+			{
+				var groupOfAuthors = filters.ByMultipleAuthors.ToLower().Split(',');
+				foreach (var author in groupOfAuthors)
+				{
+					var lastFirstMiddlenameSegments = author.Split(' ');
+					foreach (var segment in lastFirstMiddlenameSegments)
+					{
+						if (string.IsNullOrEmpty(segment)) continue;
+						var authorSegment = segment.Replace(" ", "");
+						expressions.Add(x => x.Authors.Any(a => string.IsNullOrEmpty(a.Middlename)
+										? a.Lastname.ToLower().Contains(authorSegment) || a.Firstname.ToLower().Contains(authorSegment)
+										: a.Lastname.ToLower().Contains(authorSegment) || a.Firstname.ToLower().Contains(authorSegment)
+											|| a.Middlename.ToLower().Contains(authorSegment)));
+					}
+				}
 			}
 			return expressions;
 		}

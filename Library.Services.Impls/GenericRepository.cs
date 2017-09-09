@@ -18,7 +18,10 @@ namespace Library.Services.Impls
 			_dbSet = context.Set<TEntity>();
 		}
 
-		public IEnumerable<TEntity> GetAll(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+		public IEnumerable<TEntity> GetAll(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, 
+										   Func<IQueryable<TEntity>, 
+										   IOrderedQueryable<TEntity>> orderBy = null, 
+										   string includeProperties = "")
 		{
 			IQueryable<TEntity> query = _dbSet;
 
