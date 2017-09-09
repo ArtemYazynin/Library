@@ -7,6 +7,16 @@ namespace Library.DefaultData
 	public static class Books
 	{
 		private readonly static Random Rnd = new Random();
+
+		public static Book WithoutAuthorsBook = new Book()
+		{
+			Id = Rnd.Next(int.MaxValue),
+			Name = "Тестовая книга без авторов",
+			//Isbn = "Тестовый ISBN",
+			Edition = new Edition() { Name = "Тестовое издание", Year = 2017 },
+			Publisher = Publishers.Self
+		};
+
 		public static Book MyEvernoteNotes = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),

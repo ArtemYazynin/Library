@@ -1,5 +1,6 @@
 using System;
 using System.Data.Entity;
+using System.Diagnostics;
 using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls
@@ -9,6 +10,8 @@ namespace Library.Services.Impls
 		public UnitOfWork(DbContext context)
 		{
 			_context = (LibraryContext) context;
+			_context.Database.Log = message => Trace.WriteLine(message);
+
 		}
 		#region private fields
 

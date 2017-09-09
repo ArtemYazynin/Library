@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
@@ -38,6 +37,7 @@ namespace Library.Services.Impls
 		private List<Expression<Func<Book, bool>>> BuildExpressions(Filters filters)
 		{
 			List<Expression<Func<Book, bool>>> expressions = new List<Expression<Func<Book, bool>>>();
+
 			if (!string.IsNullOrEmpty(filters.ByName))
 			{
 				expressions.Add(x => x.Name.ToLower().Contains(filters.ByName.ToLower()));
@@ -53,6 +53,10 @@ namespace Library.Services.Impls
 						|| a.Middlename.ToLower().Contains(authorSegment)));
 				}
 				
+			}
+			if (filters.WithoutAuthors)
+			{
+				expressions.Add(x=>!x.Authors.Any());
 			}
 			return expressions;
 		}

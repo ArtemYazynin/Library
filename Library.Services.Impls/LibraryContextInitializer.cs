@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls
@@ -9,13 +13,28 @@ namespace Library.Services.Impls
 
 		protected override void Seed(LibraryContext context)
 		{
-			Genres(context);
-			Books(context);
-			Invoices(context);
-			Subscribers(context);
-			Rents(context);
+			try
+			{
+				Genres(context);
+				Books(context);
+				Invoices(context);
+				Subscribers(context);
+				Rents(context);
 
-			context.SaveChanges();
+				context.SaveChanges();
+			}
+			catch (DbEntityValidationException e)
+			{
+				foreach (var eve in e.EntityValidationErrors)
+				{
+					Trace.WriteLine($"Entity of type \"{eve.Entry.State}\" in state \"{eve.Entry.Entity.GetType().Name}\" has the following validation errors:");
+					foreach (var ve in eve.ValidationErrors)
+					{
+						Trace.WriteLine($"- Property: \"{ve.PropertyName}\", Error: \"{ve.ErrorMessage}\"");
+					}
+				}
+				throw;
+			}
 		}
 
 		private static void Genres(LibraryContext context)
@@ -133,7 +152,8 @@ namespace Library.Services.Impls
 				DefaultData.Books.CSharpCompleteGuide,
 				DefaultData.Books.CSharp6AndNetPlatform,
 				DefaultData.Books.AsyncProgrammingCSharp5,
-				DefaultData.Books.MyEvernoteNotes
+				DefaultData.Books.MyEvernoteNotes,
+				DefaultData.Books.WithoutAuthorsBook
 			};
 			books.ForEach(x => context.Books.Add(x));
 		}

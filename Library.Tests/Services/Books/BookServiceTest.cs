@@ -8,23 +8,70 @@ namespace Library.Tests.Services.Books
 	[TestFixture]
 	internal sealed class BookServiceTest : ServiceTestsBase
 	{
+		#region Without authors
+
 		[Test]
-		public void SearchByAuthor_ByPartName_ShouldReturnBook()
+		public void SearchWithoutAuthors_Enabled_ShouldReturnBookWithoutAuthors()
 		{
-			var filters = new Filters() {ByAuthor = "джо" };
+			var filters = new Filters() {WithoutAuthors = true};
 			var books = BooksService.Search(filters);
 
 			foreach (var book in books)
 			{
-				Assert.That(book.Authors.Any(x=>x.Lastname.ToLower().Contains(filters.ByAuthor.ToLower())
-											|| x.Firstname.ToLower().Contains(filters.ByAuthor.ToLower())
-											|| x.Middlename.ToLower().Contains(filters.ByAuthor.ToLower())));
+				Assert.That(book.Authors, Is.Empty);
 			}
 		}
+
+
+		#endregion
+
+		#region By Author
+
+		[Test]
+		public void SearchByAuthor_ByPartName_ShouldReturnBook()
+		{
+			var filters = new Filters() {ByAuthor = "джо"};
+			SearchByAuthor(filters);
+		}
+
+		[Test]
+		public void SearchByAuthor_ByLastFirstMiddleNames_ShouldReturnValidBook()
+		{
+			var author = DefaultData.Books.MyEvernoteNotes.Authors.First();
+			var filters = new Filters()
+			{
+				ByAuthor =
+					$"{author.Lastname.Substring(0, 3)} {author.Firstname.Substring(0, 3)} {author.Middlename.Substring(0, 3)}"
+			};
+			SearchByAuthor(filters);
+		}
+
+		private void SearchByAuthor(Filters filters)
+		{
+			var books = BooksService.Search(filters);
+
+			foreach (var book in books)
+			{
+				var segments = filters.ByAuthor.ToLower().Split(' ').ToList();
+				segments.ForEach(y =>
+				{
+					Assert.That(book.Authors.Any(x => x.Lastname.ToLower().Contains(y)
+					                                  || x.Firstname.ToLower().Contains(y)
+					                                  || x.Middlename.ToLower().Contains(y)));
+				});
+
+			}
+		}
+
+		#endregion
+
+
+		#region By Name
+
 		[Test]
 		public void SearchByNameDifferentRegisters_ShouldReturnValidOneBook()
 		{
-			var filters = new Filters() { ByName = "clr" };
+			var filters = new Filters() {ByName = "clr"};
 			var books = BooksService.Search(filters);
 
 			Assert.That(books, Is.Not.Empty);
@@ -37,7 +84,7 @@ namespace Library.Tests.Services.Books
 		[Test]
 		public void SearchByName_ShouldReturnMultipleBooks()
 		{
-			var filters = new Filters() { ByName = "javasc"};
+			var filters = new Filters() {ByName = "javasc"};
 			var books = BooksService.Search(filters);
 
 			foreach (var book in books)
@@ -54,6 +101,9 @@ namespace Library.Tests.Services.Books
 
 			Assert.That(books, Is.Empty);
 		}
+
+		#endregion
+
 
 		[Test]
 		public void Update_ShouldUpdated()

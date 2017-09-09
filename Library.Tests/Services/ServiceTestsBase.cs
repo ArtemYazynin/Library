@@ -26,7 +26,9 @@ namespace Library.Tests.Services
 				DefaultData.Books.JsPocketGuide,
 				DefaultData.Books.JsForProfessionals,
 				DefaultData.Books.Es6AndNotOnly,
-				DefaultData.Books.ClrVia
+				DefaultData.Books.ClrVia,
+				DefaultData.Books.MyEvernoteNotes,
+				DefaultData.Books.WithoutAuthorsBook
 			};
 
 			var stubBookRepository = new Mock<IGenericRepository<Book>>();
