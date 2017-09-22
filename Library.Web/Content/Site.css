@@ -13,7 +13,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+	max-width: 280px;
 }
 
 .input-group-addon.filter  {
@@ -22,4 +22,27 @@ textarea {
 	-o-min-width: 100px;
 	-webkit-min-width: 100px;
 	min-width: 100px;
+}
+
+.tooltip-common {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip-common .tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+}
+
+.tooltip-common:hover .tooltiptext {
+	visibility: visible;
 }

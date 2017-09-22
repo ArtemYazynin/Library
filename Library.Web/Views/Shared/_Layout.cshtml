@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+	<base href="/">
 </head>
 <body>
     <div class="container body-content">
@@ -21,5 +22,13 @@
 	@Scripts.Render("~/bundles/viewScripts")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+<script>
+	//window.onbeforeunload = function () {
+	//	window.setTimeout(function () {
+	//		window.location = '/';
+	//	}, 0);
+	//	window.onbeforeunload = null; // necessary to prevent infinite loop, that kills your browser 
+	//}
+</script>
 </body>
 </html>
