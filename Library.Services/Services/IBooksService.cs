@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Library.Services.DTO;
 using Library.Services.VO;
 
@@ -11,9 +12,9 @@ namespace Library.Services.Services
 		IEnumerable<BookDto> Search(Filters filters);
 		BookDto Get(long id);
 
-		EntityDto Create(BookDto bookDto);
+		Task<EntityDto> Create(BookDto bookDto);
 
-		EntityDto Update(long id, BookDto bookDto);
+		Task<EntityDto> Update(long id, BookDto bookDto);
 
 		EntityDto Delete(long id);
 

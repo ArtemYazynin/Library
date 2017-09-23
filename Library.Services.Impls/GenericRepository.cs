@@ -71,7 +71,7 @@ namespace Library.Services.Impls
 			return _dbSet.Find(id);
 		}
 
-		public bool Create(TEntity entity)
+		public  bool Create(TEntity entity)
 		{
 			if (entity == null) return false;
 			_dbSet.Add(entity);

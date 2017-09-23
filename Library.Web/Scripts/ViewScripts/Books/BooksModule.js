@@ -55,9 +55,14 @@
 			}
 			return $http.get(url, request).then(function (response) { return response.data; });
 		}
+		function _create(vm) {
+			var newBook = new bookResource(vm);
+			newBook.$save();
+		}
 		return {
 			getAll: _getAll,
-			search: _search
+			search: _search,
+			create: _create
 		}
 	}]);
 

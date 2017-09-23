@@ -32,19 +32,23 @@
 					$scope.Genres = data;
 				});
 			}
+			function _init() {
+				_loadEditions();
+				_loadPublishers();
+				_loadAuthors();
+				_loadGenres();
+			}
 			return {
 				loadEditions: _loadEditions,
 				loadPublishers: _loadPublishers,
 				loadAuthors: _loadAuthors,
-				loadGenres: _loadGenres
+				loadGenres: _loadGenres,
+				init: _init
 			}
 		})();
 		(function() {
 			$scope.vm = {};
-			$scope.loadManager.loadEditions();
-			$scope.loadManager.loadPublishers();
-			$scope.loadManager.loadAuthors();
-			$scope.loadManager.loadGenres();
+			$scope.loadManager.init();
 		})();
 	}]);
 })(angular);

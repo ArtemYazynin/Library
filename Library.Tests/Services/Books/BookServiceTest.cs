@@ -50,6 +50,7 @@ namespace Library.Tests.Services.Books
 		{
 			var books = BooksService.Search(filters);
 
+			Assert.That(books, Is.Not.Empty);
 			foreach (var book in books)
 			{
 				var segments = filters.ByAuthor.ToLower().Split(' ').ToList();
@@ -168,7 +169,7 @@ namespace Library.Tests.Services.Books
 			{
 				Id = 253,
 				Name = "C# 4.0. Полное руководство",
-				Isbn = "978-5-8459-1684-6"
+				Isbn = "978-5-8459-1684-6",
 			};
 			BooksService.Create(bookDto);
 

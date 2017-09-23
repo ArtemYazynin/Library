@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
@@ -87,11 +88,11 @@ namespace Library.Services.Impls.Services
 			return dto;
 		}
 
-		public EntityDto Create(BookDto bookDto)
+		public async Task<EntityDto> Create(BookDto bookDto)
 		{
 			var book = Mapper.Map<Book>(bookDto);
 			_unitOfWork.BookRepository.Create(book);
-			_unitOfWork.Save();
+			await _unitOfWork.Save();
 			return new EntityDto()
 			{
 				Id = book.Id,
@@ -99,7 +100,7 @@ namespace Library.Services.Impls.Services
 			};
 		}
 
-		public EntityDto Update(long id, BookDto bookDto)
+		public async Task<EntityDto> Update(long id, BookDto bookDto)
 		{
 			var book = _unitOfWork.BookRepository.Get(id);
 			book.Name = bookDto.Name;
@@ -124,7 +125,7 @@ namespace Library.Services.Impls.Services
 				};
 			}
 
-			_unitOfWork.Save();
+			await _unitOfWork.Save();
 			return new EntityDto()
 			{
 				Id = id,

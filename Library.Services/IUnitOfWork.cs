@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Library.ObjectModel.Models;
 
 namespace Library.Services
@@ -14,6 +15,6 @@ namespace Library.Services
 		IGenericRepository<Publisher> PublisherRepository { get; }
 		IGenericRepository<Rent> RentRepository { get; }
 		IGenericRepository<Subscriber> SubscriberRepository { get; }
-		void Save();
+		Task<int> Save();
 	}
 }

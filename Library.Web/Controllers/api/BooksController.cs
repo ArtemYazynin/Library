@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Library.Services;
 using Library.Services.DTO;
@@ -38,6 +39,12 @@ namespace Library.Web.Controllers.api
 			};
 			var books = _booksService.Search(filters);
 			return books;
+		}
+
+		public async Task<EntityDto> Post(BookDto bookDto)
+		{
+			var createBook = await _booksService.Create(bookDto);
+			return createBook;
 		}
 	}
 }

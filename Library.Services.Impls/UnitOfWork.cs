@@ -1,6 +1,7 @@
 using System;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls
@@ -40,9 +41,9 @@ namespace Library.Services.Impls
 		public IGenericRepository<Rent> RentRepository => _rentRepository ?? (_rentRepository = new GenericRepository<Rent>(_context));
 		public IGenericRepository<Subscriber> SubscriberRepository => _subscriberRepository ?? (_subscriberRepository = new GenericRepository<Subscriber>(_context));
 
-		public void Save()
+		public async Task<int> Save()
 		{
-			_context.SaveChanges();
+			return await _context.SaveChangesAsync();
 		}
 
 		#region disposing
