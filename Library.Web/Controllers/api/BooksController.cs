@@ -2,11 +2,12 @@
 using System.Web.Http;
 using Library.Services;
 using Library.Services.DTO;
+using Library.Services.Services;
 using Library.Services.VO;
-using Newtonsoft.Json.Linq;
 
 namespace Library.Web.Controllers.api
 {
+	[RoutePrefix("api/Books")]
 	public class BooksController:ApiController
 	{
 		private readonly IBooksService _booksService;
@@ -24,7 +25,7 @@ namespace Library.Web.Controllers.api
 		}
 
 		[HttpGet]
-		[Route("api/Books/Search")]
+		[Route("Search")]
 		public IEnumerable<BookDto> Search(string byName = null, string byAuthor = null, string byMultipleAuthors = null, string byAll = null, bool withoutAuthors = false)
 		{
 			var filters = new Filters()

@@ -6,9 +6,10 @@ using System.Linq.Expressions;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
+using Library.Services.Services;
 using Library.Services.VO;
 
-namespace Library.Services.Impls
+namespace Library.Services.Impls.Services
 {
 	public class BooksService : IBooksService
 	{

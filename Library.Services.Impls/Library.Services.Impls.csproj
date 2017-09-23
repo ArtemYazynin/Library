@@ -44,11 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapperConfig.cs" />
-    <Compile Include="BooksService.cs" />
+    <Compile Include="Services\AuthorsService.cs" />
+    <Compile Include="Services\BooksService.cs" />
+    <Compile Include="Services\EditionsService.cs" />
     <Compile Include="GenericRepository.cs" />
     <Compile Include="LibraryContext.cs" />
     <Compile Include="LibraryContextInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GenresService.cs" />
+    <Compile Include="Services\PublishersService.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

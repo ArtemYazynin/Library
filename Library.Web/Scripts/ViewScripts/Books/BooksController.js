@@ -1,15 +1,20 @@
 ﻿(function (angular) {
 	"use strict";
 	angular.module("BooksModule")
-	.controller("BooksController", ["$scope", "bookService",
-		function ($scope, bookService) {
-			$scope.search = function () {
-				bookService.search($scope.filters).then(function(data) {
-					$scope.Books = data;
-				});
-			};
+	.controller("BooksController", ["$scope", "booksService",
+		function ($scope, booksService) {
+			$scope.actions = (function () {
+				function _search() {
+					booksService.search($scope.filters).then(function (data) {
+						$scope.Books = data;
+					});
+				}
+				return {
+					search: _search
+				}
+			})();
 			(function init() {
-				bookService.getAll(function (response) { $scope.Books = response; });
+				booksService.getAll(function (response) { $scope.Books = response; });
 			})();
 		}
 	]);

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Library.Services;
+using Library.Services.Services;
 
 namespace Library.Web.Controllers
 {
@@ -13,8 +14,7 @@ namespace Library.Web.Controllers
 
 		public ActionResult Index()
 		{
-			var books = _booksService.GetAll();
-			return View(books);
+			return View();
 		}
 	}
 }

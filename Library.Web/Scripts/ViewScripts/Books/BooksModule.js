@@ -1,8 +1,48 @@
 ﻿(function (angular) {
 	"use strict";
 
-	angular.module("BooksModule", ["ngRoute","ngResource"])
-	.factory("bookService", ["$resource", "$http", function ($resource, $http) {
+	angular.module("BooksModule", ["ngRoute", "ngResource", "oi.select"])
+	.factory("genresService", ["$resource", function ($resource) {
+		var baseUrl = "api/Genres";
+		var genresResource = $resource(baseUrl + "/:id", { id: "@Id" });
+		function _getAll(successCallback) {
+			genresResource.query(successCallback);
+		}
+		return {
+			getAll: _getAll
+		}
+	}])
+	.factory("authorsService", ["$resource", function ($resource) {
+		var baseUrl = "api/Authors";
+		var authorsResource = $resource(baseUrl + "/:id", { id: "@Id" });
+		function _getAll(successCallback) {
+			authorsResource.query(successCallback);
+		}
+		return {
+			getAll: _getAll
+		}
+	}])
+	.factory("publishersService", ["$resource", function ($resource) {
+		var baseUrl = "api/Publishers";
+		var publishersResource = $resource(baseUrl + "/:id", { id: "@Id" });
+		function _getAll(successCallback) {
+			publishersResource.query(successCallback);
+		}
+		return {
+			getAll: _getAll
+		}
+	}])
+	.factory("editionsService", ["$resource", function ($resource) {
+		var baseUrl = "api/Editions";
+		var editionsResource = $resource(baseUrl + "/:id", { id: "@Id" });
+		function _getAll(successCallback) {
+			editionsResource.query(successCallback);
+		}
+		return {
+			getAll: _getAll
+		}
+	}])
+	.factory("booksService", ["$resource", "$http", function ($resource, $http) {
 		var baseUrl = "/api/Books";
 		var bookResource = $resource(baseUrl + "/:id", { id: "@Id" });
 		function _getAll(successCallback) {

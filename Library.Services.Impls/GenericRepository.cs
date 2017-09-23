@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Library.ObjectModel.Models;
 
 namespace Library.Services.Impls
@@ -40,6 +41,29 @@ namespace Library.Services.Impls
 			}
 
 			return orderBy?.Invoke(query).ToList() ?? query.ToList();
+		}
+
+		public async Task<IEnumerable<TEntity>> GetAllAsync(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+		{
+			IQueryable<TEntity> query = _dbSet;
+
+			if (filters != null)
+			{
+				foreach (Expression<Func<TEntity, bool>> expression in filters)
+				{
+					query = query.Where(expression);
+				}
+			}
+
+			foreach (var includeProperty in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+			{
+				query = query.Include(includeProperty);
+			}
+			if (orderBy == null)
+			{
+				return await query.ToListAsync();
+			}
+			return await orderBy.Invoke(query).ToListAsync();
 		}
 
 		public TEntity Get(long id)

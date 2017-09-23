@@ -8,5 +8,10 @@ namespace Library.Web.Controllers
 		{
 			return PartialView("..//Books");
 		}
+
+		public ActionResult BookCreate()
+		{
+			return PartialView("..//BookCreate");
+		}
 	}
 }

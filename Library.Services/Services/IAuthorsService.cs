@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using Library.Services.DTO;
 
-namespace Library.Services
+namespace Library.Services.Services
 {
 	public interface IAuthorsService
 	{
-		Task<IEnumerable<AuthorDto>> Get();
-		IEnumerable<AuthorDto> Get(long id);
+		Task<IEnumerable<AuthorDto>> GetAll();
 	}
 }

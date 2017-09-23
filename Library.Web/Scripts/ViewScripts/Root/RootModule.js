@@ -2,8 +2,8 @@
 	"use strict";
 	angular.module("RootModule", ["ngRoute", "BooksModule"])
 	.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
-		$locationProvider.html5Mode(true);
-		$locationProvider.hashPrefix('');
+		$locationProvider
+		  .html5Mode(false).hashPrefix('');
 
 		$routeProvider.when("/", {
 			templateUrl: "/LibraryView/Books",
@@ -13,11 +13,15 @@
 			templateUrl: "/LibraryView/Books",
 			controller: "BooksController"
 		});
-		$routeProvider.otherwise({
-			redirectTo: function () {
-				window.location = "/";
-			}
+		$routeProvider.when("/Books/Create", {
+			templateUrl: "/LibraryView/BookCreate",
+			controller: "BookCreateController"
 		});
+		//$routeProvider.otherwise({
+		//	redirectTo: function () {
+		//		window.location = "/";
+		//	}
+		//});
 	}]);
 
 })(angular);

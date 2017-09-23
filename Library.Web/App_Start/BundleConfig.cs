@@ -14,8 +14,10 @@ namespace Library.Web
 						.IncludeDirectory("~/Scripts/angular/", "*.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/viewScripts")
+						.Include("~/Scripts/oi.select/select.min.js")
 						.Include("~/Scripts/ViewScripts/Root/RootModule.js")
 						.Include("~/Scripts/ViewScripts/Root/RootController.js")
+						
 						.IncludeDirectory("~/Scripts/ViewScripts/", "*Module.js",true)
 						.IncludeDirectory("~/Scripts/ViewScripts/", "*Controller.js", true)
 						.IncludeDirectory("~/Scripts/ViewScripts/", "*Service.js", true)
@@ -30,7 +32,8 @@ namespace Library.Web
 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
-					  "~/Content/site.css"));
+					  "~/Content/site.css",
+					  "~/Content/select.min.css"));
 		}
 	}
 }

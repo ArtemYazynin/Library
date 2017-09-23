@@ -14,7 +14,7 @@ namespace Library.Services.DTO
 		[DataMember]
 		public string Name { get; set; }
 
-		[IgnoreDataMember]
+		//[IgnoreDataMember]
 		public ICollection<BookDto> Books { get; set; }
 	}
 }

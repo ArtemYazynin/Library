@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Library.Services.DTO;
 using Library.Services.VO;
 
-namespace Library.Services
+namespace Library.Services.Services
 {
 	public interface IBooksService
 	{
