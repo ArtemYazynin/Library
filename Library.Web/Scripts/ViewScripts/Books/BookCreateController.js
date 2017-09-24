@@ -1,11 +1,83 @@
 ﻿(function (angular) {
 	"use strict";
 	angular.module("BooksModule")
-	.controller("BookCreateController", ["$scope", "editionsService", "publishersService", "authorsService", "genresService",
-	function ($scope, editionsService, publishersService, authorsService, genresService) {
+	.filter("byIdGroupFilter", [function () {
+		return function (listObjects, idGroup, projection) {
+			var result = [];
+			if (!listObjects || !idGroup) return result;
+			if (!(listObjects instanceof Array) || !(idGroup instanceof Array)) return result;
+
+			function convert(item) {
+				if (projection) {
+					var objByProjection = {};
+					for (var prop in projection) {
+						if (projection.hasOwnProperty(prop)) {
+							objByProjection[prop] = item[prop];
+						}
+					}
+					return objByProjection;
+				} else {
+					return item;
+				}
+			}
+
+			listObjects.forEach(function (item) {
+				for (var i = 0, len = idGroup.length; i < len; i++) {
+					if (item.Id === idGroup[i]) {
+						var obj = convert(item);
+						result.push(obj);
+					}
+				}
+			});
+			return result;
+		}
+	}])
+	.controller("BookCreateController", ["$scope", "$filter", "editionsService", "publishersService", "authorsService", "genresService","booksService",
+	function ($scope, $filter, editionsService, publishersService, authorsService, genresService, booksService) {
 		$scope.actions = (function () {
+			
 			function _create() {
-				
+				var data = {
+					Name: $scope.vm.Name,
+					Isbn: $scope.vm.Isbn,
+					Description: $scope.vm.Description,
+					Edition: (function () {
+						var projection = {
+							Id: "",
+							Name: "",
+							Year:""
+						}
+						return $filter("byIdGroupFilter")($scope.Editions, [$scope.vm.Edition], projection)[0];
+					})(),
+					Publisher: (function () {
+						var projection = {
+							Id: "",
+							Name: ""
+						}
+						return $filter("byIdGroupFilter")($scope.Publishers, [$scope.vm.Publisher], projection)[0];
+					})(),
+					Genres: (function () {
+						var projection = {
+							Id: "",
+							Name: ""
+						}
+						return $filter("byIdGroupFilter")($scope.Genres, $scope.vm.Genres, projection);
+					})(),
+					Authors: (function () {
+						var projection = {
+							Id: "",
+							Lastname: "",
+							Firstname: "",
+							Middlename: ""
+						}
+						return $filter("byIdGroupFilter")($scope.Authors, $scope.vm.Authors, projection);
+					})()
+				}
+				booksService.create(data, function(response) {
+					alert("Save successFull");
+				}, function() {
+					alert("Save fail");
+				});
 			}
 			return {
 				create: _create

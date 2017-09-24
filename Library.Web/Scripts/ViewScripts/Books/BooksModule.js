@@ -55,9 +55,9 @@
 			}
 			return $http.get(url, request).then(function (response) { return response.data; });
 		}
-		function _create(vm) {
+		function _create(vm, successCallback) {
 			var newBook = new bookResource(vm);
-			newBook.$save();
+			newBook.$save(null, successCallback);
 		}
 		return {
 			getAll: _getAll,

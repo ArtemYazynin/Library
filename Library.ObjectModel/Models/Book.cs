@@ -24,7 +24,7 @@ namespace Library.ObjectModel.Models
 		public int CountAvailable { get; set; }
 
 		public virtual Edition Edition { get; set; }
-		public long EditionId { get; set; }
+		public long EditionId => Edition.Id;
 
 		public virtual Publisher Publisher { get; set; }
 		public long PublisherId => Publisher.Id;

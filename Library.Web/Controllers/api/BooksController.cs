@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Library.Services;
@@ -43,8 +44,17 @@ namespace Library.Web.Controllers.api
 
 		public async Task<EntityDto> Post(BookDto bookDto)
 		{
-			var createBook = await _booksService.Create(bookDto);
-			return createBook;
+			try
+			{
+				var createBook = await _booksService.Create(bookDto);
+				return createBook;
+			}
+			catch (Exception e)
+			{
+				
+				throw;
+			}
+
 		}
 	}
 }
