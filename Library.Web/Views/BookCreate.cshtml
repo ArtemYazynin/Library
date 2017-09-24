@@ -52,5 +52,6 @@
 			<span style="color: red;" ng-show="BookCreateFrom.Genres.$error.required">Genres can not be empty</span>
 		</div>
 		<button type="submit" class="btn btn-primary" ng-disabled="BookCreateFrom.$pristine || BookCreateFrom.$invalid">Submit</button>
+		<button type="button" class="btn btn-danger" ng-click="actions.back()">Back</button>
 	</form>
 </div>

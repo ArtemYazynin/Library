@@ -33,7 +33,6 @@ namespace Library.ObjectModel.Models
 		public long? CoverId { get; set; }
 
 		public virtual ICollection<Genre> Genres { get; set; }
-
 		public virtual ICollection<Author> Authors { get; set; }
 		public virtual ICollection<Rent> Rents { get; set; }
 		public virtual ICollection<Invoice> Invoices { get; set; }

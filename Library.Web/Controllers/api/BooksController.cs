@@ -44,17 +44,8 @@ namespace Library.Web.Controllers.api
 
 		public async Task<EntityDto> Post(BookDto bookDto)
 		{
-			try
-			{
-				var createBook = await _booksService.Create(bookDto);
-				return createBook;
-			}
-			catch (Exception e)
-			{
-				
-				throw;
-			}
-
+			var createBook = await _booksService.Create(bookDto);
+			return createBook;
 		}
 	}
 }

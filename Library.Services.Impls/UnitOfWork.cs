@@ -19,7 +19,7 @@ namespace Library.Services.Impls
 		private readonly LibraryContext _context;
 
 		private GenericRepository<Author> _authorRepository;
-		private GenericRepository<Book> _bookRepository;
+		private BooksRepository _bookRepository;
 		private GenericRepository<Edition> _editionRepository;
 		private GenericRepository<File> _fileRepository;
 		private GenericRepository<Genre> _genreRepository;
@@ -32,7 +32,7 @@ namespace Library.Services.Impls
 
 
 		public IGenericRepository<Author> AuthorRepository => _authorRepository ?? (_authorRepository = new GenericRepository<Author>(_context));
-		public IGenericRepository<Book> BookRepository => _bookRepository ?? (_bookRepository = new GenericRepository<Book>(_context));
+		public IGenericRepository<Book> BookRepository => _bookRepository ?? (_bookRepository = new BooksRepository(_context));
 		public IGenericRepository<Edition> EditionRepository => _editionRepository ?? (_editionRepository = new GenericRepository<Edition>(_context));
 		public IGenericRepository<File> FileRepository => _fileRepository ?? (_fileRepository = new GenericRepository<File>(_context));
 		public IGenericRepository<Genre> GenreRepository => _genreRepository ?? (_genreRepository = new GenericRepository<Genre>(_context));

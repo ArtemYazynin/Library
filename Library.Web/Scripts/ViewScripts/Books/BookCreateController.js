@@ -32,10 +32,9 @@
 			return result;
 		}
 	}])
-	.controller("BookCreateController", ["$scope", "$filter", "editionsService", "publishersService", "authorsService", "genresService","booksService",
-	function ($scope, $filter, editionsService, publishersService, authorsService, genresService, booksService) {
+	.controller("BookCreateController", ["$scope", "$filter","$location", "editionsService", "publishersService", "authorsService", "genresService","booksService",
+	function ($scope, $filter, $location, editionsService, publishersService, authorsService, genresService, booksService) {
 		$scope.actions = (function () {
-			
 			function _create() {
 				var data = {
 					Name: $scope.vm.Name,
@@ -74,13 +73,17 @@
 					})()
 				}
 				booksService.create(data, function(response) {
-					alert("Save successFull");
+					$location.path("/");
 				}, function() {
 					alert("Save fail");
 				});
 			}
+			function _back() {
+				$location.path("/Books");
+			}
 			return {
-				create: _create
+				create: _create,
+				back: _back
 			}
 		})();
 		$scope.loadManager = (function () {

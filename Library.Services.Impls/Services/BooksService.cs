@@ -90,15 +90,7 @@ namespace Library.Services.Impls.Services
 
 		public async Task<EntityDto> Create(BookDto bookDto)
 		{
-			var book = new Book()
-			{
-				Name = bookDto.Name,Isbn = bookDto.Isbn,Description = bookDto.Description,
-				Edition = _unitOfWork.EditionRepository.Get(bookDto.Edition.Id),
-				Publisher = _unitOfWork.PublisherRepository
-			};
-
-
-
+			var book = Mapper.Map<Book>(bookDto);
 			_unitOfWork.BookRepository.Create(book);
 			await _unitOfWork.Save();
 			return new EntityDto()
