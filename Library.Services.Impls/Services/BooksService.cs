@@ -21,17 +21,17 @@ namespace Library.Services.Impls.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public IEnumerable<BookDto> GetAll()
+		public async Task<IEnumerable<BookDto>> GetAll()
 		{
-			var books = _unitOfWork.BookRepository.GetAll();
+			var books = await _unitOfWork.BookRepository.GetAllAsync();
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;
 		}
 
-		public IEnumerable<BookDto> Search(Filters filters)
+		public async Task<IEnumerable<BookDto>> Search(Filters filters)
 		{
 			var expressions = BuildExpressions(filters);
-			var books = _unitOfWork.BookRepository.GetAll(expressions);
+			var books = await _unitOfWork.BookRepository.GetAllAsync(expressions);
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;
 		}
@@ -81,9 +81,9 @@ namespace Library.Services.Impls.Services
 			return expressions;
 		}
 
-		public BookDto Get(long id)
+		public async Task<BookDto> Get(long id)
 		{
-			var book = _unitOfWork.BookRepository.Get(id);
+			var book = await _unitOfWork.BookRepository.Get(id);
 			var dto = Mapper.Map<BookDto>(book);
 			return dto;
 		}
@@ -102,7 +102,7 @@ namespace Library.Services.Impls.Services
 
 		public async Task<EntityDto> Update(long id, BookDto bookDto)
 		{
-			var book = _unitOfWork.BookRepository.Get(id);
+			var book = await _unitOfWork.BookRepository.Get(id);
 			book.Name = bookDto.Name;
 			book.Isbn = bookDto.Isbn;
 			book.Description = bookDto.Description;
@@ -133,10 +133,10 @@ namespace Library.Services.Impls.Services
 			};
 		}
 
-		public EntityDto Delete(long id)
+		public async Task<EntityDto> Delete(long id)
 		{
 			_unitOfWork.BookRepository.Delete(id);
-			_unitOfWork.Save();
+			await _unitOfWork.Save();
 			return new EntityDto() {Id = id};
 		}
 	}

@@ -11,7 +11,7 @@ namespace Library.Services.Impls
 	public class BooksRepository: IGenericRepository<Book>
 	{
 		private readonly LibraryContext _context;
-		private readonly IDbSet<Book> _dbSet;
+		private readonly DbSet<Book> _dbSet;
 
 		public BooksRepository(LibraryContext context)
 		{
@@ -63,9 +63,9 @@ namespace Library.Services.Impls
 			return await orderBy.Invoke(query).ToListAsync();
 		}
 
-		public Book Get(long id)
+		public async Task<Book> Get(long id)
 		{
-			return _dbSet.Find(id);
+			return await _dbSet.FindAsync(id);
 		}
 
 		public bool Create(Book entity)

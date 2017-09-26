@@ -7,16 +7,16 @@ namespace Library.Services.Services
 {
 	public interface IBooksService
 	{
-		IEnumerable<BookDto> GetAll();
+		Task<IEnumerable<BookDto>> GetAll();
 
-		IEnumerable<BookDto> Search(Filters filters);
-		BookDto Get(long id);
+		Task<IEnumerable<BookDto>> Search(Filters filters);
+		Task<BookDto> Get(long id);
 
 		Task<EntityDto> Create(BookDto bookDto);
 
 		Task<EntityDto> Update(long id, BookDto bookDto);
 
-		EntityDto Delete(long id);
+		Task<EntityDto> Delete(long id);
 
 	}
 }

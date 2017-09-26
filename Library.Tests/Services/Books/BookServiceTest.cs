@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Library.Services.DTO;
 using Library.Services.VO;
 using NUnit.Framework;
@@ -11,10 +12,10 @@ namespace Library.Tests.Services.Books
 		#region Without authors
 
 		[Test]
-		public void SearchWithoutAuthors_Enabled_ShouldReturnBookWithoutAuthors()
+		public async Task SearchWithoutAuthors_Enabled_ShouldReturnBookWithoutAuthors()
 		{
 			var filters = new Filters() {WithoutAuthors = true};
-			var books = BooksService.Search(filters);
+			var books = await BooksService.Search(filters);
 
 			foreach (var book in books)
 			{
@@ -46,9 +47,9 @@ namespace Library.Tests.Services.Books
 			SearchByAuthor(filters);
 		}
 
-		private void SearchByAuthor(Filters filters)
+		private async Task SearchByAuthor(Filters filters)
 		{
-			var books = BooksService.Search(filters);
+			var books = await BooksService.Search(filters);
 
 			Assert.That(books, Is.Not.Empty);
 			foreach (var book in books)
@@ -70,10 +71,10 @@ namespace Library.Tests.Services.Books
 		#region By Name
 
 		[Test]
-		public void SearchByNameDifferentRegisters_ShouldReturnValidOneBook()
+		public async Task SearchByNameDifferentRegisters_ShouldReturnValidOneBook()
 		{
 			var filters = new Filters() {ByName = "clr"};
-			var books = BooksService.Search(filters);
+			var books = await BooksService.Search(filters);
 
 			Assert.That(books, Is.Not.Empty);
 			foreach (var book in books)
@@ -83,10 +84,10 @@ namespace Library.Tests.Services.Books
 		}
 
 		[Test]
-		public void SearchByName_ShouldReturnMultipleBooks()
+		public async Task SearchByName_ShouldReturnMultipleBooks()
 		{
 			var filters = new Filters() {ByName = "javasc"};
-			var books = BooksService.Search(filters);
+			var books = await BooksService.Search(filters);
 
 			foreach (var book in books)
 			{
@@ -95,10 +96,10 @@ namespace Library.Tests.Services.Books
 		}
 
 		[Test]
-		public void SearchByName_InvalidName_ShouldNotFoundAnything()
+		public async Task SearchByName_InvalidName_ShouldNotFoundAnything()
 		{
 			var filters = new Filters() {ByName = "!./*.,!"};
-			var books = BooksService.Search(filters);
+			var books = await BooksService.Search(filters);
 
 			Assert.That(books, Is.Empty);
 		}
@@ -107,7 +108,7 @@ namespace Library.Tests.Services.Books
 
 
 		[Test]
-		public void Update_ShouldUpdated()
+		public async Task Update_ShouldUpdated()
 		{
 			const string newName = "Test Driven Development";
 			const string newIsbn = "111-111-111-12";
@@ -130,7 +131,7 @@ namespace Library.Tests.Services.Books
 				},
 				Edition = neweditionDto
 			};
-			BooksService.Update(DefaultData.Books.ClrVia.Id, bookDto);
+			await BooksService.Update(DefaultData.Books.ClrVia.Id, bookDto);
 
 			Assert.That(DefaultData.Books.ClrVia.Name, Is.EqualTo(newName));
 			Assert.That(DefaultData.Books.ClrVia.Isbn, Is.EqualTo(newIsbn));
@@ -143,26 +144,27 @@ namespace Library.Tests.Services.Books
 		}
 
 		[Test]
-		public void Get_ShouldReturnValidCount()
+		public async Task Get_ShouldReturnValidCount()
 		{
-			var books = BooksService.GetAll();
+			var books = await BooksService.GetAll();
 
 			Assert.That(books, Is.Not.Null);
 			Assert.That(books.Count(), Is.EqualTo(Books.Count));
 		}
 
 		[Test]
-		public void GetById_ShouldReturnById()
+		public async Task GetById_ShouldReturnById()
 		{
-			var book = BooksService.Get(DefaultData.Books.JsPocketGuide.Id);
+			var book = await BooksService.Get(DefaultData.Books.JsPocketGuide.Id);
 			Assert.That(book, Is.Not.Null);
 			Assert.That(book.Id, Is.EqualTo(DefaultData.Books.JsPocketGuide.Id));
 		}
 
 		[Test]
-		public void Create_ShouldCreated()
+		public async Task Create_ShouldCreated()
 		{
-			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(Books.Count));
+			var booksBefore = await BooksService.GetAll();
+			Assert.That(booksBefore.Count(), Is.EqualTo(Books.Count));
 
 			var oldCount = Books.Count;
 			var bookDto = new BookDto
@@ -171,22 +173,25 @@ namespace Library.Tests.Services.Books
 				Name = "C# 4.0. Полное руководство",
 				Isbn = "978-5-8459-1684-6",
 			};
-			BooksService.Create(bookDto);
+			await BooksService.Create(bookDto);
 
-			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(oldCount + 1));
-			Assert.That(BooksService.Get(bookDto.Id), Is.Not.Null);
+			var booksAfter = await BooksService.GetAll();
+			Assert.That(booksAfter.Count(), Is.EqualTo(oldCount + 1));
+			Assert.That(await BooksService.Get(bookDto.Id), Is.Not.Null);
 		}
 
 		[Test]
-		public void DeleteByid_ShouldDeleted()
+		public async Task DeleteByid_ShouldDeleted()
 		{
-			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(Books.Count));
+			var booksBefore = await BooksService.GetAll();
+			Assert.That(booksBefore.Count(), Is.EqualTo(Books.Count));
 
 			int oldCount = Books.Count;
-			BooksService.Delete(DefaultData.Books.ClrVia.Id);
+			await BooksService.Delete(DefaultData.Books.ClrVia.Id);
 
-			Assert.That(BooksService.GetAll().Count(), Is.EqualTo(oldCount - 1));
-			Assert.That(BooksService.Get(DefaultData.Books.ClrVia.Id), Is.Null);
+			var booksAfter = await BooksService.GetAll();
+			Assert.That(booksAfter.Count(), Is.EqualTo(oldCount - 1));
+			Assert.That(await BooksService.Get(DefaultData.Books.ClrVia.Id), Is.Null);
 		}
 	}
 }

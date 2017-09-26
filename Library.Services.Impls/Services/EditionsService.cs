@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
@@ -15,9 +16,9 @@ namespace Library.Services.Impls.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public IEnumerable<EditionDto> GetAll()
+		public async Task<IEnumerable<EditionDto>> GetAll()
 		{
-			var editions = _unitOfWork.EditionRepository.GetAll();
+			var editions = await _unitOfWork.EditionRepository.GetAllAsync();
 			var result = Mapper.Map<IEnumerable<Edition>, Collection<EditionDto>>(editions);
 			return result;
 		}

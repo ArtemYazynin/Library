@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Library.Services.DTO;
 using Library.Services.Services;
@@ -15,9 +16,9 @@ namespace Library.Web.Controllers.api
 			_publishersService = publishersService;
 		}
 
-		public IEnumerable<PublisherDto> Get()
+		public async Task<IEnumerable<PublisherDto>> Get()
 		{
-			var publishers = _publishersService.GetAll();
+			var publishers = await _publishersService.GetAll();
 			return publishers;
 		}
 	}

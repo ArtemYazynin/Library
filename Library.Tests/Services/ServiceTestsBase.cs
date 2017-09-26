@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Library.ObjectModel.Models;
 using Library.Services;
 using Library.Services.DTO;
@@ -35,26 +36,24 @@ namespace Library.Tests.Services
 
 			var stubBookRepository = new Mock<IGenericRepository<Book>>();
 
-			stubBookRepository.Setup(
-				x =>
-					x.GetAll(It.IsAny<IEnumerable<Expression<Func<Book, bool>>>>(), It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
-						It.IsAny<string>()))
-				.Returns((IEnumerable<Expression<Func<Book, bool>>> filters,
-						  Func<IQueryable<Book>, IOrderedQueryable<Book>> order,
-						  string includeProperties) =>
+			stubBookRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Book, bool>>>>(),
+				It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
+				It.IsAny<string>()))
+				.ReturnsAsync((IEnumerable<Expression<Func<Book, bool>>> filters, Func<IQueryable<Book>, IOrderedQueryable<Book>> order, string includeProperties) =>
+				{
+					IEnumerable<Book> books = Books;
+					if (filters != null)
+					{
+						foreach (var expression in filters)
 						{
-							IEnumerable<Book> books = Books;
-							if (filters != null)
-							{
-								foreach (var expression in filters)
-								{
-									books = books.Where(expression.Compile());
-								}
-							}
-							return order?.Invoke(books.AsQueryable()) ?? books;
-						});
+							books = books.Where(expression.Compile());
+						}
+					}
+					return order?.Invoke(books.AsQueryable()) ?? books;
+				});
 
-			stubBookRepository.Setup(x => x.Get(It.IsAny<long>())).Returns<long>(id => Books.SingleOrDefault(x => x.Id == id));
+			stubBookRepository.Setup(x => x.Get(It.IsAny<long>()))
+				.ReturnsAsync((long id) => Books.SingleOrDefault(x => x.Id == id)); //.Returns(id => Books.SingleOrDefault(x => x.Id == id));
 
 			stubBookRepository.Setup(x => x.Create(It.IsAny<Book>()))
 				.Returns((Book x) =>

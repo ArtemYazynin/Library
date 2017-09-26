@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Library.Services;
 using Library.Services.DTO;
@@ -16,9 +17,9 @@ namespace Library.Web.Controllers.api
 			_editionsService = editionsService;
 		}
 
-		public IEnumerable<EditionDto> Get()
+		public async Task<IEnumerable<EditionDto>> Get()
 		{
-			var editions = _editionsService.GetAll();
+			var editions = await _editionsService.GetAll();
 			return editions;
 		}
 	}

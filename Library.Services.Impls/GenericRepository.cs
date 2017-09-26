@@ -11,7 +11,7 @@ namespace Library.Services.Impls
 	public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : Entity
 	{
 		private readonly LibraryContext _context;
-		private readonly IDbSet<TEntity> _dbSet;
+		private readonly DbSet<TEntity> _dbSet;
 
 		public GenericRepository(LibraryContext context)
 		{
@@ -66,9 +66,9 @@ namespace Library.Services.Impls
 			return await orderBy.Invoke(query).ToListAsync();
 		}
 
-		public TEntity Get(long id)
+		public Task<TEntity> Get(long id)
 		{
-			return _dbSet.Find(id);
+			return _dbSet.FindAsync(id);
 		}
 
 		public  bool Create(TEntity entity)

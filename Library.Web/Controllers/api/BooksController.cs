@@ -20,15 +20,15 @@ namespace Library.Web.Controllers.api
 		}
 
 		[HttpGet]
-		public IHttpActionResult Get()
+		public async Task<IHttpActionResult> Get()
 		{
-			var books = _booksService.GetAll();
+			var books = await _booksService.GetAll();
 			return Ok(books);
 		}
 
 		[HttpGet]
 		[Route("Search")]
-		public IEnumerable<BookDto> Search(string byName = null, string byAuthor = null, string byMultipleAuthors = null, string byAll = null, bool withoutAuthors = false)
+		public async Task<IEnumerable<BookDto>> Search(string byName = null, string byAuthor = null, string byMultipleAuthors = null, string byAll = null, bool withoutAuthors = false)
 		{
 			var filters = new Filters()
 			{
@@ -38,7 +38,7 @@ namespace Library.Web.Controllers.api
 				ByAll = byAll,
 				WithoutAuthors = withoutAuthors
 			};
-			var books = _booksService.Search(filters);
+			var books = await _booksService.Search(filters);
 			return books;
 		}
 
