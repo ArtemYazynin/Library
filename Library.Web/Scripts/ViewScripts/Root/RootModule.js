@@ -14,8 +14,12 @@
 			controller: "BooksController"
 		});
 		$routeProvider.when("/Books/Create", {
-			templateUrl: "/LibraryView/BookCreate",
+			templateUrl: "/LibraryView/BookDetails",
 			controller: "BookCreateController"
+		});
+		$routeProvider.when("/Books/:bookId", {
+			templateUrl: "/LibraryView/BookDetails",
+			controller: "BookEditController"
 		});
 		//$routeProvider.otherwise({
 		//	redirectTo: function () {

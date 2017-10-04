@@ -195,9 +195,3 @@ namespace Library.Tests.Services.Books
 		}
 	}
 }
-
-//IGenericRepository<Book> booksRepository = Mock.Of<IGenericRepository<Book>>(d =>
-//	d.GetAll(It.IsAny<Expression<Func<Book, bool>>>(),
-//			 It.IsAny<Func<IQueryable<Book>, 
-//			 IOrderedQueryable<Book>>>(), It.IsAny<string>()) == books
-//	&& d.Get(It.IsAny<long>()) == jsPocketGuide);

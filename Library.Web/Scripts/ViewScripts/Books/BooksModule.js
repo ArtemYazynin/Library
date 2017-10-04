@@ -1,7 +1,7 @@
 ﻿(function (angular) {
 	"use strict";
 
-	angular.module("BooksModule", ["ngRoute", "ngResource", "oi.select"])
+	angular.module("BooksModule", ["ngRoute", "ngResource", "oi.select", "cp.ngConfirm"])
 	.factory("genresService", ["$resource", function ($resource) {
 		var baseUrl = "api/Genres";
 		var genresResource = $resource(baseUrl + "/:id", { id: "@Id" });
@@ -45,6 +45,10 @@
 	.factory("booksService", ["$resource", "$http", function ($resource, $http) {
 		var baseUrl = "/api/Books";
 		var bookResource = $resource(baseUrl + "/:id", { id: "@Id" });
+
+		function _get(id, successCallback) {
+			bookResource.get({ Id: id }, successCallback);
+		}
 		function _getAll(successCallback) {
 			bookResource.query(successCallback);
 		}
@@ -59,10 +63,20 @@
 			var newBook = new bookResource(vm);
 			newBook.$save(null, successCallback);
 		}
+		function _remove(vm, successCallback) {
+			if (!vm) return;
+			if (!vm.$delete) {
+				vm = new bookResource(vm);
+			}
+			
+			vm.$delete(null, successCallback);
+		}
 		return {
+			get: _get,
 			getAll: _getAll,
 			search: _search,
-			create: _create
+			create: _create,
+			remove: _remove
 		}
 	}]);
 

@@ -12,11 +12,11 @@ namespace Library.ObjectModel.Models
 		}
 
 		public string Name { get; set; }
-		public virtual Genre Parent { get; set; }
+		public Genre Parent { get; set; }
 		public long? ParentId { get; set; }
 
-		public virtual ICollection<Book> Books { get; set; }
-		public virtual ICollection<Genre> Children { get; set; }
+		public ICollection<Book> Books { get; set; }
+		public ICollection<Genre> Children { get; set; }
 
 		public override string ToString()
 		{

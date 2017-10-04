@@ -8,7 +8,7 @@ namespace Library.ObjectModel.Models
 		public string ContentType { get; set; }
 		public byte[] Content { get; set; }
 
-		public virtual Book Book { get; set; }
+		public Book Book { get; set; }
 		public int BookId { get; set; }
 	}
 }

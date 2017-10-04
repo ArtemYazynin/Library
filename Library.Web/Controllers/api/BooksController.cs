@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Library.Services;
 using Library.Services.DTO;
 using Library.Services.Services;
 using Library.Services.VO;
@@ -20,15 +19,23 @@ namespace Library.Web.Controllers.api
 		}
 
 		[HttpGet]
-		public async Task<IHttpActionResult> Get()
+		public async Task<IEnumerable<BookDto>> Get()
 		{
 			var books = await _booksService.GetAll();
-			return Ok(books);
+			return books;
 		}
 
 		[HttpGet]
+		public async Task<BookDto> Get(long id)
+		{
+			var book = await _booksService.Get(id);
+			return book;
+		}
+		
+		[HttpGet]
 		[Route("Search")]
-		public async Task<IEnumerable<BookDto>> Search(string byName = null, string byAuthor = null, string byMultipleAuthors = null, string byAll = null, bool withoutAuthors = false)
+		public async Task<IEnumerable<BookDto>> Search(string byName = null, string byAuthor = null, string byMultipleAuthors = null, 
+														string byAll = null, bool withoutAuthors = false)
 		{
 			var filters = new Filters()
 			{
@@ -46,6 +53,12 @@ namespace Library.Web.Controllers.api
 		{
 			var createBook = await _booksService.Create(bookDto);
 			return createBook;
+		}
+
+		public async Task<EntityDto> Delete(long id)
+		{
+			var deletedBook = await _booksService.Delete(id);
+			return deletedBook;
 		}
 	}
 }

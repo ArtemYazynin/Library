@@ -12,6 +12,6 @@ namespace Library.ObjectModel.Models
 			Books = new List<Book>();
 		}
 		public DateTime Date { get; set; }
-		public virtual ICollection<Book> Books { get; set; }
+		public ICollection<Book> Books { get; set; }
 	}
 }

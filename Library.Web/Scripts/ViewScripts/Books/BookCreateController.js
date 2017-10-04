@@ -32,8 +32,27 @@
 			return result;
 		}
 	}])
-	.controller("BookCreateController", ["$scope", "$filter","$location", "editionsService", "publishersService", "authorsService", "genresService","booksService",
-	function ($scope, $filter, $location, editionsService, publishersService, authorsService, genresService, booksService) {
+	.controller("BookEditController", ["$scope", "$routeParams", "booksService", function ($scope, $routeParams, booksService) {
+		
+		$scope.loadManager = (function () {
+			function _get() {
+				booksService.get($routeParams.bookId, function(data) {
+					$scope.vm = data;
+				});
+			}
+			return {
+				get: _get
+			}
+		})();
+
+		(function init() {
+			$scope.vm = {};
+			$scope.loadManager.get();
+		})();
+	}])
+	.controller("BookCreateController", ["$scope", "$filter", "$location", "editionsService", "publishersService", "authorsService",
+		"genresService", "booksService", "$ngConfirm",
+	function ($scope, $filter, $location, editionsService, publishersService, authorsService, genresService, booksService, $ngConfirm) {
 		$scope.actions = (function () {
 			function _create() {
 				var data = {
@@ -72,10 +91,9 @@
 						return $filter("byIdGroupFilter")($scope.Authors, $scope.vm.Authors, projection);
 					})()
 				}
-				booksService.create(data, function(response) {
+				booksService.create(data, function() {
 					$location.path("/");
-				}, function() {
-					alert("Save fail");
+					$ngConfirm("Book <strong>{{vm.Name}}</strong> created", $scope);
 				});
 			}
 			function _back() {

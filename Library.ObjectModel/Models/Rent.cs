@@ -10,10 +10,10 @@ namespace Library.ObjectModel.Models
 			Date = DateTime.Now;
 		}
 
-		public virtual Book Book { get; set; }
+		public Book Book { get; set; }
 		public long BookId { get; set; }
 
-		public virtual Subscriber Subscriber { get; set; }
+		public Subscriber Subscriber { get; set; }
 		public long SubscriberId { get; set; }
 
 		public int Count { get; set; }

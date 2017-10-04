@@ -23,19 +23,19 @@ namespace Library.ObjectModel.Models
 
 		public int CountAvailable { get; set; }
 
-		public virtual Edition Edition { get; set; }
+		public Edition Edition { get; set; }
 		public long EditionId => Edition.Id;
 
-		public virtual Publisher Publisher { get; set; }
+		public Publisher Publisher { get; set; }
 		public long PublisherId => Publisher.Id;
 
-		public virtual File Cover { get; set; }
+		public File Cover { get; set; }
 		public long? CoverId { get; set; }
 
-		public virtual ICollection<Genre> Genres { get; set; }
-		public virtual ICollection<Author> Authors { get; set; }
-		public virtual ICollection<Rent> Rents { get; set; }
-		public virtual ICollection<Invoice> Invoices { get; set; }
+		public ICollection<Genre> Genres { get; set; }
+		public ICollection<Author> Authors { get; set; }
+		public ICollection<Rent> Rents { get; set; }
+		public ICollection<Invoice> Invoices { get; set; }
 
 	}
 }

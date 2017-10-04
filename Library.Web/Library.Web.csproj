@@ -166,6 +166,7 @@
     <Compile Include="Utils\NinjectRegistrations.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\angular-confirm.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -200,6 +201,7 @@
     <None Include="Scripts\jquery\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\craftpip\angular-confirm.min.js" />
     <Content Include="Scripts\jquery\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery\jquery-3.1.1.slim.js" />
@@ -232,7 +234,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Books.cshtml" />
-    <Content Include="Views\BookCreate.cshtml" />
+    <Content Include="Views\BookDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery\jquery-3.1.1.slim.min.map" />

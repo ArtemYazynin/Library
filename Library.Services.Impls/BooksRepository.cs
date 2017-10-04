@@ -11,7 +11,7 @@ namespace Library.Services.Impls
 	public class BooksRepository: IGenericRepository<Book>
 	{
 		private readonly LibraryContext _context;
-		private readonly DbSet<Book> _dbSet;
+		private readonly IDbSet<Book> _dbSet;
 
 		public BooksRepository(LibraryContext context)
 		{
@@ -19,28 +19,9 @@ namespace Library.Services.Impls
 			_dbSet = context.Set<Book>();
 		}
 
-		public IEnumerable<Book> GetAll(IEnumerable<Expression<Func<Book, bool>>> filters = null, Func<IQueryable<Book>, IOrderedQueryable<Book>> orderBy = null, string includeProperties = "")
-		{
-			IQueryable<Book> query = _dbSet;
-
-			if (filters != null)
-			{
-				foreach (Expression<Func<Book, bool>> expression in filters)
-				{
-					query = query.Where(expression);
-				}
-
-			}
-
-			foreach (var includeProperty in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-			{
-				query = query.Include(includeProperty);
-			}
-
-			return orderBy?.Invoke(query).ToList() ?? query.ToList();
-		}
-
-		public async Task<IEnumerable<Book>> GetAllAsync(IEnumerable<Expression<Func<Book, bool>>> filters = null, Func<IQueryable<Book>, IOrderedQueryable<Book>> orderBy = null, string includeProperties = "")
+		public async Task<IEnumerable<Book>> GetAllAsync(IEnumerable<Expression<Func<Book, bool>>> filters = null, 
+														 Func<IQueryable<Book>, IOrderedQueryable<Book>> orderBy = null, 
+														 string includeProperties = "")
 		{
 			IQueryable<Book> query = _dbSet;
 
@@ -65,7 +46,12 @@ namespace Library.Services.Impls
 
 		public async Task<Book> Get(long id)
 		{
-			return await _dbSet.FindAsync(id);
+			var dbSet = _dbSet as DbSet<Book>;
+			if (dbSet == null)
+			{
+				return _dbSet.Find(id);
+			}
+			return await dbSet.FindAsync(id);
 		}
 
 		public bool Create(Book entity)

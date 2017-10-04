@@ -15,6 +15,7 @@ namespace Library.Web
 
 			bundles.Add(new ScriptBundle("~/bundles/viewScripts")
 						.Include("~/Scripts/oi.select/select.min.js")
+						.Include("~/Scripts/craftpip/angular-confirm.min.js")
 						.Include("~/Scripts/ViewScripts/Root/RootModule.js")
 						.Include("~/Scripts/ViewScripts/Root/RootController.js")
 						
@@ -33,7 +34,8 @@ namespace Library.Web
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css",
-					  "~/Content/select.min.css"));
+					  "~/Content/select.min.css",
+					  "~/Content/angular-confirm.min.css"));
 		}
 	}
 }

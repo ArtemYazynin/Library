@@ -33,7 +33,7 @@
 		<br />
 		<div>
 			<div class="tooltip-common">
-				<a href="#/Books/Create" class=" btn btn-default glyphicon glyphicon-plus"></a>
+				<a href="#/Books/Create" class="btn btn-default glyphicon glyphicon-plus"></a>
 				<span class="tooltiptext">Create new book</span>
 			</div>
 			
@@ -49,16 +49,31 @@
 						<th>Publisher</th>
 						<th>Count</th>
 						<th>Count available</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="book in Books">
+					<tr ng-repeat="book in Books" ng-click="actions.select()">
 						<td ng-bind="book.Name"></td>
 						<td ng-bind="book.GenresStr"></td>
 						<td ng-bind="book.AuthorsStr"></td>
 						<td ng-bind="book.Publisher.Name"></td>
 						<td ng-bind="book.Count">Count</td>
 						<td ng-bind="book.CountAvailable"></td>
+						<td style="width: 9%;">
+							<div class="tooltip-common">
+								<button type="button" class="btn btn-primary" ng-click="actions.details(book)">
+									<span class="glyphicon glyphicon-edit"></span>
+								</button>
+								<span class="tooltiptext">Edit</span>
+							</div>
+							<div class="tooltip-common">
+								<button type="button" class="btn btn-danger" ng-click="actions.remove(book)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+								<span class="tooltiptext">Remove</span>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
