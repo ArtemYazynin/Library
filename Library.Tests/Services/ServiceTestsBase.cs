@@ -52,8 +52,8 @@ namespace Library.Tests.Services
 					return order?.Invoke(books.AsQueryable()) ?? books;
 				});
 
-			stubBookRepository.Setup(x => x.Get(It.IsAny<long>()))
-				.ReturnsAsync((long id) => Books.SingleOrDefault(x => x.Id == id)); //.Returns(id => Books.SingleOrDefault(x => x.Id == id));
+			stubBookRepository.Setup(x => x.Get(It.IsAny<long>(),It.IsAny<string>()))
+				.ReturnsAsync((long id, string includeProperties) => Books.SingleOrDefault(x => x.Id == id)); //.Returns(id => Books.SingleOrDefault(x => x.Id == id));
 
 			stubBookRepository.Setup(x => x.Create(It.IsAny<Book>()))
 				.Returns((Book x) =>
