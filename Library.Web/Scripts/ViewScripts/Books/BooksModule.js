@@ -44,7 +44,12 @@
 	}])
 	.factory("booksService", ["$resource", "$http", function ($resource, $http) {
 		var baseUrl = "/api/Books";
-		var bookResource = $resource(baseUrl + "/:id", { id: "@Id" });
+		var config = {
+			update: {
+				method: 'PUT' // this method issues a PUT request
+			}
+		}
+		var bookResource = $resource(baseUrl + "/:id", { id: "@Id" }, config);
 
 		function _get(id, successCallback) {
 			bookResource.get({ Id: id }, successCallback);
@@ -63,6 +68,9 @@
 			var newBook = new bookResource(vm);
 			newBook.$save(null, successCallback);
 		}
+		function _update(vm, successCallback) {
+			vm.$update(successCallback);
+		}
 		function _remove(vm, successCallback) {
 			if (!vm) return;
 			if (!vm.$delete) {
@@ -76,6 +84,7 @@
 			getAll: _getAll,
 			search: _search,
 			create: _create,
+			update:_update,
 			remove: _remove
 		}
 	}]);

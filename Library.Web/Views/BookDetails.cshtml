@@ -1,5 +1,5 @@
 ﻿<div class="col-lg-12" ng-cloak>
-	<form name="BookCreateFrom" ng-submit="actions.create()" novalidate>
+	<form name="BookCreateFrom" ng-submit="actions.save()" novalidate>
 		<div class="form-group">
 			<label for="Name">Name</label>
 			<input type="text" class="form-control" name="Name" id="Name" ng-model="vm.Name" required/>
@@ -17,7 +17,7 @@
 		<div class="form-group">
 			<label for="Edition">Edition</label>
 			<select class="form-control" name="Edition" id="Edition" ng-model="vm.Edition"
-			        ng-options="edition.Id as edition.Name +' '+ edition.Year for edition in Editions"
+			        ng-options="edition.Name +' '+ edition.Year for edition in Editions track by edition.Id"
 			        required>
 				<option value="">-Chose-</option>
 			</select>
@@ -26,26 +26,28 @@
 		<div class="form-group">
 			<label for="Publisher">Publisher</label>
 			<select class="form-control" name="Publisher" id="Publisher" ng-model="vm.Publisher"
-			        ng-options="publisher.Id as publisher.Name for publisher in Publishers" required>
+			        ng-options="publisher.Name for publisher in Publishers track by publisher.Id"
+			        required>
 				<option value="">-Chose-</option>
 			</select>
 			<span style="color: red;" ng-show="BookCreateFrom.Publisher.$error.required">Publisher is required</span>
 		</div>
 		<div class="form-group">
 			<label for="Authors">Authors</label>
-			<oi-select id="Authors" name="Authors" oi-options="author.Id as author.Lastname +' '+ author.Firstname + ' ' + (author.Middlename || '') for author in Authors"
-			           ng-model="vm.Authors"
-			           multiple
-			           placeholder="Select Authors...">
+			<oi-select id="Authors" name="Authors" 
+				oi-options="author.Lastname +' '+ author.Firstname + ' ' + (author.Middlename || '') for author in Authors"
+				ng-model="vm.Authors"
+				multiple
+				placeholder="Select Authors...">
 			</oi-select>
 		</div>
 		<div class="form-group">
 			<label for="Genres">Genres</label>
-			<oi-select id="Genres" name="Genres" oi-options="genre.Id as genre.Name for genre in Genres"
-			           ng-model="vm.Genres"
-			           multiple
-			           placeholder="Select Genres..."
-			           required>
+			<oi-select id="Genres" name="Genres" oi-options="genre.Name for genre in Genres"
+			    ng-model="vm.Genres"
+			    multiple
+			    placeholder="Select Genres..."
+			    required>
 			</oi-select>
 			<span style="color: red;" ng-show="BookCreateFrom.Genres.$error.required">Genres can not be empty</span>
 		</div>

@@ -60,5 +60,11 @@ namespace Library.Web.Controllers.api
 			var deletedBook = await _booksService.Delete(id);
 			return deletedBook;
 		}
+
+		public async Task<EntityDto> Put(long id, BookDto bookDto)
+		{
+			var book = await _booksService.Update(id,bookDto);
+			return book;
+		}
 	}
 }

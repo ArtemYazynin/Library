@@ -22,10 +22,11 @@
 								text: 'Ok',
 								btnClass: 'btn-blue',
 								action: function (scope, button) {
+									var bookname = book.Name;
 									booksService.remove(book, function(deletedBook) {
-										var index = scope.Books.indexOf(book);
+										var index = scope.Books.indexOf(deletedBook);
 										scope.Books.splice(index, 1);
-										this.close();
+										$ngConfirm("Book <strong>" + bookname + "</strong> was deleted");
 									});
 									
 								}

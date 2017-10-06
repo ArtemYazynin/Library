@@ -83,47 +83,60 @@ namespace Library.Services.Impls.Services
 
 		public async Task<BookDto> Get(long id)
 		{
-			var book = await _unitOfWork.BookRepository.Get(id);
+			var includingProperties = $"{nameof(Edition)},{nameof(Publisher)},{nameof(Book.Authors)},{nameof(Book.Genres)}";
+			var book = await _unitOfWork.BookRepository.Get(id, includingProperties);
 			var dto = Mapper.Map<BookDto>(book);
 			return dto;
 		}
 
 		public async Task<EntityDto> Create(BookDto bookDto)
 		{
-			var book = Mapper.Map<Book>(bookDto);
-			_unitOfWork.BookRepository.Create(book);
-			await _unitOfWork.Save();
-			return new EntityDto()
+			try
 			{
-				Id = book.Id,
-				Version = book.Version
-			};
+				var book = Mapper.Map<Book>(bookDto);
+				_unitOfWork.BookRepository.Create(book);
+				await _unitOfWork.Save();
+				return new EntityDto()
+				{
+					Id = book.Id,
+					Version = book.Version
+				};
+			}
+			catch (Exception e)
+			{
+				
+				throw;
+			}
+			
 		}
 
 		public async Task<EntityDto> Update(long id, BookDto bookDto)
 		{
-			var book = await _unitOfWork.BookRepository.Get(id);
-			book.Name = bookDto.Name;
-			book.Isbn = bookDto.Isbn;
-			book.Description = bookDto.Description;
-			book.Count = bookDto.Count;
-			book.CountAvailable = bookDto.CountAvailable;
-			if (book.EditionId != bookDto.Edition.Id 
-			 || book.Edition.Name != bookDto.Edition.Name)
-			{
-				book.Edition = new Edition()
-				{
-					Name = bookDto.Edition.Name,
-					Year = bookDto.Edition.Year
-				};
-			}
-			if (book.PublisherId != bookDto.Publisher.Id)
-			{
-				book.Publisher = new Publisher()
-				{
-					Name = bookDto.Publisher.Name
-				};
-			}
+			//string includeproperties = $"{nameof(Edition)}, {nameof(Publisher)}";
+			//var book = await _unitOfWork.BookRepository.Get(id, includeproperties);
+			//book.Name = bookDto.Name;
+			//book.Isbn = bookDto.Isbn;
+			//book.Description = bookDto.Description;
+			//book.Count = bookDto.Count;
+			//book.CountAvailable = bookDto.CountAvailable;
+			//if (book.EditionId != bookDto.Edition.Id
+			// || book.Edition.Name != bookDto.Edition.Name)
+			//{
+			//	book.Edition = new Edition()
+			//	{
+			//		Name = bookDto.Edition.Name,
+			//		Year = bookDto.Edition.Year
+			//	};
+			//}
+			//if (book.PublisherId != bookDto.Publisher.Id)
+			//{
+			//	book.Publisher = new Publisher()
+			//	{
+			//		Name = bookDto.Publisher.Name
+			//	};
+			//}
+			var book = Mapper.Map<BookDto, Book>(bookDto);
+			await _unitOfWork.BookRepository.Update(book);
 
 			await _unitOfWork.Save();
 			return new EntityDto()
