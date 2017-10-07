@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Library.Services.DTO;
 using Library.Services.VO;
+using Moq;
 using NUnit.Framework;
 
 namespace Library.Tests.Services.Books
@@ -121,6 +123,23 @@ namespace Library.Tests.Services.Books
 				Id = Random.Next(int.MaxValue),
 				Name = "Daria Doncova"
 			};
+			var newAuthors = new List<AuthorDto>()
+			{
+				new AuthorDto()
+				{
+					Id = DefaultData.Authors.Ferguson.Id,
+					Lastname = DefaultData.Authors.Ferguson.Lastname,
+					Firstname = DefaultData.Authors.Ferguson.Firstname,
+					Middlename = DefaultData.Authors.Ferguson.Middlename
+				},
+				new AuthorDto()
+				{
+					Id = DefaultData.Authors.Devis.Id,
+					Lastname = DefaultData.Authors.Devis.Lastname,
+					Firstname = DefaultData.Authors.Devis.Firstname,
+					Middlename = DefaultData.Authors.Devis.Middlename
+				}
+			};
 			var bookDto = new BookDto()
 			{
 				Name = newName,
@@ -129,7 +148,8 @@ namespace Library.Tests.Services.Books
 				Count = newCount,
 				CountAvailable = newCountAvailable,
 				Publisher = newPublisherDto,
-				Edition = newEditionDto
+				Edition = newEditionDto,
+				Authors = newAuthors
 			};
 			await BooksService.Update(DefaultData.Books.ClrVia.Id, bookDto);
 
@@ -146,7 +166,10 @@ namespace Library.Tests.Services.Books
 			Assert.That(DefaultData.Books.ClrVia.Edition.Name, Is.EqualTo(newEditionDto.Name));
 			Assert.That(DefaultData.Books.ClrVia.Edition.Year, Is.EqualTo(newEditionDto.Year));
 
-
+			Assert.That(DefaultData.Books.ClrVia.Authors.Count, Is.EqualTo(newAuthors.Count));
+			Assert.That(DefaultData.Books.ClrVia.Authors.Any(x=>x.Id == DefaultData.Authors.Rihter.Id), Is.False);
+			Assert.That(DefaultData.Books.ClrVia.Authors.Any(x => x.Id == DefaultData.Authors.Ferguson.Id), Is.True);
+			Assert.That(DefaultData.Books.ClrVia.Authors.Any(x => x.Id == DefaultData.Authors.Devis.Id), Is.True);
 		}
 
 		[Test]

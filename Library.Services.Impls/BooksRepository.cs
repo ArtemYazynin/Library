@@ -1,8 +1,6 @@
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using Library.ObjectModel.Models;
-using Library.Services.Impls.Comparers;
 
 namespace Library.Services.Impls
 {
@@ -49,10 +47,7 @@ namespace Library.Services.Impls
 
 		public override bool Update(Book entity)
 		{
-			if (Context.Entry(entity).State == EntityState.Modified)
-			{
-				Context.Books.Attach(entity);
-			}
+			
 			Context.Editions.Attach(entity.Edition);
 			Context.Publishers.Attach(entity.Publisher);
 
@@ -63,6 +58,11 @@ namespace Library.Services.Impls
 			foreach (var genre in entity.Genres)
 			{
 				Context.Genres.Attach(genre);
+			}
+			if (Context.Entry(entity).State == EntityState.Modified)
+			{
+				Context.Books.Attach(entity);
+				Context.Entry(entity).State = EntityState.Modified;
 			}
 			return true;
 		}

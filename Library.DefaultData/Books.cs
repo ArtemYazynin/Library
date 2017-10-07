@@ -21,7 +21,7 @@ namespace Library.DefaultData
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Name = "Мои заметки в Evernote",
-			Authors = new List<Author>() { new Author() {Lastname = "Язынин", Firstname = "Артем", Middlename = "Дмитриевич"} },
+			Authors = new List<Author>() { Authors.Yazynin },
 			Genres = new List<Genre>() { Genres.CSharp, Genres.JavaScript, Genres.DotNet },
 			Publisher = Publishers.Self,
 			Edition = new Edition() { Name = "1-е издание", Year = 2017 },
@@ -33,7 +33,7 @@ namespace Library.DefaultData
 			Id= Rnd.Next(int.MaxValue),
 			Count = 13,
 			CountAvailable = 13,
-			Authors = new List<Author>() { new Author() { Lastname = "Флэнаган", Firstname = "Дэвид" } },
+			Authors = new List<Author>() { Authors.Flenagan },
 			Name = "JavaScript. Карманный справочник",
 			Genres = new List<Genre>() { Genres.JavaScript },
 			Isbn = "978-1-449-31685-3",
@@ -50,11 +50,7 @@ namespace Library.DefaultData
 			Id = Rnd.Next(int.MaxValue),
 			Count = 24,
 			CountAvailable = 24,
-			Authors = new List<Author>()
-			{
-				new Author() {Lastname = "Резиг", Firstname = "Джон"},
-				new Author() {Lastname = "Фергюсон", Firstname = "Расс"}
-			},
+			Authors = new List<Author>(){ Authors.Rezig, Authors.Ferguson },
 			Genres = new List<Genre>() { Genres.JavaScript },
 			Name = "JavaScript для профессионалов",
 			Isbn = "9781430263913",
@@ -71,7 +67,7 @@ namespace Library.DefaultData
 			Id = Rnd.Next(int.MaxValue),
 			Count = 34,
 			CountAvailable = 34,
-			Authors = new List<Author>() { new Author() { Lastname = "Закас", Firstname = "Николас" } },
+			Authors = new List<Author>() { Authors.Zakas },
 			Genres = new List<Genre>() { Genres.JavaScript },
 			Name = "JavaScript. Оптимизация производительности",
 			Isbn = "978-5-93286-213-1",
@@ -88,7 +84,7 @@ namespace Library.DefaultData
 			Id = Rnd.Next(int.MaxValue),
 			Count = 18,
 			CountAvailable = 18,
-			Authors = new List<Author>() { new Author() { Lastname = "Симпсон", Firstname = "Кайл" } },
+			Authors = new List<Author>() { Authors.Simpson },
 			Genres = new List<Genre>() { Genres.JavaScript },
 			Name = "ES6 и не только",
 			Isbn = "9781491904244",
@@ -105,7 +101,7 @@ namespace Library.DefaultData
 			Id = Rnd.Next(int.MaxValue),
 			Count = 56,
 			CountAvailable = 56,
-			Authors = new List<Author>() { new Author() { Lastname = "Рихтер", Firstname = "Джеффри" } },
+			Authors = new List<Author>() { Authors.Rihter },
 			Genres = new List<Genre>() { Genres.DotNet },
 			Name = "CLR via C#. Программирование на платформе Microsoft.NET Framework 4.5 на языке C#",
 			Isbn = "978-5-496-00433-6",
@@ -116,13 +112,13 @@ namespace Library.DefaultData
 				Year = 2017,
 			}
 		};
-
+		
 		public static Book CSharpCompleteGuide = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
 			Count = 33,
 			CountAvailable = 33,
-			Authors = new List<Author>() { new Author() { Lastname = "Шилдт", Firstname = "Герберт" } },
+			Authors = new List<Author>() { Authors.Shildt},
 			Genres = new List<Genre>() { Genres.CSharp },
 			Name = "C# 4.0. Полное руководство",
 			Isbn = "978-5-8459-1684-6",
@@ -133,6 +129,7 @@ namespace Library.DefaultData
 				Year = 2015,
 			}
 		};
+		
 
 		public static Book CSharp6AndNetPlatform = new Book()
 		{
@@ -142,11 +139,7 @@ namespace Library.DefaultData
 			Name = "Язык программирования C# 6.0 и платформа .NET 4.6",
 			Isbn = "978-5-8459-2099-7, 978-1-4842-1333-9",
 			Publisher = Publishers.Viliams,
-			Authors = new List<Author>()
-			{
-				new Author() {Lastname = "Троелсен", Firstname = "Эндрю"},
-				new Author() {Lastname = "Джепикс", Firstname = "Филипп"}
-			},
+			Authors = new List<Author>(){ Authors.Troelsen,Authors.Jepkins },
 			Genres = new List<Genre>() { Genres.CSharp, Genres.DotNet },
 			Edition = new Edition()
 			{
@@ -154,7 +147,7 @@ namespace Library.DefaultData
 				Year = 2016
 			}
 		};
-
+		
 		public static Book AsyncProgrammingCSharp5 = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
@@ -163,10 +156,7 @@ namespace Library.DefaultData
 			Name = "Асинхронное программирование в C# 5.0",
 			Isbn = "978-5-97060-281-2, 978-1449-33716-2",
 			Publisher = Publishers.DmkPress,
-			Authors = new List<Author>()
-			{
-				new Author() {Lastname = "Дэвис", Firstname = "Алекс"}
-			},
+			Authors = new List<Author>() { Authors.Devis },
 			Genres = new List<Genre>() { Genres.CSharp },
 			Edition = new Edition()
 			{

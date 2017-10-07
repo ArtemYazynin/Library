@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Authors.cs" />
     <Compile Include="Books.cs" />
     <Compile Include="Genres.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
