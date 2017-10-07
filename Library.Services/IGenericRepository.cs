@@ -13,6 +13,6 @@ namespace Library.Services
 		bool Create(TEntity entity);
 		bool Delete(long id);
 		bool Delete(TEntity entity);
-		Task<bool> Update(TEntity entity);
+		bool Update(TEntity entity);
 	}
 }

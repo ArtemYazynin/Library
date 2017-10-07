@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Library.ObjectModel.Models;
 using Library.Services;
-using Library.Services.DTO;
 using Library.Services.Impls;
 using Library.Services.Impls.Services;
 using Library.Services.Services;
@@ -20,6 +18,7 @@ namespace Library.Tests.Services
 		protected IBooksService BooksService;
 
 		protected Collection<Book> Books;
+		protected Random Random = new Random();
 
 		[SetUp]
 		public void SetUp()
@@ -78,7 +77,7 @@ namespace Library.Tests.Services
 					Books.Add(x);
 					return true;
 				});
-			stubBookRepository.Setup(x => x.Update(It.IsAny<Book>())).Returns<BookDto>(x => true);
+			stubBookRepository.Setup(x => x.Update(It.IsAny<Book>())).Returns((Book dbentity) => true);
 			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object);
 
 			BooksService = new BooksService(unitOfWork);

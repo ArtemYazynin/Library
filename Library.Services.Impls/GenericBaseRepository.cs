@@ -87,12 +87,11 @@ namespace Library.Services.Impls
 			return true;
 		}
 
-		public async virtual Task<bool> Update(TEntity entity)
+		public virtual bool Update(TEntity entity)
 		{
-			if (entity == null) return false;
-			//DbSet.Attach(entity);
+			DbSet.Attach(entity);
 			Context.Entry(entity).State = EntityState.Modified;
-			return await Task.FromResult(true);
+			return true;
 		}
 	}
 }

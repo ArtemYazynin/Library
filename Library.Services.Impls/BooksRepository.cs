@@ -2,6 +2,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.ObjectModel.Models;
+using Library.Services.Impls.Comparers;
 
 namespace Library.Services.Impls
 {
@@ -46,23 +47,23 @@ namespace Library.Services.Impls
 		}
 
 
-		public async override Task<bool> Update(Book entity)
+		public override bool Update(Book entity)
 		{
-			var dbEntity = await Get(entity.Id, $"{nameof(Edition)}, {nameof(Publisher)}, {nameof(Book.Authors)}, {nameof(Book.Genres)}");
-			Context.Entry(dbEntity).CurrentValues.SetValues(entity);
-			if (dbEntity.EditionId != entity.EditionId)
+			if (Context.Entry(entity).State == EntityState.Modified)
 			{
-				Context.Editions.Attach(entity.Edition);
-				
-				dbEntity.Edition = entity.Edition;
+				Context.Books.Attach(entity);
 			}
-			if (dbEntity.PublisherId != entity.PublisherId)
+			Context.Editions.Attach(entity.Edition);
+			Context.Publishers.Attach(entity.Publisher);
+
+			foreach (var author in entity.Authors)
 			{
-				Context.Publishers.Attach(entity.Publisher);
-				dbEntity.Publisher = entity.Publisher;
+				Context.Authors.Attach(author);
 			}
-
-
+			foreach (var genre in entity.Genres)
+			{
+				Context.Genres.Attach(genre);
+			}
 			return true;
 		}
 	}

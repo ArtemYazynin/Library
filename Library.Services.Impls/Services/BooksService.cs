@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
+using Library.Services.Impls.Comparers;
 using Library.Services.Services;
 using Library.Services.VO;
 
@@ -83,66 +85,80 @@ namespace Library.Services.Impls.Services
 
 		public async Task<BookDto> Get(long id)
 		{
-			var includingProperties = $"{nameof(Edition)},{nameof(Publisher)},{nameof(Book.Authors)},{nameof(Book.Genres)}";
-			var book = await _unitOfWork.BookRepository.Get(id, includingProperties);
+			var book = await GetInternal(id);
 			var dto = Mapper.Map<BookDto>(book);
 			return dto;
 		}
 
+		private async Task<Book> GetInternal(long id)
+		{
+			var includingProperties = $"{nameof(Edition)},{nameof(Publisher)},{nameof(Book.Authors)},{nameof(Book.Genres)}";
+			var book = await _unitOfWork.BookRepository.Get(id, includingProperties);
+			return book;
+		}
+
 		public async Task<EntityDto> Create(BookDto bookDto)
 		{
-			try
+			var book = Mapper.Map<Book>(bookDto);
+			_unitOfWork.BookRepository.Create(book);
+			await _unitOfWork.Save();
+			return new EntityDto()
 			{
-				var book = Mapper.Map<Book>(bookDto);
-				_unitOfWork.BookRepository.Create(book);
-				await _unitOfWork.Save();
-				return new EntityDto()
-				{
-					Id = book.Id,
-					Version = book.Version
-				};
-			}
-			catch (Exception e)
-			{
-				
-				throw;
-			}
-			
+				Id = book.Id,
+				Version = book.Version
+			};
 		}
 
 		public async Task<EntityDto> Update(long id, BookDto bookDto)
 		{
-			//string includeproperties = $"{nameof(Edition)}, {nameof(Publisher)}";
-			//var book = await _unitOfWork.BookRepository.Get(id, includeproperties);
-			//book.Name = bookDto.Name;
-			//book.Isbn = bookDto.Isbn;
-			//book.Description = bookDto.Description;
-			//book.Count = bookDto.Count;
-			//book.CountAvailable = bookDto.CountAvailable;
-			//if (book.EditionId != bookDto.Edition.Id
-			// || book.Edition.Name != bookDto.Edition.Name)
-			//{
-			//	book.Edition = new Edition()
-			//	{
-			//		Name = bookDto.Edition.Name,
-			//		Year = bookDto.Edition.Year
-			//	};
-			//}
-			//if (book.PublisherId != bookDto.Publisher.Id)
-			//{
-			//	book.Publisher = new Publisher()
-			//	{
-			//		Name = bookDto.Publisher.Name
-			//	};
-			//}
-			var book = Mapper.Map<BookDto, Book>(bookDto);
-			await _unitOfWork.BookRepository.Update(book);
+			var entity = Mapper.Map<BookDto, Book>(bookDto);
 
+			var dbEntity = await GetInternal(id);
+			dbEntity.Name = entity.Name;
+			dbEntity.Isbn = entity.Isbn;
+			dbEntity.Description = entity.Description;
+			dbEntity.Count = entity.Count;
+			dbEntity.CountAvailable = entity.CountAvailable;
+			
+			if (dbEntity.EditionId != bookDto.Edition.Id)
+			{
+				dbEntity.Edition = entity.Edition;
+			}
+			if (dbEntity.PublisherId != bookDto.Publisher.Id)
+			{
+				dbEntity.Publisher = entity.Publisher;
+			}
+			var deletedAuthors = dbEntity.Authors.Except(entity.Authors, new AuthorComparer<Author>()).ToList();
+			var addedAuthors = entity.Authors.Except(dbEntity.Authors, new AuthorComparer<Author>()).ToList();
+			deletedAuthors.ForEach(x =>
+			{
+				dbEntity.Authors.Remove(x);
+			});
+			addedAuthors.ForEach(x =>
+			{
+				dbEntity.Authors.Add(x);
+			});
+
+			var deletedGenres = dbEntity.Genres.Except(entity.Genres, new AuthorComparer<Genre>()).ToList();
+			var addedGenres = entity.Genres.Except(dbEntity.Genres, new AuthorComparer<Genre>()).ToList();
+			deletedGenres.ForEach(x =>
+			{
+				dbEntity.Genres.Remove(x);
+			});
+			addedGenres.ForEach(x =>
+			{
+				dbEntity.Genres.Add(x);
+			});
+
+
+			_unitOfWork.BookRepository.Update(dbEntity);
+
+			
 			await _unitOfWork.Save();
 			return new EntityDto()
 			{
 				Id = id,
-				Version = book.Version
+				Version = dbEntity.Version
 			};
 		}
 

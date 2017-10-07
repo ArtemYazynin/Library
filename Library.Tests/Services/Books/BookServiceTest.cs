@@ -112,12 +112,15 @@ namespace Library.Tests.Services.Books
 		{
 			const string newName = "Test Driven Development";
 			const string newIsbn = "111-111-111-12";
-			const string newPublisherName = "Daria Doncova";
 			const string newDescription = "Новое тестовое описание";
 			const int newCount = 3459;
 			const int newCountAvailable = 50;
-			EditionDto neweditionDto = new EditionDto() {Name = "новое тестовое издание", Year = 2021};
-
+			var newEditionDto = new EditionDto() {Name = "новое тестовое издание", Year = 2021, Id = Random.Next(int.MaxValue)};
+			var newPublisherDto = new PublisherDto()
+			{
+				Id = Random.Next(int.MaxValue),
+				Name = "Daria Doncova"
+			};
 			var bookDto = new BookDto()
 			{
 				Name = newName,
@@ -125,11 +128,8 @@ namespace Library.Tests.Services.Books
 				Description = newDescription,
 				Count = newCount,
 				CountAvailable = newCountAvailable,
-				Publisher = new PublisherDto()
-				{
-					Name = newPublisherName
-				},
-				Edition = neweditionDto
+				Publisher = newPublisherDto,
+				Edition = newEditionDto
 			};
 			await BooksService.Update(DefaultData.Books.ClrVia.Id, bookDto);
 
@@ -138,9 +138,15 @@ namespace Library.Tests.Services.Books
 			Assert.That(DefaultData.Books.ClrVia.Description, Is.EqualTo(newDescription));
 			Assert.That(DefaultData.Books.ClrVia.Count, Is.EqualTo(newCount));
 			Assert.That(DefaultData.Books.ClrVia.CountAvailable, Is.EqualTo(newCountAvailable));
-			Assert.That(DefaultData.Books.ClrVia.Publisher.Name, Is.EqualTo(newPublisherName));
-			Assert.That(DefaultData.Books.ClrVia.Edition.Name, Is.EqualTo(neweditionDto.Name));
-			Assert.That(DefaultData.Books.ClrVia.Edition.Year, Is.EqualTo(neweditionDto.Year));
+
+			Assert.That(DefaultData.Books.ClrVia.Publisher.Id, Is.EqualTo(newPublisherDto.Id));
+			Assert.That(DefaultData.Books.ClrVia.Publisher.Name, Is.EqualTo(newPublisherDto.Name));
+
+			Assert.That(DefaultData.Books.ClrVia.Edition.Id, Is.EqualTo(newEditionDto.Id));
+			Assert.That(DefaultData.Books.ClrVia.Edition.Name, Is.EqualTo(newEditionDto.Name));
+			Assert.That(DefaultData.Books.ClrVia.Edition.Year, Is.EqualTo(newEditionDto.Year));
+
+
 		}
 
 		[Test]
