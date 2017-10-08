@@ -38,7 +38,7 @@
 					});
 				}
 				function _details(book) {
-					$location.path("/Books/" + book.Id);
+					$location.path("/books/" + book.Id + "/edit");
 				}
 				return {
 					search: _search,

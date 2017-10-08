@@ -111,9 +111,13 @@ namespace Library.Services.Impls.Services
 
 		public async Task<EntityDto> Update(long id, BookDto bookDto)
 		{
-			var entity = Mapper.Map<BookDto, Book>(bookDto);
-
 			var dbEntity = await GetInternal(id);
+			if (dbEntity.Version != bookDto.Version)
+			{
+				throw new Exception($"Book was updated early. Please refresh page. Date latest changes: {dbEntity.Version}");
+			}
+
+			var entity = Mapper.Map<BookDto, Book>(bookDto);
 			dbEntity.Name = entity.Name;
 			dbEntity.Isbn = entity.Isbn;
 			dbEntity.Description = entity.Description;
@@ -128,38 +132,28 @@ namespace Library.Services.Impls.Services
 			{
 				dbEntity.Publisher = entity.Publisher;
 			}
-			var deletedAuthors = dbEntity.Authors.Except(entity.Authors, new AuthorComparer<Author>()).ToList();
-			var addedAuthors = entity.Authors.Except(dbEntity.Authors, new AuthorComparer<Author>()).ToList();
-			deletedAuthors.ForEach(x =>
-			{
-				dbEntity.Authors.Remove(x);
-			});
-			addedAuthors.ForEach(x =>
-			{
-				dbEntity.Authors.Add(x);
-			});
-
-			var deletedGenres = dbEntity.Genres.Except(entity.Genres, new AuthorComparer<Genre>()).ToList();
-			var addedGenres = entity.Genres.Except(dbEntity.Genres, new AuthorComparer<Genre>()).ToList();
-			deletedGenres.ForEach(x =>
-			{
-				dbEntity.Genres.Remove(x);
-			});
-			addedGenres.ForEach(x =>
-			{
-				dbEntity.Genres.Add(x);
-			});
-
-
+			EditAuthors(dbEntity, entity);
+			EditGenres(dbEntity, entity);
 			_unitOfWork.BookRepository.Update(dbEntity);
 
-			
 			await _unitOfWork.Save();
-			return new EntityDto()
-			{
-				Id = id,
-				Version = dbEntity.Version
-			};
+			return bookDto;
+		}
+
+		private void EditGenres(Book dbEntity, Book entity)
+		{
+			var deletedGenres = dbEntity.Genres.Except(entity.Genres, new AuthorComparer<Genre>()).ToList();
+			var addedGenres = entity.Genres.Except(dbEntity.Genres, new AuthorComparer<Genre>()).ToList();
+			deletedGenres.ForEach(x => { dbEntity.Genres.Remove(x); });
+			addedGenres.ForEach(x => { dbEntity.Genres.Add(x); });
+		}
+
+		private void EditAuthors(Book dbEntity, Book entity)
+		{
+			var deletedAuthors = dbEntity.Authors.Except(entity.Authors, new AuthorComparer<Author>()).ToList();
+			var addedAuthors = entity.Authors.Except(dbEntity.Authors, new AuthorComparer<Author>()).ToList();
+			deletedAuthors.ForEach(x => { dbEntity.Authors.Remove(x); });
+			addedAuthors.ForEach(x => { dbEntity.Authors.Add(x); });
 		}
 
 		public async Task<EntityDto> Delete(long id)

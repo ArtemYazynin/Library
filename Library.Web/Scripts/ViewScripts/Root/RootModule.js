@@ -1,7 +1,7 @@
 ﻿(function (angular) {
 	"use strict";
-	angular.module("RootModule", ["ngRoute", "BooksModule"])
-	.config(["$routeProvider", "$locationProvider", "$httpProvider", function ($routeProvider, $locationProvider, $httpProvider) {
+	angular.module("RootModule", ["ngRoute", "BooksModule"/*, "ui.router"*/])
+	.config(["$routeProvider", "$locationProvider", "$httpProvider"/*, "$stateProvider"*/, function ($routeProvider, $locationProvider, $httpProvider/*, $stateProvider*/) {
 		$httpProvider.interceptors.push(function() {
 			return {
 				response: function (response) {
@@ -48,11 +48,11 @@
 			templateUrl: "/LibraryView/Books",
 			controller: "BooksController"
 		});
-		$routeProvider.when("/Books/Create", {
+		$routeProvider.when("/books/new", {
 			templateUrl: "/LibraryView/BookDetails",
 			controller: "BookCreateController"
 		});
-		$routeProvider.when("/Books/:bookId", {
+		$routeProvider.when("/books/:bookId/edit", {
 			templateUrl: "/LibraryView/BookDetails",
 			controller: "BookCreateController"
 		});

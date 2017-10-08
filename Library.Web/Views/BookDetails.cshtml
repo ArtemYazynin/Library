@@ -34,20 +34,20 @@
 		</div>
 		<div class="form-group">
 			<label for="Authors">Authors</label>
-			<oi-select id="Authors" name="Authors" 
-				oi-options="author.Lastname +' '+ author.Firstname + ' ' + (author.Middlename || '') for author in Authors"
-				ng-model="vm.Authors"
-				multiple
-				placeholder="Select Authors...">
+			<oi-select id="Authors" name="Authors"
+			           oi-options="author.Lastname +' '+ author.Firstname + ' ' + (author.Middlename || '') for author in Authors"
+			           ng-model="vm.Authors"
+			           multiple
+			           placeholder="Select Authors...">
 			</oi-select>
 		</div>
 		<div class="form-group">
 			<label for="Genres">Genres</label>
 			<oi-select id="Genres" name="Genres" oi-options="genre.Name for genre in Genres"
-			    ng-model="vm.Genres"
-			    multiple
-			    placeholder="Select Genres..."
-			    required>
+			           ng-model="vm.Genres"
+			           multiple
+			           placeholder="Select Genres..."
+			           required>
 			</oi-select>
 			<span style="color: red;" ng-show="BookCreateFrom.Genres.$error.required">Genres can not be empty</span>
 		</div>

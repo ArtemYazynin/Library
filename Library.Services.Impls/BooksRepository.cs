@@ -1,4 +1,6 @@
+using System;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using Library.ObjectModel.Models;
 
@@ -47,7 +49,8 @@ namespace Library.Services.Impls
 
 		public override bool Update(Book entity)
 		{
-			
+			//Context.Entry(entity).Property(x => x.Version).OriginalValue = oldVersion;
+
 			Context.Editions.Attach(entity.Edition);
 			Context.Publishers.Attach(entity.Publisher);
 
@@ -59,11 +62,8 @@ namespace Library.Services.Impls
 			{
 				Context.Genres.Attach(genre);
 			}
-			if (Context.Entry(entity).State == EntityState.Modified)
-			{
-				Context.Books.Attach(entity);
-				Context.Entry(entity).State = EntityState.Modified;
-			}
+			Context.Books.Attach(entity);
+			Context.Entry(entity).State = EntityState.Modified;
 			return true;
 		}
 	}

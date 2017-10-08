@@ -9,7 +9,6 @@
 			function _save() {
 				if ($routeParams.bookId) {
 					booksService.update($scope.vm, function () {
-						$location.path("/");
 						$ngConfirm("Book <strong>{{vm.Name}}</strong> was updated", $scope);
 					});
 				} else {
