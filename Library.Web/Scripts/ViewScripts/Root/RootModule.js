@@ -1,9 +1,22 @@
 ﻿(function (angular) {
 	"use strict";
-	angular.module("RootModule", ["ngRoute", "BooksModule"/*, "ui.router"*/])
-	.config(["$routeProvider", "$locationProvider", "$httpProvider"/*, "$stateProvider"*/, function ($routeProvider, $locationProvider, $httpProvider/*, $stateProvider*/) {
-		$httpProvider.interceptors.push(function() {
+	angular.module("RootModule", ["ngRoute", "BooksModule", "oi.select", "cp.ngConfirm"])
+	.config(["$routeProvider", "$locationProvider", "$httpProvider", "$ngConfirmProvider", function ($routeProvider, $locationProvider, $httpProvider, $ngConfirmProvider) {
+		$httpProvider.interceptors.push("$q", function ($q) {
 			return {
+				responseError: function (rejection) {
+					$ngConfirmProvider.$get()({
+						title: rejection.statusText,
+						content: rejection.data.ExceptionMessage,
+						type: 'red',
+						typeAnimated: true,
+						buttons: {
+							close: function () {
+							}
+						}
+					});
+					return $q.reject(rejection);
+				},
 				response: function (response) {
 					if ((typeof response.data) === "string") return response;
 

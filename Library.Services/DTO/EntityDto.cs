@@ -9,13 +9,12 @@ namespace Library.Services.DTO
 	{
 		public EntityDto()
 		{
-			Version = DateTime.Now;
 		}
 
 		[DataMember]
 		public long Id { get; set; }
 
 		[DataMember]
-		public DateTime Version { get; set; }
+		public byte[] Version { get; set; }
 	}
 }

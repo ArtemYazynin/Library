@@ -112,9 +112,9 @@ namespace Library.Services.Impls.Services
 		public async Task<EntityDto> Update(long id, BookDto bookDto)
 		{
 			var dbEntity = await GetInternal(id);
-			if (dbEntity.Version != bookDto.Version)
+			if (!dbEntity.Version.SequenceEqual(bookDto.Version))
 			{
-				throw new Exception($"Book was updated early. Please refresh page. Date latest changes: {dbEntity.Version}");
+				throw new Exception("Book was updated early. Please refresh page");
 			}
 
 			var entity = Mapper.Map<BookDto, Book>(bookDto);
@@ -123,7 +123,7 @@ namespace Library.Services.Impls.Services
 			dbEntity.Description = entity.Description;
 			dbEntity.Count = entity.Count;
 			dbEntity.CountAvailable = entity.CountAvailable;
-			
+
 			if (dbEntity.EditionId != bookDto.Edition.Id)
 			{
 				dbEntity.Edition = entity.Edition;
@@ -137,8 +137,16 @@ namespace Library.Services.Impls.Services
 			_unitOfWork.BookRepository.Update(dbEntity);
 
 			await _unitOfWork.Save();
-			return bookDto;
+			return Mapper.Map<Book, BookDto>(dbEntity);
 		}
+		//public async Task<EntityDto> Update(long id, BookDto bookDto)
+		//{
+		//	var entity = Mapper.Map<BookDto, Book>(bookDto);
+
+		//	_unitOfWork.BookRepository.Update(entity);
+		//	await _unitOfWork.Save();
+		//	return Mapper.Map<Book, BookDto>(entity);
+		//}
 
 		private void EditGenres(Book dbEntity, Book entity)
 		{

@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Library.Web.Controllers.api;
 
 namespace Library.Web
 {
@@ -6,7 +7,6 @@ namespace Library.Web
 	{
 		public static void Register(HttpConfiguration config)
 		{
-			// Web API routes
 			config.MapHttpAttributeRoutes();
 
 			config.Routes.MapHttpRoute(

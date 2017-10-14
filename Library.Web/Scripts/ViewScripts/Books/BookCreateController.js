@@ -8,7 +8,7 @@
 		$scope.actions = (function () {
 			function _save() {
 				if ($routeParams.bookId) {
-					booksService.update($scope.vm, function () {
+					booksService.update($scope.vm, function (response) {
 						$ngConfirm("Book <strong>{{vm.Name}}</strong> was updated", $scope);
 					});
 				} else {
