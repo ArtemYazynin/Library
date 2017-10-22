@@ -12,16 +12,7 @@
 			getAll: _getAll
 		}
 	}])
-	.factory("authorsService", ["$resource", function ($resource) {
-		var baseUrl = "api/Authors";
-		var authorsResource = $resource(baseUrl + "/:id", { id: "@Id" });
-		function _getAll(successCallback) {
-			authorsResource.query(successCallback);
-		}
-		return {
-			getAll: _getAll
-		}
-	}])
+
 	.factory("publishersService", ["$resource", function ($resource) {
 		var baseUrl = "api/Publishers";
 		var publishersResource = $resource(baseUrl + "/:id", { id: "@Id" });

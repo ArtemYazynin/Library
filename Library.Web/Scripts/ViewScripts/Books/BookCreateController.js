@@ -20,7 +20,7 @@
 
 			}
 			function _back() {
-				$location.path("/Books");
+				$location.path("/books");
 			}
 			return {
 				save: _save,

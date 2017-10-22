@@ -134,19 +134,13 @@ namespace Library.Services.Impls.Services
 			}
 			EditAuthors(dbEntity, entity);
 			EditGenres(dbEntity, entity);
-			_unitOfWork.BookRepository.Update(dbEntity);
+			if (_unitOfWork.BookRepository.Update(dbEntity))
+			{
+				await _unitOfWork.Save();
+			}
 
-			await _unitOfWork.Save();
 			return Mapper.Map<Book, BookDto>(dbEntity);
 		}
-		//public async Task<EntityDto> Update(long id, BookDto bookDto)
-		//{
-		//	var entity = Mapper.Map<BookDto, Book>(bookDto);
-
-		//	_unitOfWork.BookRepository.Update(entity);
-		//	await _unitOfWork.Save();
-		//	return Mapper.Map<Book, BookDto>(entity);
-		//}
 
 		private void EditGenres(Book dbEntity, Book entity)
 		{
@@ -169,6 +163,14 @@ namespace Library.Services.Impls.Services
 			_unitOfWork.BookRepository.Delete(id);
 			await _unitOfWork.Save();
 			return new EntityDto() {Id = id};
+		}
+
+		public async Task<IEnumerable<string>> BooksByAuthor(long id)
+		{
+			var filters = new List<Expression<Func<Book, bool>>> {x => x.Authors.Any(y => y.Id == id)};
+			var books = await _unitOfWork.BookRepository.GetAllAsync(filters);
+			var booksDto = Mapper.Map<IEnumerable<Book>, IEnumerable<BookDto>>(books);
+			return booksDto.Select(x => x.Name);
 		}
 	}
 }

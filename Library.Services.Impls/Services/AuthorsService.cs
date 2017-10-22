@@ -23,5 +23,42 @@ namespace Library.Services.Impls.Services
 			var result = Mapper.Map<IEnumerable<Author>, Collection<AuthorDto>>(authors);
 			return result;
 		}
+
+		public async Task<EntityDto> Delete(long id)
+		{
+			_unitOfWork.AuthorRepository.Delete(id);
+			await _unitOfWork.Save();
+			return new EntityDto() { Id = id };
+		}
+		public async Task<AuthorDto> Get(long id)
+		{
+			var author = await _unitOfWork.AuthorRepository.Get(id);
+			var dto = Mapper.Map<AuthorDto>(author);
+			return dto;
+		}
+
+		public async Task<AuthorDto> Update(long id, AuthorDto authorDto)
+		{
+			var author = Mapper.Map<AuthorDto,Author>(authorDto);
+			if (_unitOfWork.AuthorRepository.Update(author))
+			{
+				await _unitOfWork.Save();
+			}
+			return authorDto;
+		}
+
+		public async Task<EntityDto> Create(AuthorDto authorDto)
+		{
+			var author = Mapper.Map<AuthorDto, Author>(authorDto);
+			if (_unitOfWork.AuthorRepository.Create(author))
+			{
+				await _unitOfWork.Save();
+			}
+			return new EntityDto()
+			{
+				Id = author.Id,
+				Version = author.Version
+			};
+		}
 	}
 }

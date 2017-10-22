@@ -1,6 +1,6 @@
 ﻿(function (angular) {
 	"use strict";
-	angular.module("RootModule", ["ngRoute", "BooksModule", "oi.select", "cp.ngConfirm"])
+	angular.module("RootModule", ["ngRoute", "BooksModule", "AuthorsModule", "oi.select", "cp.ngConfirm"])
 	.config(["$routeProvider", "$locationProvider", "$httpProvider", "$ngConfirmProvider", function ($routeProvider, $locationProvider, $httpProvider, $ngConfirmProvider) {
 		$httpProvider.interceptors.push("$q", function ($q) {
 			return {
@@ -57,7 +57,7 @@
 			templateUrl: "/LibraryView/Books",
 			controller: "BooksController"
 		});
-		$routeProvider.when("/Books", {
+		$routeProvider.when("/books", {
 			templateUrl: "/LibraryView/Books",
 			controller: "BooksController"
 		});
@@ -69,11 +69,25 @@
 			templateUrl: "/LibraryView/BookDetails",
 			controller: "BookCreateController"
 		});
-		//$routeProvider.otherwise({
-		//	redirectTo: function () {
-		//		window.location = "/";
-		//	}
-		//});
-	}]);
 
+		$routeProvider.when("/authors", {
+			templateUrl: "/LibraryView/Authors",
+			controller: "AuthorsController"
+		});
+		$routeProvider.when("/authors/:authorId/edit", {
+			templateUrl: "/LibraryView/AuthorDetails",
+			controller: "AuthorDetailsController",
+			controllerAs:"authorDetails"
+		});
+		$routeProvider.when("/authors/new", {
+			templateUrl: "/LibraryView/AuthorDetails",
+			controller: "AuthorDetailsController",
+			controllerAs: "authorDetails"
+		});
+			//$routeProvider.otherwise({
+			//	redirectTo: function () {
+			//		window.location = "/";
+			//	}
+			//});
+		}]);
 })(angular);

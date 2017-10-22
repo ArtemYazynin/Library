@@ -213,6 +213,8 @@
     <Content Include="Scripts\bootstrap\respond.min.js" />
     <Content Include="Content\select.min.css" />
     <Content Include="Scripts\oi.select\select.min.js" />
+    <Content Include="Scripts\ViewScripts\Authors\AuthorsController.js" />
+    <Content Include="Scripts\ViewScripts\Authors\AuthorsModule.js" />
     <Content Include="Scripts\ViewScripts\Books\BookCreateController.js" />
     <Content Include="Scripts\ViewScripts\Books\BooksModule.js" />
     <Content Include="Scripts\ViewScripts\Books\BooksController.js" />
@@ -235,6 +237,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Books.cshtml" />
     <Content Include="Views\BookDetails.cshtml" />
+    <Content Include="Views\Authors.cshtml" />
+    <Content Include="Views\AuthorDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery\jquery-3.1.1.slim.min.map" />

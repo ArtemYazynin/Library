@@ -9,9 +9,19 @@ namespace Library.Web.Controllers
 			return PartialView("..//Books");
 		}
 
+		public ActionResult Authors()
+		{
+			return PartialView("..//Authors");
+		}
+
 		public ActionResult BookDetails()
 		{
 			return PartialView("..//BookDetails");
+		}
+
+		public ActionResult AuthorDetails()
+		{
+			return PartialView("..//AuthorDetails");
 		}
 	}
 }

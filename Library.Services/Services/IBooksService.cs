@@ -18,5 +18,7 @@ namespace Library.Services.Services
 
 		Task<EntityDto> Delete(long id);
 
+		Task<IEnumerable<string>> BooksByAuthor(long id);
+
 	}
 }

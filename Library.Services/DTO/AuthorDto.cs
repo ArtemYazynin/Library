@@ -20,12 +20,10 @@ namespace Library.Services.DTO
 		[DataMember]
 		public string Middlename { get; set; }
 
+		[DataMember]
+		public string Fio => $"{Lastname} {Firstname} {Middlename ?? string.Empty}";
+
 
 		public ICollection<BookDto> Books { get; set; }
-
-		public override string ToString()
-		{
-			return $"{Lastname} {Firstname} {Middlename?? string.Empty}";
-		}
 	}
 }

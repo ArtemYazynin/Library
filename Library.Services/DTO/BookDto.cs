@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Library.Common;
 
@@ -55,7 +56,7 @@ namespace Library.Services.DTO
 		public ICollection<AuthorDto> Authors { get; set; }
 
 		[DataMember]
-		public string AuthorsStr => string.Join(", ", Authors);
+		public string AuthorsStr => string.Join(", ", Authors.Select(x=>x.Fio));
 
 		#endregion
 
