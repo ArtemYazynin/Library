@@ -128,6 +128,7 @@ namespace Library.Tests.Services.Books
 				new AuthorDto()
 				{
 					Id = DefaultData.Authors.Ferguson.Id,
+					Version =  DefaultData.Authors.Ferguson.Version,
 					Lastname = DefaultData.Authors.Ferguson.Lastname,
 					Firstname = DefaultData.Authors.Ferguson.Firstname,
 					Middlename = DefaultData.Authors.Ferguson.Middlename
@@ -135,6 +136,7 @@ namespace Library.Tests.Services.Books
 				new AuthorDto()
 				{
 					Id = DefaultData.Authors.Devis.Id,
+					Version =  DefaultData.Authors.Devis.Version,
 					Lastname = DefaultData.Authors.Devis.Lastname,
 					Firstname = DefaultData.Authors.Devis.Firstname,
 					Middlename = DefaultData.Authors.Devis.Middlename
@@ -142,6 +144,7 @@ namespace Library.Tests.Services.Books
 			};
 			var bookDto = new BookDto()
 			{
+				Version = DefaultData.Books.ClrVia.Version,
 				Name = newName,
 				Isbn = newIsbn,
 				Description = newDescription,

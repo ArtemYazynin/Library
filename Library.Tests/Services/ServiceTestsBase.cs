@@ -18,6 +18,7 @@ namespace Library.Tests.Services
 		protected IBooksService BooksService;
 
 		protected Collection<Book> Books;
+		protected Collection<Author> Authors;
 		protected Random Random = new Random();
 
 		[SetUp]
@@ -32,27 +33,85 @@ namespace Library.Tests.Services
 				DefaultData.Books.MyEvernoteNotes,
 				DefaultData.Books.WithoutAuthorsBook
 			};
+			Authors = new Collection<Author>()
+			{
+				DefaultData.Authors.Devis,
+				DefaultData.Authors.Ferguson,
+				DefaultData.Authors.Flenagan,
+				DefaultData.Authors.Jepkins,
+				DefaultData.Authors.Rezig,
+				DefaultData.Authors.Rihter,
+				DefaultData.Authors.Shildt,
+				DefaultData.Authors.Simpson,
+				DefaultData.Authors.Troelsen,
+				DefaultData.Authors.Yazynin,
+				DefaultData.Authors.Zakas
+			};
 
+			var stubBookRepository = GetBookRepositoryStub();
+			var stubAuthorRepository = GetAuthorsRepositoryStub();
+			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object && x.AuthorRepository == stubAuthorRepository.Object);
+
+			BooksService = new BooksService(unitOfWork);
+		}
+
+		private Mock<IGenericRepository<Author>> GetAuthorsRepositoryStub()
+		{
+			var stubAuthorRepository = new Mock<IGenericRepository<Author>>();
+			stubAuthorRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Author, bool>>>>(),
+					It.IsAny<Func<IQueryable<Author>, IOrderedQueryable<Author>>>(),
+					It.IsAny<string>()))
+				.ReturnsAsync((IEnumerable<Expression<Func<Author, bool>>> filters,
+					Func<IQueryable<Author>, IOrderedQueryable<Author>> order, string includeProperties) =>
+				{
+					IEnumerable<Author> localEntities = Authors;
+					return GetAllStub(localEntities, filters, order);
+				});
+
+			stubAuthorRepository.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
+				.ReturnsAsync((long id, string includeProperties) => Authors.SingleOrDefault(x => x.Id == id));
+
+			stubAuthorRepository.Setup(x => x.Create(It.IsAny<Author>()))
+				.Returns((Author x) =>
+				{
+					Authors.Add(x);
+					return true;
+				});
+			stubAuthorRepository.Setup(x => x.Delete(It.IsAny<long>()))
+				.Returns((long id) =>
+				{
+					var author = Authors.SingleOrDefault(x => x.Id == id);
+					if (author == null) return false;
+
+					Authors.Remove(author);
+					return true;
+				});
+			stubAuthorRepository.Setup(x => x.Delete(It.IsAny<Author>()))
+				.Returns<Author>(x =>
+				{
+					Authors.Add(x);
+					return true;
+				});
+			stubAuthorRepository.Setup(x => x.Update(It.IsAny<Author>())).Returns((Author dbentity) => true);
+			return stubAuthorRepository;
+		}
+
+		private Mock<IGenericRepository<Book>> GetBookRepositoryStub()
+		{
 			var stubBookRepository = new Mock<IGenericRepository<Book>>();
 
 			stubBookRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Book, bool>>>>(),
-				It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
-				It.IsAny<string>()))
-				.ReturnsAsync((IEnumerable<Expression<Func<Book, bool>>> filters, Func<IQueryable<Book>, IOrderedQueryable<Book>> order, string includeProperties) =>
+					It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
+					It.IsAny<string>()))
+				.ReturnsAsync((IEnumerable<Expression<Func<Book, bool>>> filters,
+					Func<IQueryable<Book>, IOrderedQueryable<Book>> order, string includeProperties) =>
 				{
 					IEnumerable<Book> books = Books;
-					if (filters != null)
-					{
-						foreach (var expression in filters)
-						{
-							books = books.Where(expression.Compile());
-						}
-					}
-					return order?.Invoke(books.AsQueryable()) ?? books;
+					return GetAllStub(books, filters, order);
 				});
 
-			stubBookRepository.Setup(x => x.Get(It.IsAny<long>(),It.IsAny<string>()))
-				.ReturnsAsync((long id, string includeProperties) => Books.SingleOrDefault(x => x.Id == id)); //.Returns(id => Books.SingleOrDefault(x => x.Id == id));
+			stubBookRepository.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
+				.ReturnsAsync((long id, string includeProperties) => Books.SingleOrDefault(x => x.Id == id));
 
 			stubBookRepository.Setup(x => x.Create(It.IsAny<Book>()))
 				.Returns((Book x) =>
@@ -78,15 +137,28 @@ namespace Library.Tests.Services
 					return true;
 				});
 			stubBookRepository.Setup(x => x.Update(It.IsAny<Book>())).Returns((Book dbentity) => true);
-			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object);
-
-			BooksService = new BooksService(unitOfWork);
+			return stubBookRepository;
 		}
+
 
 		[TestFixtureSetUp]
 		public void FixtureSetUp()
 		{
 			AutoMapperConfig.Initialize();
+		}
+
+		private IEnumerable<TEntity> GetAllStub<TEntity>(IEnumerable<TEntity> entities, IEnumerable<Expression<Func<TEntity, bool>>> filters,
+			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> order) where TEntity : Entity
+		{
+
+			if (filters != null)
+			{
+				foreach (var expression in filters)
+				{
+					entities = entities.Where(expression.Compile());
+				}
+			}
+			return order?.Invoke(entities.AsQueryable()) ?? entities;
 		}
 	}
 }

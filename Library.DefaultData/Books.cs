@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Library.ObjectModel.Models;
 
 namespace Library.DefaultData
 {
 	public static class Books
 	{
-		private readonly static Random Rnd = new Random();
+		private static readonly Random Rnd = new Random();
 
 		public static Book WithoutAuthorsBook = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Name = "Тестовая книга без авторов",
 			Isbn = "Тестовый ISBN",
 			Edition = new Edition() { Name = "Тестовое издание", Year = 2017 },
@@ -20,6 +22,7 @@ namespace Library.DefaultData
 		public static Book MyEvernoteNotes = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Name = "Мои заметки в Evernote",
 			Authors = new List<Author>() { Authors.Yazynin },
 			Genres = new List<Genre>() { Genres.CSharp, Genres.JavaScript, Genres.DotNet },
@@ -31,6 +34,7 @@ namespace Library.DefaultData
 		public static Book JsPocketGuide = new Book()
 		{
 			Id= Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Count = 13,
 			CountAvailable = 13,
 			Authors = new List<Author>() { Authors.Flenagan },
@@ -48,6 +52,7 @@ namespace Library.DefaultData
 		public static Book JsForProfessionals = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Count = 24,
 			CountAvailable = 24,
 			Authors = new List<Author>(){ Authors.Rezig, Authors.Ferguson },
@@ -65,6 +70,7 @@ namespace Library.DefaultData
 		public static Book JsOptimizingPerfomance = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Count = 34,
 			CountAvailable = 34,
 			Authors = new List<Author>() { Authors.Zakas },
@@ -82,6 +88,7 @@ namespace Library.DefaultData
 		public static Book Es6AndNotOnly = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Count = 18,
 			CountAvailable = 18,
 			Authors = new List<Author>() { Authors.Simpson },
@@ -99,6 +106,7 @@ namespace Library.DefaultData
 		public static Book ClrVia = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Count = 56,
 			CountAvailable = 56,
 			Authors = new List<Author>() { Authors.Rihter },
@@ -116,6 +124,7 @@ namespace Library.DefaultData
 		public static Book CSharpCompleteGuide = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Count = 33,
 			CountAvailable = 33,
 			Authors = new List<Author>() { Authors.Shildt},
@@ -134,6 +143,7 @@ namespace Library.DefaultData
 		public static Book CSharp6AndNetPlatform = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Count = 20,
 			CountAvailable = 20,
 			Name = "Язык программирования C# 6.0 и платформа .NET 4.6",
@@ -151,6 +161,7 @@ namespace Library.DefaultData
 		public static Book AsyncProgrammingCSharp5 = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = Encoding.ASCII.GetBytes(Rnd.Next(int.MaxValue).ToString()),
 			Count = 62,
 			CountAvailable = 62,
 			Name = "Асинхронное программирование в C# 5.0",
