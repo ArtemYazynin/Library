@@ -14,6 +14,11 @@ namespace Library.Web.Controllers
 			return PartialView("..//Authors");
 		}
 
+		public ActionResult Genres()
+		{
+			return PartialView("..//Genres");
+		}
+
 		public ActionResult BookDetails()
 		{
 			return PartialView("..//BookDetails");

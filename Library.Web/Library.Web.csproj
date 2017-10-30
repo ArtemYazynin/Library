@@ -167,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\angular-confirm.min.css" />
+    <Content Include="Content\angular-ui-tree.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -182,6 +183,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\angular-ui-tree\angular-ui-tree.min.js" />
     <Content Include="Scripts\angular\angular-cookies.js" />
     <Content Include="Scripts\angular\angular-cookies.min.js" />
     <Content Include="Scripts\angular\angular-mocks.js" />
@@ -219,6 +221,8 @@
     <Content Include="Scripts\ViewScripts\Books\BookCreateController.js" />
     <Content Include="Scripts\ViewScripts\Books\BooksModule.js" />
     <Content Include="Scripts\ViewScripts\Books\BooksController.js" />
+    <Content Include="Scripts\ViewScripts\Genres\GenresController.js" />
+    <Content Include="Scripts\ViewScripts\Genres\GenresModule.js" />
     <Content Include="Scripts\ViewScripts\Root\RootController.js" />
     <Content Include="Scripts\ViewScripts\Root\RootModule.js" />
     <Content Include="src\template.html" />
@@ -240,6 +244,7 @@
     <Content Include="Views\BookDetails.cshtml" />
     <Content Include="Views\Authors.cshtml" />
     <Content Include="Views\AuthorDetails.cshtml" />
+    <Content Include="Views\Genres.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery\jquery-3.1.1.slim.min.map" />
