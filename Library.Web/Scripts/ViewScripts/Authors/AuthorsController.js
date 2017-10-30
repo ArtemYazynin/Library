@@ -2,52 +2,6 @@
 	"use strict";
 
 	angular.module("AuthorsModule")
-	.controller("AuthorDetailsController", ["$location", "$routeParams", "authorsService", "$ngConfirm", function ($location, $routeParams, authorsService, $ngConfirm) {
-		var self = this;
-		function Model() {
-			this.Lastname = "";
-			this.Firstname = "";
-			this.Middlename = "";
-		}
-		Model.prototype.Fio = function() {
-			var result = this.Lastname + " " + this.Firstname;
-			if (this.Middlename) {
-				result += " "+this.Middlename;
-			}
-			return result;
-		}
-		function stepBack() {
-			$location.path("/authors");
-		}
-		this.actions = {
-			save: function () {
-				if ($routeParams.authorId) {
-					authorsService.update(self.vm, function() {
-						$ngConfirm("Author <strong>"+self.vm.Fio()+"</strong> was updated");
-					});
-				} else {
-					authorsService.create(self.vm, function() {
-						stepBack();
-						$ngConfirm("Author <strong>" + self.vm.Fio() + "</strong> was created");
-					});
-				}
-
-			},
-			back: function() {
-				stepBack();
-			},
-			init: function () {
-				if ($routeParams.authorId) {
-					authorsService.get($routeParams.authorId, function(data) {
-						self.vm = data;
-					});
-				} else {
-					self.vm = new Model();
-				}
-			}
-		}
-		this.actions.init();
-	}])
 	.controller("AuthorsController", ["$scope", "$location", "authorsService", "$ngConfirm", function ($scope, $location, authorsService, $ngConfirm) {
 		$scope.actions = (function () {
 			function _init() {

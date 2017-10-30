@@ -44,7 +44,7 @@ namespace Library.Services.Impls.Services
 			{
 				await _unitOfWork.Save();
 			}
-			return authorDto;
+			return Mapper.Map<AuthorDto>(author);
 		}
 
 		public async Task<EntityDto> Create(AuthorDto authorDto)

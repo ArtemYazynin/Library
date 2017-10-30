@@ -213,6 +213,7 @@
     <Content Include="Scripts\bootstrap\respond.min.js" />
     <Content Include="Content\select.min.css" />
     <Content Include="Scripts\oi.select\select.min.js" />
+    <Content Include="Scripts\ViewScripts\Authors\AuthorDetailsController.js" />
     <Content Include="Scripts\ViewScripts\Authors\AuthorsController.js" />
     <Content Include="Scripts\ViewScripts\Authors\AuthorsModule.js" />
     <Content Include="Scripts\ViewScripts\Books\BookCreateController.js" />
