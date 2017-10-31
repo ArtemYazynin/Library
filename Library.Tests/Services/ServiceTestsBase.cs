@@ -16,6 +16,7 @@ namespace Library.Tests.Services
 	abstract class ServiceTestsBase
 	{
 		protected IBooksService BooksService;
+		protected IAuthorsService AuthorsService;
 
 		protected Collection<Book> Books;
 		protected Collection<Author> Authors;
@@ -53,6 +54,7 @@ namespace Library.Tests.Services
 			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object && x.AuthorRepository == stubAuthorRepository.Object);
 
 			BooksService = new BooksService(unitOfWork);
+			AuthorsService = new AuthorsService(unitOfWork);
 		}
 
 		private Mock<IGenericRepository<Author>> GetAuthorsRepositoryStub()

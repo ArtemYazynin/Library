@@ -195,8 +195,7 @@ namespace Library.Tests.Services.Books
 		[Test]
 		public async Task Create_ShouldCreated()
 		{
-			var booksBefore = await BooksService.GetAll();
-			Assert.That(booksBefore.Count(), Is.EqualTo(Books.Count));
+			Assert.That((await BooksService.GetAll()).Count(), Is.EqualTo(Books.Count));
 
 			var oldCount = Books.Count;
 			var bookDto = new BookDto
