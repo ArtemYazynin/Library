@@ -1,10 +1,10 @@
 ﻿<div class="panel panel-default">
-	<div class="panel-heading">Authors</div>
+	<div class="panel-heading">Genres</div>
 	<div class="panel-body">
 		<div>
 			<div class="tooltip-common">
-				<a href="#/authors/new" class="btn btn-default glyphicon glyphicon-plus"></a>
-				<span class="tooltiptext">Create new author</span>
+				<a href="#/genres/new" class="btn btn-default glyphicon glyphicon-plus"></a>
+				<span class="tooltiptext">Create new genre</span>
 			</div>
 			
 		</div>
@@ -13,22 +13,22 @@
 			<table class="table table-bordered table-condensed table-hover">
 				<thead>
 					<tr>
-						<th>Author</th>
+						<th>Name</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="author in Authors">
-						<td ng-bind="author.Fio"></td>
+					<tr ng-repeat="genre in genresCtrl.Genres">
+						<td ng-bind="genre.Name"></td>
 						<td style="width: 9%;">
 							<div class="tooltip-common">
-								<button type="button" class="btn btn-primary" ng-click="actions.details(author)">
+								<button type="button" class="btn btn-primary" ng-click="genresCtrl.actions.details(genre)">
 									<span class="glyphicon glyphicon-edit"></span>
 								</button>
 								<span class="tooltiptext">Edit</span>
 							</div>
 							<div class="tooltip-common">
-								<button type="button" class="btn btn-danger" ng-click="actions.remove(author)">
+								<button type="button" class="btn btn-danger" ng-click="genresCtrl.actions.remove(genre)">
 									<span class="glyphicon glyphicon-remove"></span>
 								</button>
 								<span class="tooltiptext">Remove</span>
