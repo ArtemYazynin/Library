@@ -53,6 +53,7 @@ namespace Library.Services.Impls.Services
 
 		public async Task<EntityDto> Create(AuthorDto authorDto)
 		{
+			ThrowIfDtoInvalid(authorDto);
 			await ThrowIfSameAuthorExists(authorDto);
 			var author = Mapper.Map<AuthorDto, Author>(authorDto);
 			if (_unitOfWork.AuthorRepository.Create(author))
@@ -65,6 +66,14 @@ namespace Library.Services.Impls.Services
 				Version = author.Version
 			};
 		}
+
+		private void ThrowIfDtoInvalid(AuthorDto authorDto)
+		{
+			if (string.IsNullOrEmpty(authorDto.Lastname) || string.IsNullOrEmpty(authorDto.Firstname))
+			{
+				throw new AuthorIncorrectException();
+			}
+		} 
 
 		private async Task ThrowIfSameAuthorExists(AuthorDto authorDto)
 		{

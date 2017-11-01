@@ -94,7 +94,15 @@ namespace Library.Tests.Services
 					Authors.Add(x);
 					return true;
 				});
-			stubAuthorRepository.Setup(x => x.Update(It.IsAny<Author>())).Returns((Author dbentity) => true);
+			stubAuthorRepository.Setup(x => x.Update(It.IsAny<Author>())).Returns((Author dbentity) =>
+			{
+				var author = Authors.Single(x => x.Id == dbentity.Id);
+				author.Lastname = dbentity.Lastname;
+				author.Firstname = dbentity.Firstname;
+				author.Middlename = dbentity.Middlename;
+
+				return true;
+			});
 			return stubAuthorRepository;
 		}
 

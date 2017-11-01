@@ -46,6 +46,7 @@
     <Compile Include="Comparers\AuthorComparer.cs" />
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="BooksRepository.cs" />
+    <Compile Include="Exceptions\AuthorIncorrectException.cs" />
     <Compile Include="GenericBaseRepository.cs" />
     <Compile Include="Exceptions\AuthorDublicateException.cs" />
     <Compile Include="Services\AuthorsService.cs" />
