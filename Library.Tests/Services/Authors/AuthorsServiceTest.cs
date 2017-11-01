@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.Services.DTO;
+using Library.Services.Impls.Exceptions;
 using NUnit.Framework;
 
 namespace Library.Tests.Services.Authors
@@ -56,6 +57,19 @@ namespace Library.Tests.Services.Authors
 			await AuthorsService.Create(authorDto);
 			Assert.That(Authors.Count, Is.EqualTo(oldCount+1));
 			Assert.That(await AuthorsService.Get(authorDto.Id), Is.Not.Null);
+		}
+
+		[Test]
+		public void Create_ExistsAuthor_ShouldThrownException()
+		{
+			var dto = new AuthorDto()
+			{
+				Lastname = DefaultData.Authors.Flenagan.Lastname,
+				Firstname = DefaultData.Authors.Flenagan.Firstname,
+				Middlename = DefaultData.Authors.Flenagan.Middlename,
+			};
+
+			Assert.Throws<AuthorDublicateException>(async () => await AuthorsService.Create(dto));
 		}
 	}
 }

@@ -100,6 +100,7 @@ namespace Library.DefaultData
 		public static Book ClrVia = new Book()
 		{
 			Id = Rnd.Next(int.MaxValue),
+			Version = new byte[] { 0, 0, 0, 0, 0, 0, 0, 120 },
 			Count = 56,
 			CountAvailable = 56,
 			Authors = new List<Author>() { Authors.Rihter },

@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
+using Library.Services.Impls.Exceptions;
 using Library.Services.Services;
 
 namespace Library.Services.Impls.Services
@@ -49,6 +53,7 @@ namespace Library.Services.Impls.Services
 
 		public async Task<EntityDto> Create(AuthorDto authorDto)
 		{
+			await ThrowIfSameAuthorExists(authorDto);
 			var author = Mapper.Map<AuthorDto, Author>(authorDto);
 			if (_unitOfWork.AuthorRepository.Create(author))
 			{
@@ -59,6 +64,17 @@ namespace Library.Services.Impls.Services
 				Id = author.Id,
 				Version = author.Version
 			};
+		}
+
+		private async Task ThrowIfSameAuthorExists(AuthorDto authorDto)
+		{
+			var filters = new List<Expression<Func<Author, bool>>>()
+			{
+				x => x.Lastname.ToLower() == authorDto.Lastname.ToLower()
+				     && x.Firstname.ToLower() == authorDto.Firstname.ToLower()
+			};
+			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(filters);
+			if (authors.Any()) throw new AuthorDublicateException();
 		}
 	}
 }
