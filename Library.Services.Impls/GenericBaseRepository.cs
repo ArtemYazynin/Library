@@ -51,7 +51,7 @@ namespace Library.Services.Impls
 		}
 
 
-		public async Task<TEntity> Get(long id, string includeProperties = "")
+		public virtual async Task<TEntity> Get(long id, string includeProperties = "")
 		{
 			IQueryable<TEntity> query = DbSet;
 			ApplyIncludeProperties(includeProperties, ref query);
@@ -75,7 +75,7 @@ namespace Library.Services.Impls
 			return true;
 		}
 
-		public bool Delete(TEntity entity)
+		public virtual bool Delete(TEntity entity)
 		{
 			if (entity == null) return false;
 

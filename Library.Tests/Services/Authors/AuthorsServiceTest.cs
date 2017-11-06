@@ -1,7 +1,4 @@
-﻿
-
-using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions;
@@ -62,7 +59,7 @@ namespace Library.Tests.Services.Authors
 		}
 
 		[Test]
-		public void Create_ExistsAuthor_ShouldThrownException()
+		public void Create_ExistsAuthor_ShouldThrownAuthorDublicateException()
 		{
 			var dto = new AuthorDto()
 			{
@@ -75,7 +72,7 @@ namespace Library.Tests.Services.Authors
 		}
 
 		[Test]
-		public void Create_InvalidDto_ShouldThrownException()
+		public void Create_InvalidDto_ShouldThrownAuthorIncorrectException()
 		{
 			var dto = new AuthorDto();
 			Assert.Throws<AuthorIncorrectException>(async () => await AuthorsService.Create(dto));
@@ -130,8 +127,33 @@ namespace Library.Tests.Services.Authors
 			Assert.That(DefaultData.Authors.Rihter.Lastname, Is.EqualTo(int.MinValue.ToString()));
 			Assert.That(DefaultData.Authors.Rihter.Firstname, Is.EqualTo(int.MaxValue.ToString()));
 			Assert.That(DefaultData.Authors.Rihter.Middlename, Is.EqualTo(default(int).ToString()));
-		} 
+		}
 
+		[Test]
+		public void Update_ExistingAuthorValues_ShouldThrownDublicateException()
+		{
+			var dto = new AuthorDto()
+			{
+				Id = DefaultData.Authors.Devis.Id,
+				Version = DefaultData.Authors.Devis.Version,
+				Lastname = DefaultData.Authors.Ferguson.Lastname,
+				Firstname = DefaultData.Authors.Ferguson.Firstname,
+				Middlename = DefaultData.Authors.Ferguson.Middlename
+			};
+
+			Assert.Throws<AuthorDublicateException>(async () => await AuthorsService.Update(dto.Id, dto));
+		}
+
+		[Test]
+		public void Update_InvalidAuthor_ShouldThrownAuthorIncorrectException()
+		{
+			var dto = new AuthorDto()
+			{
+				Id = DefaultData.Authors.Devis.Id
+			};
+			Assert.Throws<AuthorIncorrectException>(async () => await AuthorsService.Update(dto.Id, dto));
+
+		}
 		#endregion
 	}
 }

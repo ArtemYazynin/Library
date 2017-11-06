@@ -8,35 +8,39 @@
 			</div>
 			
 		</div>
-		<br />
-		<div>
-			<table class="table table-bordered table-condensed table-hover">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="genre in genresCtrl.Genres">
-						<td ng-bind="genre.Name"></td>
-						<td style="width: 9%;">
-							<div class="tooltip-common">
-								<button type="button" class="btn btn-primary" ng-click="genresCtrl.actions.details(genre)">
-									<span class="glyphicon glyphicon-edit"></span>
-								</button>
-								<span class="tooltiptext">Edit</span>
-							</div>
-							<div class="tooltip-common">
-								<button type="button" class="btn btn-danger" ng-click="genresCtrl.actions.remove(genre)">
-									<span class="glyphicon glyphicon-remove"></span>
-								</button>
-								<span class="tooltiptext">Remove</span>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		<br/>
+		<script type="text/ng-template" id="nodes_renderer.html">
+			<div cclass="angular-ui-tree-handle tree-node tree-node-content" ui-tree-handle data-nodrag>
+				<a class="btn btn-success btn-xs" ng-if="item.Children && item.Children.length > 0" data-nodrag ng-click="actions.toogle(this)">
+					<span class="glyphicon" ng-class="{
+									  'glyphicon-chevron-right': collapsed,
+									  'glyphicon-chevron-down': !collapsed
+									}">
+
+					</span>
+				</a>
+				<span ng-if="!item.mode" data-nodrag ng-click="actions.rename($event)">
+					{{item.Name}}
+				</span>
+				
+				<a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="actions.add(this)">
+					<span class="glyphicon glyphicon-plus"></span>
+				</a>
+				<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="actions.remove(item)">
+					<span class="glyphicon glyphicon-remove"></span>
+				</a>
+			</div>
+			<ol ui-tree-nodes="" ng-model="item.Children" ng-class="{hidden: collapsed}">
+				<li ng-repeat="item in item.Children" ui-tree-node ng-include="'nodes_renderer.html'">
+				</li>
+			</ol>
+		
+		</script>
+		<div class="col-sm-6" ng-if="Genres.length > 0" ui-tree>
+			<ol ui-tree-nodes="" ng-model="Genres" id="tree-root">
+				<li ng-repeat="item in Genres" ui-tree-node ng-include="'nodes_renderer.html'">
+				</li>
+			</ol>
 		</div>
 	</div>
 </div>

@@ -1,7 +1,8 @@
-﻿(function(angular) {
+﻿
+(function (angular) {
 	"use strict";
 
-	angular.module("GenresModule", ["ngRoute", "ngResource", "oi.select", "cp.ngConfirm"])
+	angular.module("GenresModule", ["ngRoute", "ngResource", "oi.select", "cp.ngConfirm", "ui.tree"])
 	.factory("genresService", ["$resource", "$http", function ($resource, $http) {
 		var baseUrl = "api/Genres";
 		var config = {
@@ -26,8 +27,13 @@
 		function _update() {
 
 		}
-		function _remove() {
+		function _remove(vm, successCallback) {
+			if (!vm) return;
+			if (!vm.$delete) {
+				vm = new genresResource(vm);
+			}
 
+			vm.$delete(null, successCallback);
 		}
 
 		return {

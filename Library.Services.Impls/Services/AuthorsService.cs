@@ -43,6 +43,8 @@ namespace Library.Services.Impls.Services
 
 		public async Task<AuthorDto> Update(long id, AuthorDto authorDto)
 		{
+			ThrowIfDtoInvalid(authorDto);
+			await ThrowIfSameAuthorExists(authorDto);
 			var author = Mapper.Map<AuthorDto,Author>(authorDto);
 			if (_unitOfWork.AuthorRepository.Update(author))
 			{

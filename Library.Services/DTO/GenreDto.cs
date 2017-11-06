@@ -17,6 +17,8 @@ namespace Library.Services.DTO
 
 		public GenreDto Parent { get; set; }
 		public ICollection<BookDto> Books { get; set; }
+
+		[DataMember]
 		public ICollection<GenreDto> Children { get; set; }
 
 		public override string ToString()

@@ -68,8 +68,7 @@
 
 		$routeProvider.when("/genres", {
 			templateUrl: "/LibraryView/Genres",
-			controller: "GenresController",
-			controllerAs:"genresCtrl"
+			controller: "GenresController"
 		});
 
 		$routeProvider.when("/authors", {

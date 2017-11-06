@@ -21,5 +21,12 @@ namespace Library.Web.Controllers.api
 			var genres = await _genresService.GetAll();
 			return genres;
 		}
+
+		[HttpDelete]
+		public async Task<EntityDto> Delete(long id)
+		{
+			var result = await _genresService.Delete(id, true);
+			return result;
+		} 
 	}
 }
