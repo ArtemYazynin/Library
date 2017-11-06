@@ -19,7 +19,7 @@ namespace Library.Services.Impls
 			DbSet = context.Set<TEntity>();
 		}
 
-		public async Task<IEnumerable<TEntity>> GetAllAsync(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+		public virtual async Task<IEnumerable<TEntity>> GetAllAsync(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
 		{
 			IQueryable<TEntity> query = DbSet;
 
@@ -66,7 +66,7 @@ namespace Library.Services.Impls
 			return true;
 		}
 
-		public bool Delete(long id)
+		public virtual bool Delete(long id)
 		{
 			var entity = DbSet.Find(id);
 			if (entity == null) return false;

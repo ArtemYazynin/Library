@@ -22,8 +22,7 @@ namespace Library.Services.Impls.Services
 
 		public async Task<IEnumerable<GenreDto>> GetAll()
 		{
-			var genresRepository = (GenresRepository) _unitOfWork.GenreRepository;
-			var genres = await genresRepository.GetTree(new List<Expression<Func<Genre, bool>>>()
+			var genres = await _unitOfWork.GenreRepository.GetTree(new List<Expression<Func<Genre, bool>>>()
 			{
 				x=>x.Parent == null
 			});

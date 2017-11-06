@@ -39,6 +39,7 @@
     <Compile Include="DTO\PublisherDto.cs" />
     <Compile Include="DTO\RentDto.cs" />
     <Compile Include="DTO\SubscriberDto.cs" />
+    <Compile Include="IGenresRepository.cs" />
     <Compile Include="Services\IAuthorsService.cs" />
     <Compile Include="Services\IBooksService.cs" />
     <Compile Include="Services\IEditionsService.cs" />

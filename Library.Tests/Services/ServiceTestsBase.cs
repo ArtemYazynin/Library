@@ -17,9 +17,12 @@ namespace Library.Tests.Services
 	{
 		protected IBooksService BooksService;
 		protected IAuthorsService AuthorsService;
+		protected IGenresService GenresService;
 
 		protected Collection<Book> Books;
 		protected Collection<Author> Authors;
+		protected Collection<Genre> Genres;
+
 		protected Random Random = new Random();
 
 		[SetUp]
@@ -49,12 +52,76 @@ namespace Library.Tests.Services
 				DefaultData.Authors.Zakas
 			};
 
+			Genres = new Collection<Genre>()
+			{
+				DefaultData.Genres.CSharp,
+				DefaultData.Genres.ComputersAndTecnology,
+				DefaultData.Genres.DotNet,
+				DefaultData.Genres.JavaScript,
+				DefaultData.Genres.LanguageAndTools,
+				DefaultData.Genres.MicrosoftProgramming,
+				DefaultData.Genres.Programming,
+				DefaultData.Genres.WebProgramming
+			};
 			var stubBookRepository = GetBookRepositoryStub();
 			var stubAuthorRepository = GetAuthorsRepositoryStub();
-			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object && x.AuthorRepository == stubAuthorRepository.Object);
+			var stubGenresRepository = GetGenresRepositoryStub();
+			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object 
+													&& x.AuthorRepository == stubAuthorRepository.Object
+													&& x.GenreRepository == stubGenresRepository.Object);
 
 			BooksService = new BooksService(unitOfWork);
 			AuthorsService = new AuthorsService(unitOfWork);
+			GenresService = new GenresService(unitOfWork);
+		}
+
+		private Mock<IGenresRepository> GetGenresRepositoryStub()
+		{
+			var stub = new Mock<IGenresRepository>();
+			stub.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Genre, bool>>>>(),
+					It.IsAny<Func<IQueryable<Genre>, IOrderedQueryable<Genre>>>(),
+					It.IsAny<string>()))
+				.ReturnsAsync((IEnumerable<Expression<Func<Genre, bool>>> filters,
+					Func<IQueryable<Genre>, IOrderedQueryable<Genre>> order, string includeProperties) =>
+				{
+					IEnumerable<Genre> localEntities = Genres;
+					return GetAllStub(localEntities, filters, order);
+				});
+
+			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
+				.ReturnsAsync((long id, string includeProperties) => Genres.SingleOrDefault(x => x.Id == id));
+
+			stub.Setup(x => x.Create(It.IsAny<Genre>()))
+				.Returns((Genre x) =>
+				{
+					Genres.Add(x);
+					return true;
+				});
+			stub.Setup(x => x.Delete(It.IsAny<long>()))
+				.Returns((long id) =>
+				{
+					var genre = Genres.SingleOrDefault(x => x.Id == id);
+					if (genre == null) return false;
+
+					Genres.Remove(genre);
+					return true;
+				});
+			stub.Setup(x => x.Delete(It.IsAny<Genre>()))
+				.Returns<Genre>(x =>
+				{
+					Genres.Remove(x);
+					return true;
+				});
+			stub.Setup(x => x.GetTree(It.IsAny<IList<Expression<Func<Genre, bool>>>>()))
+				.ReturnsAsync((IList<Expression<Func<Genre, bool>>> filters) => GetAllStub(Genres, filters, null));
+			stub.Setup(x => x.Update(It.IsAny<Genre>())).Returns((Genre dbentity) =>
+			{
+				var genre = Genres.Single(x => x.Id == dbentity.Id);
+				genre.Name = dbentity.Name;
+
+				return true;
+			});
+			return stub;
 		}
 
 		private Mock<IGenericRepository<Author>> GetAuthorsRepositoryStub()
@@ -91,7 +158,7 @@ namespace Library.Tests.Services
 			stubAuthorRepository.Setup(x => x.Delete(It.IsAny<Author>()))
 				.Returns<Author>(x =>
 				{
-					Authors.Add(x);
+					Authors.Remove(x);
 					return true;
 				});
 			stubAuthorRepository.Setup(x => x.Update(It.IsAny<Author>())).Returns((Author dbentity) =>

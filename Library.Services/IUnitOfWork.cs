@@ -10,7 +10,7 @@ namespace Library.Services
 		IGenericRepository<Book> BookRepository { get; }
 		IGenericRepository<Edition> EditionRepository { get; }
 		IGenericRepository<File> FileRepository { get; }
-		IGenericRepository<Genre> GenreRepository { get; }
+		IGenresRepository GenreRepository { get; }
 		IGenericRepository<Invoice> InvoiceRepository { get; }
 		IGenericRepository<Publisher> PublisherRepository { get; }
 		IGenericRepository<Rent> RentRepository { get; }

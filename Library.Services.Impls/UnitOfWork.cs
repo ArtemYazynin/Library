@@ -35,7 +35,7 @@ namespace Library.Services.Impls
 		public IGenericRepository<Book> BookRepository => _bookRepository ?? (_bookRepository = new BooksRepository(_context));
 		public IGenericRepository<Edition> EditionRepository => _editionRepository ?? (_editionRepository = new GenericRepository<Edition>(_context));
 		public IGenericRepository<File> FileRepository => _fileRepository ?? (_fileRepository = new GenericRepository<File>(_context));
-		public IGenericRepository<Genre> GenreRepository => _genreRepository ?? (_genreRepository = new GenresRepository(_context));
+		public IGenresRepository GenreRepository => _genreRepository ?? (_genreRepository = new GenresRepository(_context));
 		public IGenericRepository<Invoice> InvoiceRepository => _invoiceRepository ?? (_invoiceRepository = new GenericRepository<Invoice>(_context));
 		public IGenericRepository<Publisher> PublisherRepository => _publisherRepository ?? (_publisherRepository = new GenericRepository<Publisher>(_context));
 		public IGenericRepository<Rent> RentRepository => _rentRepository ?? (_rentRepository = new GenericRepository<Rent>(_context));
