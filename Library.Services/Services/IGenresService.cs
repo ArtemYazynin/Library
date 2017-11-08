@@ -9,5 +9,8 @@ namespace Library.Services.Services
 		Task<IEnumerable<GenreDto>> GetAll();
 
 		Task<EntityDto> Delete(long id, bool recursivelly);
+
+		Task<GenreDto> Update(long id, GenreDto dto);
+		Task<GenreDto> Create(GenreDto dto);
 	}
 }

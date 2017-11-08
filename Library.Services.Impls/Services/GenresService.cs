@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
+using Library.Services.Impls.Exceptions;
 using Library.Services.Services;
 
 namespace Library.Services.Impls.Services
@@ -44,6 +45,46 @@ namespace Library.Services.Impls.Services
 			{
 				Id = id
 			};
+		}
+
+		public async Task<GenreDto> Update(long id, GenreDto dto)
+		{
+			ThrowIfDtoIncorrect(dto);
+			await ThrowIfSameGenreExists(dto);
+
+			var dbEntity = Mapper.Map<Genre>(dto);
+			if (!dbEntity.Version.SequenceEqual(dto.Version))
+			{
+				throw new Exception("Genre was updated early. Please refresh page");
+			}
+			_unitOfWork.GenreRepository.Update(dbEntity);
+			return Mapper.Map<GenreDto>(dbEntity);
+		}
+
+		private async Task ThrowIfSameGenreExists(GenreDto dto)
+		{
+			List<Expression<Func<Genre, bool>>> filters = new List<Expression<Func<Genre, bool>>>()
+			{
+				x => string.Equals(x.Name, dto.Name, StringComparison.CurrentCultureIgnoreCase)
+			};
+			var dublicates = await _unitOfWork.GenreRepository.GetAllAsync(filters);
+			if (dublicates.Any())
+			{
+				throw new GenreDublicateException();
+			}
+		}
+
+		private void ThrowIfDtoIncorrect(GenreDto dto)
+		{
+			if (string.IsNullOrEmpty(dto.Name))
+			{
+				throw new GenreIncorrectException();
+			}
+		}
+
+		public async Task<GenreDto> Create(GenreDto dto)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void DeleteChildrenGenres(IList<Genre> genres)
