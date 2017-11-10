@@ -18,14 +18,28 @@
 					return $q.reject(rejection);
 				},
 				response: function (response) {
+					var removedProperty = "$id";
 					if ((typeof response.data) === "string") return response;
-
-					function removeReferenceindicator(data) {
+					function internalRemove(data) {
+						if (!data) return;
+						if ((typeof data) === "object") {
+							if (data instanceof Array) {
+								removeReferenceIndicator(data);
+							} else {
+								delete data[removedProperty];
+							}
+							for (var innerProp in data) {
+								if (data.hasOwnProperty(innerProp)) {
+									internalRemove(data[innerProp]);
+								}
+							}
+						}
+					}
+					function removeReferenceIndicator(data) {
 						/*
 						[DataContract(IsReference = true)]
 						EntityDto
 						*/
-						var removedProperty = "$id";
 						for (var prop in data) {
 							if (data.hasOwnProperty(prop)) {
 								if (data[prop] === null || data[prop] === undefined) continue;
@@ -33,19 +47,12 @@
 									delete data[prop];
 									continue;
 								}
-								if ((typeof data[prop]) === "object") {
-									if (data[prop] instanceof Array) {
-										removeReferenceindicator(data[prop]);
-									} else {
-										delete data[prop][removedProperty];
-									}
-								}
-								
+								internalRemove(data[prop]);
 							}
 							
 						}
 					}
-					removeReferenceindicator(response.data);
+					removeReferenceIndicator(response.data);
 					return response;
 				}
 			}

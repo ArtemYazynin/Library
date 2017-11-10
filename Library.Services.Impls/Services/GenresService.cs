@@ -52,12 +52,14 @@ namespace Library.Services.Impls.Services
 			ThrowIfDtoIncorrect(dto);
 			await ThrowIfSameGenreExists(dto);
 
-			var dbEntity = Mapper.Map<Genre>(dto);
+			var dbEntity = await _unitOfWork.GenreRepository.Get(id);
 			if (!dbEntity.Version.SequenceEqual(dto.Version))
 			{
 				throw new Exception("Genre was updated early. Please refresh page");
 			}
+			dbEntity.Name = dto.Name;
 			_unitOfWork.GenreRepository.Update(dbEntity);
+			await _unitOfWork.Save();
 			return Mapper.Map<GenreDto>(dbEntity);
 		}
 
@@ -65,7 +67,7 @@ namespace Library.Services.Impls.Services
 		{
 			List<Expression<Func<Genre, bool>>> filters = new List<Expression<Func<Genre, bool>>>()
 			{
-				x => string.Equals(x.Name, dto.Name, StringComparison.CurrentCultureIgnoreCase)
+				x=>x.Name.Trim().ToLower() == dto.Name.Trim().ToLower()
 			};
 			var dublicates = await _unitOfWork.GenreRepository.GetAllAsync(filters);
 			if (dublicates.Any())

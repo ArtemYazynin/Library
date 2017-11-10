@@ -24,8 +24,12 @@
 		function _create() {
 
 		}
-		function _update() {
-
+		function _update(vm, successCallback) {
+			if (!vm) return;
+			if (!vm.$update) {
+				vm = new genresResource(vm);
+			}
+			vm.$update(successCallback);
 		}
 		function _remove(vm, successCallback) {
 			if (!vm) return;

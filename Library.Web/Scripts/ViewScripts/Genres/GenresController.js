@@ -21,24 +21,33 @@
 				});
 			}
 
-			function _rename(e) {
+			function _rename(e,genre) {
 				e.target.style.display = "none";
-				var el = angular.element("<input id='editingGenre' type='text' data-nodrag />");
-				el.attr("value", e.target.textContent.trim());
-				el.bind("keypress", function(event) {
-					if (event.which === 13) {
-						e.target.innerHTML = event.target.value;
+				
+				var el = angular.element("<input id='editingGenre' type='text' ng-model='editiongGenre.value' ng-keypress='editiongGenre.keypress($event)' ng-blur='editiongGenre.blur($event)' data-nodrag />");
+				$scope.editiongGenre = {
+					value: e.target.textContent.trim(),
+					keypress: function (event) {
+						if (event.which === 13) {
+							e.target.innerHTML = event.target.value;
+							e.target.style.display = "";
+							el.remove();
+							event.preventDefault();
+
+							angular.extend(genre, {
+								Name: e.target.innerHTML
+							});
+							genresService.update(genre, function() {
+								$ngConfirm("Genre <b>" + genre.Name + "</b> was updated");
+							});
+						}
+					},
+					blur: function(event) {
 						e.target.style.display = "";
 						el.remove();
-
 						event.preventDefault();
 					}
-				});
-				el.bind("blur", function (event) {
-					e.target.style.display = "";
-					el.remove();
-					event.preventDefault();
-				});
+				}
 				$compile(el)($scope);
 				e.target.parentElement.append(el[0]);
 				el[0].focus();

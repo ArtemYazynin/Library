@@ -33,6 +33,12 @@ namespace Library.Tests.Services.Genres
 			Assert.Throws<GenreIncorrectException>(async () => await Update_ShouldUpdate(string.Empty));
 		}
 
+		[Test]
+		public void Update_ExistingAuthor_ShouldThrownDublicateException()
+		{
+			Assert.Throws<GenreDublicateException>(async () => await Update_ShouldUpdate(DefaultData.Genres.CSharp.Name));
+		}
+
 		#endregion
 
 		[Test]
@@ -44,8 +50,10 @@ namespace Library.Tests.Services.Genres
 			Assert.That(genres.Count(), Is.EqualTo(rootGenres.Count()));
 		}
 
+		#region Delete
+
 		[Test]
-		public void Delete_RootNodes_ShouldDeleteAllGenres()
+		public void Delete_RecursibellyRootNodes_ShouldDeleteAllGenres()
 		{
 			var rootGenres = Genres.Where(x=>x.Parent == null).ToList();
 
@@ -56,5 +64,7 @@ namespace Library.Tests.Services.Genres
 
 			Assert.That(Genres, Is.Empty);
 		}
+
+		#endregion
 	}
 }

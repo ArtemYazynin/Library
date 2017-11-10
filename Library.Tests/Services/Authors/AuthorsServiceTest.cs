@@ -130,7 +130,7 @@ namespace Library.Tests.Services.Authors
 		}
 
 		[Test]
-		public void Update_ExistingAuthorValues_ShouldThrownDublicateException()
+		public void Update_ExistingAuthor_ShouldThrownDublicateException()
 		{
 			var dto = new AuthorDto()
 			{

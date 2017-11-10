@@ -27,6 +27,13 @@ namespace Library.Web.Controllers.api
 		{
 			var result = await _genresService.Delete(id, true);
 			return result;
-		} 
+		}
+
+		[HttpPut]
+		public async Task<EntityDto> Put(long id, GenreDto dto)
+		{
+			var result = await _genresService.Update(id, dto);
+			return result;
+		}
 	}
 }
