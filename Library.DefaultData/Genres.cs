@@ -61,6 +61,7 @@ namespace Library.DefaultData
 			Programming = new Genre()
 			{
 				Id = Rnd.Next(int.MaxValue),
+				Version = new byte[] { 0, 0, 0, 0, 0, 0, 0, 120 },
 				Name = "Programming",
 				Parent = ComputersAndTecnology,
 				Children = new List<Genre>()

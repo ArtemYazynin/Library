@@ -47,6 +47,8 @@
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="BooksRepository.cs" />
     <Compile Include="Exceptions\AuthorIncorrectException.cs" />
+    <Compile Include="Exceptions\GenreDublicateException.cs" />
+    <Compile Include="Exceptions\GenreIncorrectException.cs" />
     <Compile Include="GenericBaseRepository.cs" />
     <Compile Include="Exceptions\AuthorDublicateException.cs" />
     <Compile Include="GenresRepository.cs" />
