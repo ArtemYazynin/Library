@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Library.Services.DTO;
 
 namespace Library.Services.Impls.Exceptions

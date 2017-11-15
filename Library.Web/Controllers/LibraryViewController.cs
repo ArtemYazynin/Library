@@ -28,5 +28,9 @@ namespace Library.Web.Controllers
 		{
 			return PartialView("..//AuthorDetails");
 		}
+		public ActionResult Publishers()
+		{
+			return PartialView("..//Publishers");
+		}
 	}
 }

@@ -21,5 +21,11 @@ namespace Library.Web.Controllers.api
 			var publishers = await _publishersService.GetAll();
 			return publishers;
 		}
+
+		public async Task<PublisherDto> Delete(long id)
+		{
+			var deletedPublisher = await _publishersService.Delete(id);
+			return deletedPublisher;
+		}
 	}
 }

@@ -49,6 +49,7 @@
     <Compile Include="Exceptions\AuthorIncorrectException.cs" />
     <Compile Include="Exceptions\GenreDublicateException.cs" />
     <Compile Include="Exceptions\GenreIncorrectException.cs" />
+    <Compile Include="Exceptions\PublisherHasBooksException.cs" />
     <Compile Include="GenericBaseRepository.cs" />
     <Compile Include="Exceptions\AuthorDublicateException.cs" />
     <Compile Include="GenresRepository.cs" />

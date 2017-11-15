@@ -1,0 +1,29 @@
+﻿<div class="panel panel-default">
+	<div class="panel-heading">Publishers</div>
+	<div class="panel-body">
+		<div>
+			<table class="table table-bordered table-condensed table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="publisher in ctrl.Publishers">
+						<td ng-bind="publisher.Name"></td>
+						<td style="width: 9%;">
+
+							<div class="tooltip-common">
+								<button type="button" class="btn btn-danger" ng-click="ctrl.actions.remove(publisher)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+								<span class="tooltiptext">Remove</span>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
