@@ -1,14 +1,6 @@
 ﻿<div class="panel panel-default">
 	<div class="panel-heading">Genres</div>
 	<div class="panel-body">
-		<div>
-			<div class="tooltip-common">
-				<a href="#/genres/new" class="btn btn-default glyphicon glyphicon-plus"></a>
-				<span class="tooltiptext">Create new genre</span>
-			</div>
-			
-		</div>
-		<br/>
 		<script type="text/ng-template" id="nodes_renderer.html">
 			<div cclass="angular-ui-tree-handle tree-node tree-node-content" ui-tree-handle data-nodrag>
 				<a class="btn btn-success btn-xs" ng-if="item.Children && item.Children.length > 0" data-nodrag ng-click="actions.toogle(this)">
