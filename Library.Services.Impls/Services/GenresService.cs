@@ -21,7 +21,15 @@ namespace Library.Services.Impls.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<IEnumerable<GenreDto>> GetAll()
+
+		public async Task<IEnumerable<GenreSimpleDto>> GetAll()
+		{
+			var genres = await _unitOfWork.GenreRepository.GetAllAsync();
+			var result = Mapper.Map<IEnumerable<Genre>, Collection<GenreSimpleDto>>(genres);
+			return result;
+		}
+
+		public async Task<IEnumerable<GenreDto>> GetTree()
 		{
 			var genres = await _unitOfWork.GenreRepository.GetTree(new List<Expression<Func<Genre, bool>>>()
 			{
@@ -29,6 +37,11 @@ namespace Library.Services.Impls.Services
 			});
 			var result = Mapper.Map<IEnumerable<Genre>, Collection<GenreDto>>(genres);
 			return result;
+		}
+
+		public async Task<GenreDto> Create(GenreDto dto)
+		{
+			throw new NotImplementedException();
 		}
 
 		public async Task<EntityDto> Delete(long id, bool recursivelly)
@@ -82,11 +95,6 @@ namespace Library.Services.Impls.Services
 			{
 				throw new GenreIncorrectException();
 			}
-		}
-
-		public async Task<GenreDto> Create(GenreDto dto)
-		{
-			throw new NotImplementedException();
 		}
 
 		private void DeleteChildrenGenres(IList<Genre> genres)

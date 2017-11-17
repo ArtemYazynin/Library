@@ -5,11 +5,11 @@ using Library.Common;
 
 namespace Library.Services.DTO
 {
-	public class BookDto: EntityDto, IBook<EditionDto,PublisherDto,GenreDto,AuthorDto,RentDto,InvoiceDto,FileDto>
+	public class BookDto: EntityDto, IBook<EditionDto,PublisherDto, GenreSimpleDto, AuthorDto,RentDto,InvoiceDto,FileDto>
 	{
 		public BookDto()
 		{
-			Genres = new List<GenreDto>();
+			Genres = new List<GenreSimpleDto>();
 			Authors = new List<AuthorDto>();
 			Rents = new List<RentDto>();
 			Invoices = new List<InvoiceDto>();
@@ -42,7 +42,7 @@ namespace Library.Services.DTO
 		#region Genres
 
 		[DataMember]
-		public ICollection<GenreDto> Genres { get; set; }
+		public ICollection<GenreSimpleDto> Genres { get; set; }
 
 		[DataMember]
 		public string GenresStr => string.Join(", ", Genres);

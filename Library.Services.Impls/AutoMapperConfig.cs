@@ -29,6 +29,9 @@ namespace Library.Services.Impls
 
 				config.CreateMap<Genre, GenreDto>()
 					.ReverseMap();
+				config.CreateMap<Genre, GenreSimpleDto>()
+					.MaxDepth(0)
+					.ReverseMap();
 
 				config.CreateMap<Edition, EditionDto>()
 					.ReverseMap();

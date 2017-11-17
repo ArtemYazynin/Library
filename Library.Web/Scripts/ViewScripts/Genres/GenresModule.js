@@ -18,6 +18,10 @@
 		function _getAll(successCallback) {
 			genresResource.query(successCallback);
 		}
+		function _getTree() {
+			var url = baseUrl + "/GetTree"
+			return $http.get(url);
+		}
 		function _get() {
 
 		}
@@ -43,6 +47,7 @@
 		return {
 			getModel: _getModel,
 			getAll: _getAll,
+			getTree: _getTree,
 			get: _get,
 			create: _create,
 			update: _update,

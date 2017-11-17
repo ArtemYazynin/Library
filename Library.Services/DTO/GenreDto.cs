@@ -26,4 +26,19 @@ namespace Library.Services.DTO
 			return Name;
 		}
 	}
+
+	public class GenreSimpleDto : EntityDto, IGenre<GenreDto, BookDto>
+	{
+		[DataMember]
+		public string Name { get; set; }
+
+
+		public GenreDto Parent { get; set ; }
+
+
+		public ICollection<BookDto> Books { get; set; }
+
+
+		public ICollection<GenreDto> Children { get; set; }
+	}
 }

@@ -16,9 +16,15 @@ namespace Library.Web.Controllers.api
 			_genresService = genresService;
 		}
 
-		public async Task<IEnumerable<GenreDto>> Get()
+		public async Task<IEnumerable<GenreSimpleDto>> Get()
 		{
 			var genres = await _genresService.GetAll();
+			return genres;
+		}
+		[Route("GetTree")]
+		public async Task<IEnumerable<GenreDto>> GetTree()
+		{
+			var genres = await _genresService.GetTree();
 			return genres;
 		}
 

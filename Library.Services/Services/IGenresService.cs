@@ -6,7 +6,8 @@ namespace Library.Services.Services
 {
 	public interface IGenresService
 	{
-		Task<IEnumerable<GenreDto>> GetAll();
+		Task<IEnumerable<GenreSimpleDto>> GetAll();
+		Task<IEnumerable<GenreDto>> GetTree();
 
 		Task<EntityDto> Delete(long id, bool recursivelly);
 

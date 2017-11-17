@@ -8,6 +8,16 @@
 				
 			}
 
+			function _init() {
+				var emptyGenre = {
+					Id: 1,
+					Name: "New Genre",
+					Children: [],
+					IsTemporary: true
+				};
+				$scope.Genres.push(emptyGenre);
+			}
+
 			function _toogle(scope) {
 				scope.toggle();
 			}
@@ -17,7 +27,8 @@
 				nodeData.Children.push({
 					Id: nodeData.Id * 10 + nodeData.Children.length,
 					Name: nodeData.Name + '.' + (nodeData.Children.length + 1),
-					Children: []
+					Children: [],
+					IsTemporary: true
 				});
 			}
 
@@ -58,8 +69,8 @@
 			}
 
 			function _getAll() {
-				genresService.getAll(function (data) {
-					$scope.Genres = data;
+				genresService.getTree().then(function (response) {
+					$scope.Genres = response.data;
 				});
 			}
 
@@ -77,32 +88,34 @@
 				}
 			}
 			function _remove(genre) {
-				$ngConfirm({
-					title: 'Confirm!',
-					content: 'Are you sure you want to delete this genre with nested nodes?',
-					scope: $scope,
-					buttons: {
-						ok: {
-							text: 'Ok',
-							btnClass: 'btn-blue',
-							action: function () {
-								var safeGenre = genre;
-								genresService.remove(genre, function (response) {
-									recursivellyDelete($scope.Genres, response.Id);
-									$ngConfirm("Genre <b>" + safeGenre.Name + "</b> with nested nodes was deleted");
-								});
+				if (genre.IsTemporary) {
+					recursivellyDelete($scope.Genres, genre.Id);
+				} else {
+					$ngConfirm({
+						title: 'Confirm!',
+						content: 'Are you sure you want to delete this genre with nested nodes?',
+						scope: $scope,
+						buttons: {
+							ok: {
+								text: 'Ok',
+								btnClass: 'btn-blue',
+								action: function () {
+									var safeGenre = genre;
+									genresService.remove(genre, function (response) {
+										recursivellyDelete($scope.Genres, response.Id);
+										$ngConfirm("Genre <b>" + safeGenre.Name + "</b> with nested nodes was deleted");
+									});
+								}
+							},
+							close: {
+								text: "Cancel"
 							}
-						},
-						close: {
-							text: "Cancel"
 						}
-					}
-				});
-
-
-				
+					});
+				}
 			}
 			return {
+				init: _init,
 				getAll: _getAll,
 				add: _add,
 				remove: _remove,
