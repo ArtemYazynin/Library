@@ -2,18 +2,22 @@
 	"use strict";
 
 	angular.module("GenresModule")
-	.controller("GenresController", ["$scope", "$compile", "genresService", "$ngConfirm", function ($scope, $compile, genresService, $ngConfirm) {
+	.controller("GenresController", ["$scope", "$q", "$compile", "genresService", "$ngConfirm", function ($scope, $q, $compile, genresService, $ngConfirm) {
 		$scope.actions = (function () {
 			function _details() {
 				
 			}
-
+			function _getAll() {
+				genresService.getTree().then(function (response) {
+					$scope.Genres = response.data;
+				});
+			}
 			function _init() {
 				var emptyGenre = {
 					Id: 1,
 					Name: "New Genre",
 					Children: [],
-					IsTemporary: true
+					Unsaved: true
 				};
 				$scope.Genres.push(emptyGenre);
 			}
@@ -24,11 +28,22 @@
 
 			function _add(scope) {
 				var nodeData = scope.$modelValue;
-				nodeData.Children.push({
+				//nodeData.Children.push({
+				//	Id: nodeData.Id * 10 + nodeData.Children.length,
+				//	Name: nodeData.Name + '.' + (nodeData.Children.length + 1),
+				//	Parent: { Id: nodeData.Id, Name: nodeData.Name },
+				//	Children: [],
+				//	Unsaved: true
+				//});
+				var newGenre = {
 					Id: nodeData.Id * 10 + nodeData.Children.length,
 					Name: nodeData.Name + '.' + (nodeData.Children.length + 1),
-					Children: [],
-					IsTemporary: true
+					Parent: { Id: nodeData.Id, Name: nodeData.Name },
+					Children: []
+				};
+				genresService.save(newGenre, function () {
+					//$ngConfirm("Genres <strong>" + newGenre.Name + "</strong> was created");
+					_getAll();
 				});
 			}
 
@@ -68,11 +83,7 @@
 				
 			}
 
-			function _getAll() {
-				genresService.getTree().then(function (response) {
-					$scope.Genres = response.data;
-				});
-			}
+			
 
 			function recursivellyDelete(genres, id) {
 				for (var i = 0, len = genres.length; i < len; i++) {
@@ -88,7 +99,7 @@
 				}
 			}
 			function _remove(genre) {
-				if (genre.IsTemporary) {
+				if (genre.Unsaved) {
 					recursivellyDelete($scope.Genres, genre.Id);
 				} else {
 					$ngConfirm({
@@ -114,6 +125,42 @@
 					});
 				}
 			}
+
+
+			function _hasUnsaved() {
+				function recurcivelyFindUnsavedGenres(children) {
+					if (!children || children.length === 0) {
+						return false;
+					}
+					for (var i = 0, len = children.length; i < len; i++) {
+						var found = recurcivelyFindUnsavedGenres(children[i].Children);
+						if (found || children[i].Unsaved) {
+							return true;
+						}
+					}
+				}
+				var result = recurcivelyFindUnsavedGenres($scope.Genres);
+				return result;
+			}
+			function _save() {
+				var unsavedGenres = (function() {
+					var result = [];
+					function recursivelyFindUnsavedGenres(children) {
+						for (var i = 0, len = children.length; i < len; i++) {
+							if (children[i].Unsaved) {
+								result.push(children[i]);
+							}
+							recursivelyFindUnsavedGenres(children[i].Children);
+						}
+					}
+					recursivelyFindUnsavedGenres($scope.Genres);
+					return result;
+				})();
+				genresService.save(unsavedGenres, function () {
+					$ngConfirm("Genres <strong>" + self.vm.Fio() + "</strong> was created");
+				});
+				
+			}
 			return {
 				init: _init,
 				getAll: _getAll,
@@ -122,7 +169,9 @@
 				details: _details,
 				rename: _rename,
 				renameSubmit: _renameSubmit,
-				toogle: _toogle
+				toogle: _toogle,
+				hasUnsaved: _hasUnsaved,
+				save: _save
 			}
 		})();
 

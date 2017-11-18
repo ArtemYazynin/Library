@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -39,11 +40,6 @@ namespace Library.Services.Impls.Services
 			return result;
 		}
 
-		public async Task<GenreDto> Create(GenreDto dto)
-		{
-			throw new NotImplementedException();
-		}
-
 		public async Task<EntityDto> Delete(long id, bool recursivelly)
 		{
 			var includeProperties = $"{nameof(Genre.Children)}, {nameof(Genre.Parent)}";
@@ -62,8 +58,8 @@ namespace Library.Services.Impls.Services
 
 		public async Task<GenreDto> Update(long id, GenreDto dto)
 		{
-			ThrowIfDtoIncorrect(dto);
-			await ThrowIfSameGenreExists(dto);
+			ThrowIfDtoIncorrect(dto.Name);
+			await ThrowIfSameGenreExists(dto.Name);
 
 			var dbEntity = await _unitOfWork.GenreRepository.Get(id);
 			if (!dbEntity.Version.SequenceEqual(dto.Version))
@@ -76,11 +72,23 @@ namespace Library.Services.Impls.Services
 			return Mapper.Map<GenreDto>(dbEntity);
 		}
 
-		private async Task ThrowIfSameGenreExists(GenreDto dto)
+		public async Task<GenreDto> Create(GenreDto dto)
+		{
+			ThrowIfDtoIncorrect(dto.Name);
+			await ThrowIfSameGenreExists(dto.Name);
+
+			var genre = Mapper.Map<Genre>(dto);
+			_unitOfWork.GenreRepository.Create(genre);
+			await _unitOfWork.Save();
+
+			return Mapper.Map<GenreDto>(genre);
+		}
+
+		private async Task ThrowIfSameGenreExists(string name)
 		{
 			List<Expression<Func<Genre, bool>>> filters = new List<Expression<Func<Genre, bool>>>()
 			{
-				x=>x.Name.Trim().ToLower() == dto.Name.Trim().ToLower()
+				x=>x.Name.Trim().ToLower() == name.Trim().ToLower()
 			};
 			var dublicates = await _unitOfWork.GenreRepository.GetAllAsync(filters);
 			if (dublicates.Any())
@@ -89,9 +97,9 @@ namespace Library.Services.Impls.Services
 			}
 		}
 
-		private void ThrowIfDtoIncorrect(GenreDto dto)
+		private void ThrowIfDtoIncorrect(string name)
 		{
-			if (string.IsNullOrEmpty(dto.Name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new GenreIncorrectException();
 			}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -46,6 +47,15 @@ namespace Library.Services.Impls
 			var genre = await base.Get(id, includeProperties);
 			await RecurcivelyLoadChildren(new List<Genre>() { genre });
 			return genre;
+		}
+
+		public override bool Create(Genre entity)
+		{
+			if (Context.Entry(entity.Parent).State == EntityState.Detached)
+			{
+				Context.Genres.Attach(entity.Parent);
+			}
+			return base.Create(entity);
 		}
 	}
 }

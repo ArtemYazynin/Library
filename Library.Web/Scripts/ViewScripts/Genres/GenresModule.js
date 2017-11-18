@@ -19,14 +19,15 @@
 			genresResource.query(successCallback);
 		}
 		function _getTree() {
-			var url = baseUrl + "/GetTree"
+			var url = baseUrl + "/GetTree";
 			return $http.get(url);
 		}
 		function _get() {
 
 		}
-		function _create() {
-
+		function _save(vm, successCallback) {
+			var newGenres = new genresResource(vm);
+			newGenres.$save(null, successCallback);
 		}
 		function _update(vm, successCallback) {
 			if (!vm) return;
@@ -49,7 +50,7 @@
 			getAll: _getAll,
 			getTree: _getTree,
 			get: _get,
-			create: _create,
+			save: _save,
 			update: _update,
 			remove: _remove
 		}

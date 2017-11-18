@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Library.Services.DTO;
 using Library.Services.Services;
+using Microsoft.Ajax.Utilities;
 
 namespace Library.Web.Controllers.api
 {
@@ -40,6 +43,12 @@ namespace Library.Web.Controllers.api
 		{
 			var result = await _genresService.Update(id, dto);
 			return result;
+		}
+
+		[HttpPost]
+		public async Task<GenreDto> Post(GenreDto dto)
+		{
+			return await _genresService.Create(dto);
 		}
 	}
 }

@@ -15,6 +15,7 @@ namespace Library.Services.DTO
 		[DataMember]
 		public string Name { get; set; }
 
+		[DataMember]
 		public GenreDto Parent { get; set; }
 		public ICollection<BookDto> Books { get; set; }
 
@@ -40,5 +41,10 @@ namespace Library.Services.DTO
 
 
 		public ICollection<GenreDto> Children { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
