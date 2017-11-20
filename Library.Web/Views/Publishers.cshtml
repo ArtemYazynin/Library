@@ -10,15 +10,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="publisher in ctrl.Publishers">
-						<td ng-bind="publisher.Name"></td>
+					<tr ng-repeat="publisher in Publishers">
+						<td  ng-click="actions.enableEdit($event,publisher)">
+							<span ng-bind="publisher.Name">
+
+							</span>
+						</td>
 						<td style="width: 9%;">
 
-							<div class="tooltip-common">
-								<button type="button" class="btn btn-danger" ng-click="ctrl.actions.remove(publisher)">
+							<div>
+								<button type="button" class="btn btn-danger" ng-click="actions.remove(publisher)">
 									<span class="glyphicon glyphicon-remove"></span>
 								</button>
-								<span class="tooltiptext">Remove</span>
 							</div>
 						</td>
 					</tr>
