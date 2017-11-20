@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -21,7 +20,6 @@ namespace Library.Services.Impls.Services
 		{
 			_unitOfWork = unitOfWork;
 		}
-
 
 		public async Task<IEnumerable<GenreSimpleDto>> GetAll()
 		{

@@ -6,7 +6,6 @@ using NUnit.Framework;
 
 namespace Library.Tests.Services.Authors
 {
-	[TestFixture]
 	internal sealed class AuthorsServiceTest: ServiceTestsBase
 	{
 		[Test]

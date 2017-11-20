@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 
@@ -11,7 +10,6 @@ namespace Library.Services.Impls
 		{
 			Mapper.Initialize((config) =>
 			{
-
 				config.CreateMap<Rent, RentDto>()
 					.ReverseMap();
 

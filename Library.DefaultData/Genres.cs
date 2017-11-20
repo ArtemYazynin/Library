@@ -10,53 +10,11 @@ namespace Library.DefaultData
 
 		static Genres()
 		{
-			CSharp = new Genre()
+			ComputersAndTecnology = new Genre()
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "C#",
-				Parent = LanguageAndTools
-			};
-			LanguageAndTools = new Genre()
-			{
-				Id = Rnd.Next(int.MaxValue),
-				Name = "Languages & Tools",
-				Parent = Programming,
-				Children = new List<Genre>()
-				{
-					CSharp
-				}
-			};
-			DotNet = new Genre()
-			{
-				Id = Rnd.Next(int.MaxValue),
-				Name = ".NET",
-				Parent = MicrosoftProgramming
-			};
-			MicrosoftProgramming = new Genre()
-			{
-				Id = Rnd.Next(int.MaxValue),
-				Name = "Microsoft Programming",
-				Parent = Programming,
-				Children = new List<Genre>()
-				{
-					DotNet
-				}
-			};
-			JavaScript = new Genre()
-			{
-				Id = Rnd.Next(int.MaxValue),
-				Name = "JavaScript",
-				Parent = WebProgramming
-			};
-			WebProgramming = new Genre()
-			{
-				Id = Rnd.Next(int.MaxValue),
-				Name = "Web Programming",
-				Parent = Programming,
-				Children = new List<Genre>()
-				{
-					JavaScript
-				}
+				Name = "Computers & Technology",
+				
 			};
 			Programming = new Genre()
 			{
@@ -64,21 +22,63 @@ namespace Library.DefaultData
 				Version = new byte[] { 0, 0, 0, 0, 0, 0, 0, 120 },
 				Name = "Programming",
 				Parent = ComputersAndTecnology,
-				Children = new List<Genre>()
-				{
-					WebProgramming,
-					MicrosoftProgramming,
-					LanguageAndTools
-				}
+
 			};
-			ComputersAndTecnology = new Genre()
+			LanguageAndTools = new Genre()
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "Computers & Technology",
-				Children = new List<Genre>()
-				{
-					Programming
-				}
+				Name = "Languages & Tools",
+				Parent = Programming,
+			};
+			CSharp = new Genre()
+			{
+				Id = Rnd.Next(int.MaxValue),
+				Name = "C#",
+				Parent = LanguageAndTools
+			};
+			MicrosoftProgramming = new Genre()
+			{
+				Id = Rnd.Next(int.MaxValue),
+				Name = "Microsoft Programming",
+				Parent = Programming,
+			};
+			DotNet = new Genre()
+			{
+				Id = Rnd.Next(int.MaxValue),
+				Name = ".NET",
+				Parent = MicrosoftProgramming
+			};
+			WebProgramming = new Genre()
+			{
+				Id = Rnd.Next(int.MaxValue),
+				Name = "Web Programming",
+				Parent = Programming
+			};
+			JavaScript = new Genre()
+			{
+				Id = Rnd.Next(int.MaxValue),
+				Name = "JavaScript",
+				Parent = WebProgramming
+			};
+
+			ComputersAndTecnology.Children = new List<Genre>() { Programming };
+			Programming.Children = new List<Genre>()
+			{
+				WebProgramming,
+				MicrosoftProgramming,
+				LanguageAndTools
+			};
+			LanguageAndTools.Children = new List<Genre>()
+			{
+				CSharp
+			};
+			MicrosoftProgramming.Children = new List<Genre>()
+			{
+				DotNet
+			};
+			WebProgramming.Children = new List<Genre>()
+			{
+				JavaScript
 			};
 		}
 		public static Genre ComputersAndTecnology { get; }

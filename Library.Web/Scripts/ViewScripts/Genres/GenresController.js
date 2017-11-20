@@ -28,22 +28,19 @@
 
 			function _add(scope) {
 				var nodeData = scope.$modelValue;
-				//nodeData.Children.push({
-				//	Id: nodeData.Id * 10 + nodeData.Children.length,
-				//	Name: nodeData.Name + '.' + (nodeData.Children.length + 1),
-				//	Parent: { Id: nodeData.Id, Name: nodeData.Name },
-				//	Children: [],
-				//	Unsaved: true
-				//});
 				var newGenre = {
 					Id: nodeData.Id * 10 + nodeData.Children.length,
 					Name: nodeData.Name + '.' + (nodeData.Children.length + 1),
 					Parent: { Id: nodeData.Id, Name: nodeData.Name },
 					Children: []
 				};
-				genresService.save(newGenre, function () {
-					//$ngConfirm("Genres <strong>" + newGenre.Name + "</strong> was created");
-					_getAll();
+				genresService.save(newGenre, function (response) {
+					nodeData.Children.push(response);
+					$ngConfirm({
+						title: "Successfully created!",
+						content: "Genre <strong>" + response.Name + "</strong> was created",
+						backgroundDismiss: true
+					});
 				});
 			}
 
@@ -64,7 +61,11 @@
 								Name: e.target.innerHTML
 							});
 							genresService.update(genre, function() {
-								$ngConfirm("Genre <b>" + genre.Name + "</b> was updated");
+								$ngConfirm({
+									title: "Successfully updated!",
+									content: "Genre <b>" + genre.Name + "</b> was updated",
+									backgroundDismiss: true
+								});
 							});
 						}
 					},
@@ -78,13 +79,6 @@
 				e.target.parentElement.append(el[0]);
 				el[0].focus();
 			}
-
-			function _renameSubmit(e) {
-				
-			}
-
-			
-
 			function recursivellyDelete(genres, id) {
 				for (var i = 0, len = genres.length; i < len; i++) {
 					if (genres[i].Children && genres[i].Children.length > 0) {
@@ -105,6 +99,7 @@
 					$ngConfirm({
 						title: 'Confirm!',
 						content: 'Are you sure you want to delete this genre with nested nodes?',
+						backgroundDismiss: true,
 						scope: $scope,
 						buttons: {
 							ok: {
@@ -114,7 +109,11 @@
 									var safeGenre = genre;
 									genresService.remove(genre, function (response) {
 										recursivellyDelete($scope.Genres, response.Id);
-										$ngConfirm("Genre <b>" + safeGenre.Name + "</b> with nested nodes was deleted");
+										$ngConfirm({
+											title: "Successfully removed!",
+											content: "Genre <b>" + safeGenre.Name + "</b> with nested nodes was deleted",
+											backgroundDismiss: true
+										});
 									});
 								}
 							},
@@ -168,7 +167,6 @@
 				remove: _remove,
 				details: _details,
 				rename: _rename,
-				renameSubmit: _renameSubmit,
 				toogle: _toogle,
 				hasUnsaved: _hasUnsaved,
 				save: _save

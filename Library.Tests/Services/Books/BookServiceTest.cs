@@ -8,7 +8,6 @@ using NUnit.Framework;
 
 namespace Library.Tests.Services.Books
 {
-	[TestFixture]
 	internal sealed class BookServiceTest : ServiceTestsBase
 	{
 		#region Without authors
