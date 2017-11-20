@@ -79,8 +79,7 @@
 		});
 		$routeProvider.when("/publishers", {
 			templateUrl: "/LibraryView/Publishers",
-			controller: "PublishersController",
-			controllerAs:"ctrl"
+			controller: "PublishersController"
 		});
 
 		$routeProvider.when("/authors", {
