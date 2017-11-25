@@ -18,10 +18,12 @@ namespace Library.Tests.Services
 		protected IBooksService BooksService;
 		protected IAuthorsService AuthorsService;
 		protected IGenresService GenresService;
+		protected IPublishersService PublishersService;
 
 		protected Collection<Book> Books;
 		protected Collection<Author> Authors;
 		protected Collection<Genre> Genres;
+		protected Collection<Publisher> Publishers;
 
 		protected Random Random = new Random();
 
@@ -63,16 +65,94 @@ namespace Library.Tests.Services
 				DefaultData.Genres.Programming,
 				DefaultData.Genres.WebProgramming
 			};
+			Publishers = new Collection<Publisher>()
+			{
+				DefaultData.Publishers.Self,
+				DefaultData.Publishers.DmkPress,
+				DefaultData.Publishers.Piter,
+				DefaultData.Publishers.SymbolPlus,
+				DefaultData.Publishers.Viliams,
+
+			};
+
 			var stubBookRepository = GetBookRepositoryStub();
 			var stubAuthorRepository = GetAuthorsRepositoryStub();
 			var stubGenresRepository = GetGenresRepositoryStub();
+			var stubPublishersRepository = GetPublishersRepositoryStub();
 			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object 
 													&& x.AuthorRepository == stubAuthorRepository.Object
-													&& x.GenreRepository == stubGenresRepository.Object);
+													&& x.GenreRepository == stubGenresRepository.Object
+													&& x.PublisherRepository == stubPublishersRepository.Object);
 
 			BooksService = new BooksService(unitOfWork);
 			AuthorsService = new AuthorsService(unitOfWork);
 			GenresService = new GenresService(unitOfWork);
+			PublishersService = new PublishersService(unitOfWork);
+		}
+
+		private Mock<IGenericRepository<Publisher>> GetPublishersRepositoryStub()
+		{
+			var stub = new Mock<IGenericRepository<Publisher>>();
+			stub.Setup(x=>x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Publisher, bool>>>>(),
+										It.IsAny<Func<IQueryable<Publisher>, IOrderedQueryable<Publisher>>>(),
+										It.IsAny<string>()))
+				.ReturnsAsync((IEnumerable<Expression<Func<Publisher, bool>>> filters,
+					Func<IQueryable<Publisher>, IOrderedQueryable<Publisher>> orders
+					, string includeProperties) => GetAllStub(Publishers, filters,orders));
+
+			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
+				.ReturnsAsync((long id, string includeProperties) =>
+				{
+					return Publishers.SingleOrDefault(x => x.Id == id);
+				});
+			stub.Setup(x => x.Create(It.IsAny<Publisher>()))
+				.Returns((Publisher x) =>
+				{
+					Publishers.Add(x);
+					return true;
+				});
+			stub.Setup(x => x.Delete(It.IsAny<long>()))
+				.Returns((long id) =>
+				{
+					var deletedPublisher = Publishers.SingleOrDefault(x => x.Id == id);
+					if (deletedPublisher == null)
+					{
+						return false;
+					}
+
+					Publishers.Remove(deletedPublisher);
+					return true;
+				});
+			stub.Setup(x => x.Delete(It.IsAny<Publisher>()))
+				.Returns((Publisher x) =>
+				{
+					try
+					{
+						Publishers.Remove(x);
+						return true;
+					}
+					catch (Exception)
+					{
+						
+						return false;
+					}
+				});
+			stub.Setup(x => x.Update(It.IsAny<Publisher>()))
+				.Returns((Publisher x) =>
+				{
+					try
+					{
+						var publisher = Publishers.Single(n => n.Id == x.Id);
+						publisher.Name = x.Name;
+
+						return true;
+					}
+					catch (Exception)
+					{
+						return false;
+					}
+				});
+			return stub;
 		}
 
 		private Mock<IGenresRepository> GetGenresRepositoryStub()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Library.ObjectModel.Models;
 
 namespace Library.DefaultData
@@ -6,30 +7,49 @@ namespace Library.DefaultData
 	public static class Publishers
 	{
 		private readonly static Random Rnd = new Random();
-		public static readonly Publisher Viliams = new Publisher()
+		public static Publisher Viliams = new Publisher()
 		{
 			Id = Rnd.Next(int.MaxValue),
-			Name = "Вильямс"
+			Name = "Вильямс",
+			Books = new List<Book>()
+			{
+				Books.JsPocketGuide,
+				Books.JsForProfessionals,
+				Books.CSharpCompleteGuide,
+				Books.CSharp6AndNetPlatform
+			}
 		};
-		public static readonly Publisher Self = new Publisher()
+		public static Publisher Self = new Publisher()
 		{
 			Id = Rnd.Next(int.MaxValue),
-			Name = "Язынин Артем Дмитриевич"
+			Name = "Язынин Артем Дмитриевич",
+			Books = new List<Book>()
+			{
+				Books.WithoutAuthorsBook,
+				Books.MyEvernoteNotes
+			}
 		};
-		public static readonly Publisher Piter = new Publisher()
+		public static Publisher Piter = new Publisher()
 		{
 			Id = Rnd.Next(int.MaxValue),
-			Name = "Питер"
+			Name = "Питер",
+			Books = new List<Book>()
+			{
+				Books.Es6AndNotOnly,
+				Books.ClrVia
+			}
 		};
-		public static readonly Publisher DmkPress = new Publisher()
+		public static Publisher DmkPress = new Publisher()
 		{
 			Id = Rnd.Next(int.MaxValue),
-			Name = "ДМК Пресс"
+			Name = "ДМК Пресс",
+			Books = new List<Book>() { Books.AsyncProgrammingCSharp5 }
 		};
-		public static readonly Publisher SymbolPlus = new Publisher()
+		public static Publisher SymbolPlus = new Publisher()
 		{
 			Id = Rnd.Next(int.MaxValue),
-			Name = "Символ-Плюс"
+			Name = "Символ-Плюс",
+			Books = new List<Book>() { Books.JsOptimizingPerfomance }
 		};
 	}
 }
