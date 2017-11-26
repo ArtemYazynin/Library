@@ -8,6 +8,7 @@ using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions;
+using Library.Services.Impls.Exceptions.Genre;
 using Library.Services.Services;
 
 namespace Library.Services.Impls.Services

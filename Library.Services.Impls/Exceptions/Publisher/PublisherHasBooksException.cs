@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Library.ObjectModel.Models;
 
-namespace Library.Services.Impls.Exceptions
+namespace Library.Services.Impls.Exceptions.Publisher
 {
 	public class PublisherHasBooksException : Exception
 	{

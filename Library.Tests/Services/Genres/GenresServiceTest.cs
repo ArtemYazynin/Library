@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
+using Library.ObjectModel.Models;
 using Library.Services.Impls.Exceptions;
 using NUnit.Framework;
 
@@ -67,32 +69,5 @@ namespace Library.Tests.Services.Genres
 
 		#endregion
 
-	}
-
-	sealed class PublishersServiceTest : ServiceTestsBase
-	{
-		[Test]
-		public async Task GetAll_ShouldReturnValid()
-		{
-			var publishers = await PublishersService.GetAll();
-
-			Assert.That(publishers.Count(), Is.EqualTo(Publishers.Count));
-		}
-
-		[Test]
-		public void Delete_PublisherHasBooks_ShouldThrowPublisherHasBooksException()
-		{
-			var publisher = Publishers.First(x => x.Books.Any());
-			Assert.Throws<PublisherHasBooksException>(async () =>
-			{
-				await PublishersService.Delete(publisher.Id);
-			});
-		}
-
-		[Test]
-		public void Delete_ShouldSuccessDelete()
-		{
-			
-		}
 	}
 }

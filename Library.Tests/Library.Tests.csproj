@@ -69,6 +69,7 @@
     <Compile Include="Services\Authors\AuthorsServiceTest.cs" />
     <Compile Include="Services\Genres\GenresServiceTest.cs" />
     <Compile Include="Services\Books\BookServiceTest.cs" />
+    <Compile Include="Services\Genres\PublishersServiceTest.cs" />
     <Compile Include="Services\ServiceTestsBase.cs" />
   </ItemGroup>
   <ItemGroup>
