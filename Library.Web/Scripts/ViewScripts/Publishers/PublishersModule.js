@@ -1,7 +1,7 @@
 ﻿(function(angular) {
 	"use strict";
 	angular.module("PublishersModule", ["ngRoute", "ngResource", "cp.ngConfirm"])
-	.factory("publishersFactory", ["$resource", function ($resource) {
+	.factory("publishersService", ["$resource", function ($resource) {
 		var baseUrl = "api/Publishers";
 		var config = {
 			update: {
@@ -14,6 +14,9 @@
 		}
 
 		function _update(vm, successCallback) {
+			if (!vm.$update) {
+				vm = new resource(vm);
+			}
 			vm.$update(successCallback);
 		}
 		function _remove(vm, successCallback) {

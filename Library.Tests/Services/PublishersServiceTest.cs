@@ -5,7 +5,7 @@ using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Publisher;
 using NUnit.Framework;
 
-namespace Library.Tests.Services.Genres
+namespace Library.Tests.Services
 {
 	sealed class PublishersServiceTest : ServiceTestsBase
 	{

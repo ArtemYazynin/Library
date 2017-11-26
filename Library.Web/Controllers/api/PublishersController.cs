@@ -27,5 +27,11 @@ namespace Library.Web.Controllers.api
 			var deletedPublisher = await _publishersService.Delete(id);
 			return deletedPublisher;
 		}
+
+		public async Task<PublisherDto> Put(long id, PublisherDto dto)
+		{
+			var updatedPublisher = await _publishersService.Update(id, dto);
+			return updatedPublisher;
+		}
 	}
 }

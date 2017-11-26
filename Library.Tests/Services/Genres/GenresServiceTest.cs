@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Library.ObjectModel.Models;
-using Library.Services.Impls.Exceptions;
 using NUnit.Framework;
 
 namespace Library.Tests.Services.Genres
