@@ -34,7 +34,7 @@
 				});
 			}
 			function _loadPublishers() {
-				publishersService.getAll(function (data) {
+				publishersService.get(function (data) {
 					$scope.Publishers = data;
 				});
 			}

@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using Library.Services.DTO;
 
-namespace Library.Services.Impls.Exceptions
+namespace Library.Services.Impls.Exceptions.Genre
 {
 	public class GenreIncorrectException: Exception
 	{

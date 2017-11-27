@@ -8,6 +8,8 @@ using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions;
+using Library.Services.Impls.Exceptions.Genre;
+using Library.Services.Impls.Exceptions.Publisher;
 using Library.Services.Services;
 
 namespace Library.Services.Impls.Services
@@ -48,12 +50,41 @@ namespace Library.Services.Impls.Services
 
 		public async Task<PublisherDto> Update(long id, PublisherDto dto)
 		{
-			throw new System.NotImplementedException();
+			ThrowIfDtoIncorrect(dto.Name);
+			await ThrowIfSamePublisherExists(dto.Name);
+			var publisherDb = Mapper.Map<Publisher>(dto);
+			_unitOfWork.PublisherRepository.Update(publisherDb);
+			await _unitOfWork.Save();
+			return dto;
+		}
+
+		private async Task ThrowIfSamePublisherExists(string name)
+		{
+			List<Expression<Func<Publisher, bool>>> filters = new List<Expression<Func<Publisher, bool>>>()
+			{
+				x=>x.Name.Trim().ToLower() == name.Trim().ToLower()
+			};
+			var dublicates = await _unitOfWork.PublisherRepository.GetAllAsync(filters);
+			if (dublicates.Any())
+			{
+				throw new PublisherDublicateException();
+			}
+		}
+
+		private void ThrowIfDtoIncorrect(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+			{
+				throw new PublisherIncorrectException();
+			}
 		}
 
 		public async Task<PublisherDto> Create(PublisherDto dto)
 		{
-			throw new System.NotImplementedException();
+			var publisher = Mapper.Map<Publisher>(dto);
+			_unitOfWork.PublisherRepository.Create(publisher);
+			await _unitOfWork.Save();
+			return dto;
 		}
 	}
 }

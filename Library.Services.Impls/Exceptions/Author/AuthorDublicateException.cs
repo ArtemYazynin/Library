@@ -1,6 +1,6 @@
 using System;
 
-namespace Library.Services.Impls.Exceptions
+namespace Library.Services.Impls.Exceptions.Author
 {
 	public class AuthorDublicateException :Exception
 	{

@@ -2,29 +2,34 @@
 	<div class="panel-heading">Publishers</div>
 	<div class="panel-body">
 		<div>
-			<table class="table table-bordered table-condensed table-hover">
+			<table id="publishers-table" class="table table-hover">
 				<thead>
-					<tr>
-						<th>Name</th>
-						<th></th>
-					</tr>
+				<tr>
+					<th>Name</th>
+					<th></th>
+				</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="publisher in Publishers">
-						<td  ng-click="actions.enableEdit($event,publisher)">
-							<span ng-bind="publisher.Name">
+				<tr ng-repeat="publisher in Publishers">
+					<td ng-click="actions.enableEdit($event,publisher)">
+						<span ng-bind="publisher.Name">
 
 							</span>
-						</td>
-						<td style="width: 9%;">
+					</td>
+					<td style="width: 9%;">
 
-							<div>
-								<button type="button" class="btn btn-danger" ng-click="actions.remove(publisher)">
-									<span class="glyphicon glyphicon-remove"></span>
-								</button>
-							</div>
-						</td>
-					</tr>
+						<div>
+							<button type="button" class="btn btn-danger" ng-click="actions.remove(publisher)">
+								<span class="glyphicon glyphicon-remove"></span>
+							</button>
+						</div>
+					</td>
+				</tr>
+				<tr ng-click="actions.addNew($event)">
+					<td colspan="2">
+						<i>Click to add new publisher...</i>
+					</td>
+				</tr>
 				</tbody>
 			</table>
 		</div>
