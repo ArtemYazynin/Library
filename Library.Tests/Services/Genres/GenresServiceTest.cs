@@ -1,5 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Library.Services.DTO;
+using Library.Services.Impls.Exceptions;
 using NUnit.Framework;
 
 namespace Library.Tests.Services.Genres
@@ -65,6 +69,54 @@ namespace Library.Tests.Services.Genres
 		}
 
 		#endregion
+
+
+		#region Create
+
+		[Test]
+		public void Create_IncorrectName_ShouldThrownGenreIncorrectException()
+		{
+			GenreDto dto = new GenreDto();
+			Assert.Throws<GenreIncorrectException>(async () => await GenresService.Create(dto));
+		}
+
+		[Test]
+		public void Create_ExistsGenre_ShouldThrownGenreDublicateException()
+		{
+			var dto = new GenreDto(){Name = DefaultData.Genres.CSharp.Name};
+			Assert.Throws<GenreDublicateException>(async ()=> await GenresService.Create(dto));
+		}
+
+		[Test]
+		public async Task Create_RootGenre_ShouldValid()
+		{
+			var oldCount = Genres.Count;
+			var dto = new GenreDto(){ Name = nameof(Create_RootGenre_ShouldValid) };
+			await GenresService.Create(dto);
+
+			Assert.That(Genres.Count, Is.EqualTo(oldCount+1));
+			var createdGenre = Genres.SingleOrDefault(x => string.Equals(x.Name, nameof(Create_RootGenre_ShouldValid), StringComparison.CurrentCultureIgnoreCase));
+			Assert.That(createdGenre, Is.Not.Null);
+			Assert.That(createdGenre.Parent, Is.Null);
+			Assert.That(createdGenre.Children, Is.Empty);
+		}
+
+		[Test]
+		public async Task Create_ChildGenre_ShouldValid()
+		{
+			var oldCount = Genres.Count;
+			var dto = new GenreDto() { Name = nameof(Create_ChildGenre_ShouldValid), Parent = Mapper.Map<GenreDto>(DefaultData.Genres.CSharp) };
+			await GenresService.Create(dto);
+
+			Assert.That(Genres.Count, Is.EqualTo(oldCount + 1));
+			var createdGenre = Genres.SingleOrDefault(x => string.Equals(x.Name, nameof(Create_ChildGenre_ShouldValid), StringComparison.CurrentCultureIgnoreCase));
+			Assert.That(createdGenre, Is.Not.Null);
+			Assert.That(createdGenre.Parent.Id, Is.EqualTo(DefaultData.Genres.CSharp.Id));
+			Assert.That(createdGenre.Children, Is.Empty);
+		}
+
+		#endregion
+
 
 	}
 }

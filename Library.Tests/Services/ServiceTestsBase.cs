@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Library.Tests.Services
 {
+	[TestFixture]
 	abstract class ServiceTestsBase
 	{
 		protected IBooksService BooksService;
