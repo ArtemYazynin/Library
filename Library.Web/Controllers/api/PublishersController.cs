@@ -33,5 +33,11 @@ namespace Library.Web.Controllers.api
 			var updatedPublisher = await _publishersService.Update(id, dto);
 			return updatedPublisher;
 		}
+
+		public async Task<PublisherDto> Post(PublisherDto dto)
+		{
+			var result = await _publishersService.Create(dto);
+			return result;
+		}
 	}
 }

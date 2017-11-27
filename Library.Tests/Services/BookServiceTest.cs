@@ -3,10 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Library.Services.DTO;
 using Library.Services.VO;
-using Moq;
 using NUnit.Framework;
 
-namespace Library.Tests.Services.Books
+namespace Library.Tests.Services
 {
 	internal sealed class BookServiceTest : ServiceTestsBase
 	{

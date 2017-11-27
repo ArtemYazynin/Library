@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
-using Library.Services.Impls.Exceptions;
 using Library.Services.Impls.Exceptions.Genre;
 using Library.Services.Services;
 
@@ -61,10 +60,6 @@ namespace Library.Services.Impls.Services
 			await ThrowIfSameGenreExists(dto.Name);
 
 			var dbEntity = await _unitOfWork.GenreRepository.Get(id);
-			if (!dbEntity.Version.SequenceEqual(dto.Version))
-			{
-				throw new Exception("Genre was updated early. Please refresh page");
-			}
 			dbEntity.Name = dto.Name;
 			_unitOfWork.GenreRepository.Update(dbEntity);
 			await _unitOfWork.Save();

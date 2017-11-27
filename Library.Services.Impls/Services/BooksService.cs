@@ -112,11 +112,6 @@ namespace Library.Services.Impls.Services
 		public async Task<EntityDto> Update(long id, BookDto bookDto)
 		{
 			var dbEntity = await GetInternal(id);
-			if (!dbEntity.Version.SequenceEqual(bookDto.Version))
-			{
-				throw new Exception("Book was updated early. Please refresh page");
-			}
-
 			var entity = Mapper.Map<BookDto, Book>(bookDto);
 			dbEntity.Name = entity.Name;
 			dbEntity.Isbn = entity.Isbn;

@@ -66,9 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Authors\AuthorsServiceTest.cs" />
-    <Compile Include="Services\Genres\GenresServiceTest.cs" />
-    <Compile Include="Services\Books\BookServiceTest.cs" />
+    <Compile Include="Services\AuthorsServiceTest.cs" />
+    <Compile Include="Services\GenresServiceTest.cs" />
+    <Compile Include="Services\BookServiceTest.cs" />
     <Compile Include="Services\PublishersServiceTest.cs" />
     <Compile Include="Services\ServiceTestsBase.cs" />
   </ItemGroup>

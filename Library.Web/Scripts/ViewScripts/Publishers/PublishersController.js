@@ -15,9 +15,28 @@
 						Name: this.beginValue
 					});
 					var self = this;
-					publishersService.update(vm, function(response) {
-						self.blur(event);
-					});
+					if (vm.Id) {
+						publishersService.update(vm, function (updatedPublisher) {
+							var index = $scope.Publishers.indexOf(updatedPublisher);
+							$scope.Publishers[index] = updatedPublisher;
+							self.blur(event);
+							$ngConfirm({
+								title: "Successfully updated!",
+								content: "Publisher <strong>" + updatedPublisher.Name + "</strong> was updated",
+								backgroundDismiss: true
+							});
+						});
+					} else {
+						publishersService.create(vm, function (createdPublisher) {
+							$scope.Publishers.push(createdPublisher);
+							self.blur(event);
+							$ngConfirm({
+								title: "Successfully created!",
+								content: "Publisher <strong>" + createdPublisher.Name + "</strong> was created",
+								backgroundDismiss: true
+							});
+						});
+					}
 				}
 			}
 			EditingPublisher.prototype.blur = function (event) {
@@ -30,6 +49,7 @@
 				$ngConfirm({
 					title: 'Confirm!',
 					content: 'Are you sure you want to delete this publisher?',
+					backgroundDismiss: true,
 					buttons: {
 						ok: {
 							text: 'Ok',
@@ -38,7 +58,11 @@
 								publishersService.remove(publisher, function (deletedPublisher) {
 									var index = $scope.Publishers.indexOf(deletedPublisher);
 									$scope.Publishers.splice(index, 1);
-									$ngConfirm("Publisher <strong>" + deletedPublisher.Name + "</strong> was deleted");
+									$ngConfirm({
+										title: "Successfully removed!",
+										content: "Publisher <strong>" + deletedPublisher.Name + "</strong> was deleted",
+										backgroundDismiss: true
+									});
 								});
 							}
 						},

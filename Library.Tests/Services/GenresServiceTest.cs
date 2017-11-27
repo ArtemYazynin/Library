@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Library.Services.DTO;
-using Library.Services.Impls.Exceptions;
+using Library.Services.Impls.Exceptions.Genre;
 using NUnit.Framework;
 
-namespace Library.Tests.Services.Genres
+namespace Library.Tests.Services
 {
 	sealed class GenresServiceTest: ServiceTestsBase
 	{
@@ -117,6 +117,50 @@ namespace Library.Tests.Services.Genres
 
 		#endregion
 
+		#region Update
 
+		[Test]
+		public void Update_ExistingName_ShouldThrownGenresDublicateException()
+		{
+			var dto = new GenreDto()
+			{
+				Id = DefaultData.Genres.CSharp.Id,
+				Name = DefaultData.Genres.LanguageAndTools.Name,
+			};
+			Assert.Throws<GenreDublicateException>(async () =>
+			{
+				await GenresService.Update(dto.Id, dto);
+			});
+		}
+
+		[Test]
+		public void Update_NameIncorrect_ShouldThrownGenreIncorrectException()
+		{
+			var dto = new GenreDto()
+			{
+				Id = DefaultData.Genres.DotNet.Id
+			};
+
+			Assert.Throws<GenreIncorrectException>(async () =>
+			{
+				await GenresService.Update(dto.Id, dto);
+			});
+		}
+
+		[Test]
+		public async Task Update_ShouldUpdated()
+		{
+			var genre = Genres.First();
+			var dto = new GenreDto()
+			{
+				Id = genre.Id,
+				Name = "very updated genre name"
+			};
+			await GenresService.Update(dto.Id, dto);
+
+			Assert.That(Genres.SingleOrDefault(x=>string.Equals(x.Name, dto.Name, StringComparison.CurrentCultureIgnoreCase)), Is.Not.Null);
+		}
+
+		#endregion
 	}
 }

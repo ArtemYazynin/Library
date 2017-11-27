@@ -129,8 +129,9 @@ namespace Library.Tests.Services
 			};
 			await PublishersService.Create(dto);
 
-			Assert.That(Publishers.Single(x => string.Equals(x.Name, dto.Name, StringComparison.CurrentCultureIgnoreCase)), 
-						Is.Not.Empty);
+
+			Assert.That(Publishers.SingleOrDefault(x => string.Equals(x.Name, dto.Name, StringComparison.CurrentCultureIgnoreCase)), 
+						Is.Not.Null);
 		}
 		#endregion
 	}

@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Library.Services.DTO;
-using Library.Services.Impls.Exceptions;
 using Library.Services.Impls.Exceptions.Author;
 using NUnit.Framework;
 
-namespace Library.Tests.Services.Authors
+namespace Library.Tests.Services
 {
 	internal sealed class AuthorsServiceTest: ServiceTestsBase
 	{

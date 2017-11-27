@@ -55,7 +55,7 @@ namespace Library.Services.Impls.Services
 			var publisherDb = Mapper.Map<Publisher>(dto);
 			_unitOfWork.PublisherRepository.Update(publisherDb);
 			await _unitOfWork.Save();
-			return dto;
+			return Mapper.Map<PublisherDto>(publisherDb);
 		}
 
 		private async Task ThrowIfSamePublisherExists(string name)
@@ -81,10 +81,12 @@ namespace Library.Services.Impls.Services
 
 		public async Task<PublisherDto> Create(PublisherDto dto)
 		{
+			ThrowIfDtoIncorrect(dto.Name);
+			await ThrowIfSamePublisherExists(dto.Name);
 			var publisher = Mapper.Map<Publisher>(dto);
 			_unitOfWork.PublisherRepository.Create(publisher);
 			await _unitOfWork.Save();
-			return dto;
+			return Mapper.Map<PublisherDto>(publisher);
 		}
 	}
 }
