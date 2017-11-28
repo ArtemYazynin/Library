@@ -298,11 +298,16 @@ namespace Library.Tests.Services
 			return stubBookRepository;
 		}
 
-
+		private static volatile bool _alreadyInitialized;
 		[TestFixtureSetUp]
 		public void FixtureSetUp()
 		{
-			AutoMapperConfig.Initialize();
+			if (!_alreadyInitialized)
+			{
+				AutoMapperConfig.Initialize();
+				_alreadyInitialized = true;
+			}
+			
 		}
 
 		private IEnumerable<TEntity> GetAllStub<TEntity>(IEnumerable<TEntity> entities, IEnumerable<Expression<Func<TEntity, bool>>> filters,
