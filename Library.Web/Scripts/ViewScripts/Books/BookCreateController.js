@@ -9,12 +9,22 @@
 			function _save() {
 				if ($routeParams.bookId) {
 					booksService.update($scope.vm, function (response) {
-						$ngConfirm("Book <strong>{{vm.Name}}</strong> was updated", $scope);
+						$ngConfirm({
+							title: "Successfully updated!",
+							content: "Book <strong>{{vm.Name}}</strong> was updated",
+							scope:$scope,
+							backgroundDismiss: true
+						});
 					});
 				} else {
 					booksService.create($scope.vm, function () {
 						$location.path("/");
-						$ngConfirm("Book <strong>{{vm.Name}}</strong> was created", $scope);
+						$ngConfirm({
+							title: "Successfully created!",
+							content: "Book <strong>{{vm.Name}}</strong> was created",
+							scope: $scope,
+							backgroundDismiss: true
+						});
 					});
 				}
 

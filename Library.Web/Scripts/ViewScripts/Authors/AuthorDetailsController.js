@@ -12,12 +12,20 @@
 				if ($routeParams.authorId) {
 					authorsService.update(self.vm, function (response) {
 						self.vm = response;
-						$ngConfirm("Author <strong>"+ self.vm.Fio +"</strong> was updated");
+						$ngConfirm({
+							title: "Successfully updated!",
+							content: "Author <strong>" + self.vm.Fio + "</strong> was updated",
+							backgroundDismiss: true
+						});
 					});
 				} else {
 					authorsService.create(self.vm, function() {
 						stepBack();
-						$ngConfirm("Author <strong>" + self.vm.Fio() + "</strong> was created");
+						$ngConfirm({
+							title: "Successfully created!",
+							content: "Author <strong>" + self.vm.Fio() + "</strong> was created",
+							backgroundDismiss: true
+						});
 					});
 				}
 

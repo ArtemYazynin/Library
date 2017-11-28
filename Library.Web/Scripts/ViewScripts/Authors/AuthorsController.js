@@ -16,7 +16,11 @@
 					authorsService.remove(author, function (deletedAuthor) {
 						var index = $scope.Authors.indexOf(deletedAuthor);
 						$scope.Authors.splice(index, 1);
-						$ngConfirm("Author <strong>" + fio + "</strong> was deleted");
+						$ngConfirm({
+							title: "Successfully removed!",
+							content: "Author <strong>" + fio + "</strong> was removed",
+							backgroundDismiss: true
+						});
 					});
 				}
 				function removeConfirm(author) {
@@ -35,7 +39,8 @@
 							close: {
 								text: "Cancel"
 							}
-						}
+						},
+						backgroundDismiss: true
 					});
 				}
 				authorsService.getRelatedBooks(author.Id).then(function(data) {
@@ -58,7 +63,8 @@
 								close: {
 									text: "Cancel"
 								}
-							}
+							},
+							backgroundDismiss: true
 						});
 					}
 				});

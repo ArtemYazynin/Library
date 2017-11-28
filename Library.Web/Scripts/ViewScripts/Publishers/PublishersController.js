@@ -40,6 +40,10 @@
 				}
 			}
 			EditingPublisher.prototype.blur = function (event) {
+				if (!event.currentTarget.previousElementSibling.style) {
+					event.preventDefault();
+					return;
+				}
 				event.currentTarget.previousElementSibling.style.display = "";
 				event.currentTarget.remove();
 				event.preventDefault();

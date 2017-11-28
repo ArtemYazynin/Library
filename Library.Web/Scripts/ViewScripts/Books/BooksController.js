@@ -26,7 +26,11 @@
 									booksService.remove(book, function(deletedBook) {
 										var index = scope.Books.indexOf(deletedBook);
 										scope.Books.splice(index, 1);
-										$ngConfirm("Book <strong>" + bookname + "</strong> was deleted");
+										$ngConfirm({
+											title: "Successfully removed!",
+											content: "Book <strong>" + bookname + "</strong> was removed",
+											backgroundDismiss: true
+										});
 									});
 									
 								}
@@ -34,7 +38,8 @@
 							close: {
 								text: "Cancel"
 							}
-						}
+						},
+						backgroundDismiss: true
 					});
 				}
 				function _details(book) {
