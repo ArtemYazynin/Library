@@ -20,11 +20,13 @@ namespace Library.Tests.Services
 		protected IAuthorsService AuthorsService;
 		protected IGenresService GenresService;
 		protected IPublishersService PublishersService;
+		protected IInvoicesService InvoicesService;
 
 		protected Collection<Book> Books;
 		protected Collection<Author> Authors;
 		protected Collection<Genre> Genres;
 		protected Collection<Publisher> Publishers;
+		protected Collection<Invoice> Invoices;
 
 		protected Random Random = new Random();
 
@@ -89,6 +91,7 @@ namespace Library.Tests.Services
 			AuthorsService = new AuthorsService(unitOfWork);
 			GenresService = new GenresService(unitOfWork);
 			PublishersService = new PublishersService(unitOfWork);
+			InvoicesService = new InvoicesService(unitOfWork);
 		}
 
 		private Mock<IGenericRepository<Publisher>> GetPublishersRepositoryStub()

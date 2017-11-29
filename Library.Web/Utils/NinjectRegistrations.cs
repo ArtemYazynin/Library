@@ -18,6 +18,7 @@ namespace Library.Web.Utils
 			Bind<IAuthorsService>().To<AuthorsService>();
 			Bind<IGenresService>().To<GenresService>();
 			Bind<IBooksService>().To<BooksService>();
+			Bind<IInvoicesService>().To<InvoicesService>();
 		}
 	}
 }

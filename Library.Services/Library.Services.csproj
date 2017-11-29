@@ -45,6 +45,7 @@
     <Compile Include="Services\IEditionsService.cs" />
     <Compile Include="IGenericRepository.cs" />
     <Compile Include="Services\IGenresService.cs" />
+    <Compile Include="Services\IInvoicesService.cs" />
     <Compile Include="Services\IPublishersService.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
