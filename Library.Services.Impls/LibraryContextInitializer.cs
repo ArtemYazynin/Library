@@ -131,9 +131,9 @@ namespace Library.Services.Impls
 		{
 			List<Invoice> invoices = new List<Invoice>()
 			{
-				new Invoice() {Books = new List<Book>() { DefaultData.Books.JsPocketGuide, DefaultData.Books.JsForProfessionals, DefaultData.Books.JsOptimizingPerfomance}},
-				new Invoice() {Books = new List<Book>() { DefaultData.Books.Es6AndNotOnly, DefaultData.Books.ClrVia}},
-				new Invoice() {Books = new List<Book>() { DefaultData.Books.CSharpCompleteGuide, DefaultData.Books.CSharp6AndNetPlatform, DefaultData.Books.AsyncProgrammingCSharp5}}
+				DefaultData.Invoices.First,
+				DefaultData.Invoices.Second,
+				DefaultData.Invoices.Third
 			};
 			invoices.ForEach(x => context.Invoices.Add(x));
 		}

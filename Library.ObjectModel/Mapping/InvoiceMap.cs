@@ -8,7 +8,6 @@ namespace Library.ObjectModel.Mapping
 		public InvoiceMap()
 		{
 			Property(x => x.Date).HasColumnType("datetime2").HasPrecision(0).IsRequired();
-			HasMany(x => x.Books).WithMany(x => x.Invoices);
 		}
 	}
 }

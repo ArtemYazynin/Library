@@ -77,21 +77,93 @@ namespace Library.Tests.Services
 				DefaultData.Publishers.Viliams,
 
 			};
-
+			Invoices = new Collection<Invoice>()
+			{
+				DefaultData.Invoices.First,
+				DefaultData.Invoices.Second,
+				DefaultData.Invoices.Third
+			};
 			var stubBookRepository = GetBookRepositoryStub();
 			var stubAuthorRepository = GetAuthorsRepositoryStub();
 			var stubGenresRepository = GetGenresRepositoryStub();
 			var stubPublishersRepository = GetPublishersRepositoryStub();
+			var stubInvoicesRepository = GetInvoicesRepositoryStub();
 			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object 
 													&& x.AuthorRepository == stubAuthorRepository.Object
 													&& x.GenreRepository == stubGenresRepository.Object
-													&& x.PublisherRepository == stubPublishersRepository.Object);
+													&& x.PublisherRepository == stubPublishersRepository.Object
+													&& x.InvoiceRepository == stubInvoicesRepository.Object);
 
 			BooksService = new BooksService(unitOfWork);
 			AuthorsService = new AuthorsService(unitOfWork);
 			GenresService = new GenresService(unitOfWork);
 			PublishersService = new PublishersService(unitOfWork);
 			InvoicesService = new InvoicesService(unitOfWork);
+		}
+		private Mock<IGenericRepository<Invoice>> GetInvoicesRepositoryStub()
+		{
+			var stub = new Mock<IGenericRepository<Invoice>>();
+			stub.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Invoice, bool>>>>(),
+										It.IsAny<Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>>>(),
+										It.IsAny<string>()))
+				.ReturnsAsync((IEnumerable<Expression<Func<Invoice, bool>>> filters,
+					Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>> orders
+					, string includeProperties) => GetAllStub(Invoices, filters, orders));
+
+			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
+				.ReturnsAsync((long id, string includeProperties) =>
+				{
+					return Invoices.SingleOrDefault(x => x.Id == id);
+				});
+			stub.Setup(x => x.Create(It.IsAny<Invoice>()))
+				.Returns((Invoice x) =>
+				{
+					Invoices.Add(x);
+					return true;
+				});
+			stub.Setup(x => x.Delete(It.IsAny<long>()))
+				.Returns((long id) =>
+				{
+					var deletedInvoice = Invoices.SingleOrDefault(x => x.Id == id);
+					if (deletedInvoice == null)
+					{
+						return false;
+					}
+
+					Invoices.Remove(deletedInvoice);
+					return true;
+				});
+			stub.Setup(x => x.Delete(It.IsAny<Invoice>()))
+				.Returns((Invoice x) =>
+				{
+					try
+					{
+						Invoices.Remove(x);
+						return true;
+					}
+					catch (Exception)
+					{
+
+						return false;
+					}
+				});
+			stub.Setup(x => x.Update(It.IsAny<Invoice>()))
+				.Returns((Invoice x) =>
+				{
+					try
+					{
+						var invoice = Invoices.Single(n => n.Id == x.Id);
+						invoice.Date = x.Date;
+						invoice.IncomingBooks = x.IncomingBooks;
+
+						return true;
+					}
+					catch (Exception)
+					{
+						return false;
+					}
+				});
+			return stub;
 		}
 
 		private Mock<IGenericRepository<Publisher>> GetPublishersRepositoryStub()

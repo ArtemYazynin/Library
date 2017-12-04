@@ -135,4 +135,32 @@ namespace Library.Tests.Services
 		}
 		#endregion
 	}
+
+	sealed class InvoicesServiceTest: ServiceTestsBase
+	{
+		#region GetAll
+
+		[Test]
+		public async Task GetAll_ShouldReturnValid()
+		{
+			var invoices = await InvoicesService.GetAll();
+			Assert.That(invoices.Count(), Is.EqualTo(Invoices.Count));
+		}
+
+		#endregion
+
+		#region Delete
+
+		[Test]
+		public async Task Delete_ShouldDelete()
+		{
+			var first = Invoices.SingleOrDefault(x => x.Id == DefaultData.Invoices.First.Id);
+			if (first == null) throw new NullReferenceException($"Invoices collection not has invoice with id: {DefaultData.Invoices.First.Id}");
+
+			var dto = await InvoicesService.Delete(first.Id);
+
+		}
+
+		#endregion
+	}
 }

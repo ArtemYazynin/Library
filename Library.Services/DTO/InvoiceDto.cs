@@ -5,15 +5,22 @@ using Library.Common;
 
 namespace Library.Services.DTO
 {
-	public class InvoiceDto: EntityDto, IInvoice<BookDto>
+	public class InvoiceDto: EntityDto, IInvoice<IncomingBookDto>
 	{
 		public InvoiceDto()
 		{
-			Books = new List<BookDto>();
+			IncomingBooks = new List<IncomingBookDto>();
 		}
 
 		[DataMember]
 		public DateTime Date { get; set; }
-		public ICollection<BookDto> Books { get; set; }
+		public ICollection<IncomingBookDto> IncomingBooks { get; set; }
+	}
+
+	public class IncomingBookDto : EntityDto
+	{
+		public BookDto Book { get; set; }
+		public int Count { get; set; }
+
 	}
 }

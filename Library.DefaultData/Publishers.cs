@@ -6,7 +6,7 @@ namespace Library.DefaultData
 {
 	public static class Publishers
 	{
-		private readonly static Random Rnd = new Random();
+		private static readonly Random Rnd = new Random();
 		public static Publisher Viliams = new Publisher()
 		{
 			Id = Rnd.Next(int.MaxValue),

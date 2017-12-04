@@ -3,14 +3,14 @@ using Library.Common;
 
 namespace Library.ObjectModel.Models
 {
-	public class Book: Entity, IBook<Edition,Publisher,Genre,Author,Rent,Invoice,File>
+	public class Book: Entity, IBook<Edition,Publisher,Genre,Author,Rent, IncomingBook, File>
 	{
 		public Book()
 		{
 			Authors = new List<Author>();
 			Rents = new List<Rent>();
-			Invoices = new List<Invoice>();
 			Genres = new List<Genre>();
+			IncomingBooks = new List<IncomingBook>();
 		}
 
 		public string Name { get; set; }
@@ -35,7 +35,7 @@ namespace Library.ObjectModel.Models
 		public ICollection<Genre> Genres { get; set; }
 		public ICollection<Author> Authors { get; set; }
 		public ICollection<Rent> Rents { get; set; }
-		public ICollection<Invoice> Invoices { get; set; }
+		public ICollection<IncomingBook> IncomingBooks { get; set; }
 
 	}
 }

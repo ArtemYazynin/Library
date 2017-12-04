@@ -5,14 +5,14 @@ using Library.Common;
 
 namespace Library.Services.DTO
 {
-	public class BookDto: EntityDto, IBook<EditionDto,PublisherDto, GenreSimpleDto, AuthorDto,RentDto,InvoiceDto,FileDto>
+	public class BookDto: EntityDto, IBook<EditionDto,PublisherDto, GenreSimpleDto, AuthorDto,RentDto,IncomingBookDto,FileDto>
 	{
 		public BookDto()
 		{
 			Genres = new List<GenreSimpleDto>();
 			Authors = new List<AuthorDto>();
 			Rents = new List<RentDto>();
-			Invoices = new List<InvoiceDto>();
+			IncomingBooks = new List<IncomingBookDto>();
 		}
 
 		[DataMember]
@@ -65,6 +65,6 @@ namespace Library.Services.DTO
 		public ICollection<RentDto> Rents { get; set; }
 
 		[DataMember]
-		public ICollection<InvoiceDto> Invoices { get; set; }
+		public ICollection<IncomingBookDto> IncomingBooks { get; set; }
 	}
 }

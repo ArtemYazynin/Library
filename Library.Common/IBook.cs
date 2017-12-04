@@ -23,6 +23,6 @@ namespace Library.Common
 
 		ICollection<TAuthor> Authors { get; set; }
 		ICollection<TRent> Rents { get; set; }
-		ICollection<TInvoice> Invoices { get; set; }
+		ICollection<TInvoice> IncomingBooks { get; set; }
 	}
 }

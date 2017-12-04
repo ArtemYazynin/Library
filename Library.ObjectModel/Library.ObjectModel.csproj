@@ -44,6 +44,7 @@
     <Compile Include="Mapping\AuthorMap.cs" />
     <Compile Include="Mapping\BookMap.cs" />
     <Compile Include="Mapping\EditionMap.cs" />
+    <Compile Include="Mapping\IncomingBookMap.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Mapping\FileMap.cs" />

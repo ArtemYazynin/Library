@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Library.Common
 {
-	public interface IInvoice<TBook>
+	public interface IInvoice<TIncomingBook>
 	{
 		DateTime Date { get; set; }
-		ICollection<TBook> Books { get; set; }
+		ICollection<TIncomingBook> IncomingBooks { get; set; }
 	}
 }
