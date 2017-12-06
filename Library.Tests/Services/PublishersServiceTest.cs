@@ -157,8 +157,16 @@ namespace Library.Tests.Services
 			var first = Invoices.SingleOrDefault(x => x.Id == DefaultData.Invoices.First.Id);
 			if (first == null) throw new NullReferenceException($"Invoices collection not has invoice with id: {DefaultData.Invoices.First.Id}");
 
-			var dto = await InvoicesService.Delete(first.Id);
+			var booksOldCount = DefaultData.Invoices.First.IncomingBooks.Select(incomingBook => Books.Single(x => x.Id == incomingBook.Book.Id)).ToDictionary(book => book.Id, book => book.Count);
 
+			await InvoicesService.Delete(first.Id);
+
+			foreach (var incomingBook in DefaultData.Invoices.First.IncomingBooks)
+			{
+				var book = Books.Single(x => x.Id == incomingBook.Book.Id);
+				var expectedCount = booksOldCount[book.Id] - incomingBook.Count;
+				Assert.That(book.Count, Is.EqualTo(expectedCount));
+			}
 		}
 
 		#endregion
