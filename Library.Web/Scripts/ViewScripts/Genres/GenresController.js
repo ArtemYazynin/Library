@@ -4,22 +4,29 @@
 	angular.module("GenresModule")
 	.controller("GenresController", ["$scope", "$q", "$compile", "genresService", "$ngConfirm", function ($scope, $q, $compile, genresService, $ngConfirm) {
 		$scope.actions = (function () {
-			function _details() {
-				
-			}
 			function _getAll() {
 				genresService.getTree().then(function (response) {
 					$scope.Genres = response.data;
 				});
 			}
+
+			function postSaveConfirm(genreName) {
+				$ngConfirm({
+					title: "Successfully created!",
+					content: "Genre <strong>" + genreName + "</strong> was created",
+					backgroundDismiss: true
+				});
+			}
+
 			function _init() {
 				var emptyGenre = {
-					Id: 1,
-					Name: "New Genre",
-					Children: [],
-					Unsaved: true
+					Name: "New Genre"
 				};
-				$scope.Genres.push(emptyGenre);
+				genresService.save(emptyGenre, function (response) {
+					$scope.Genres.push(response);
+					postSaveConfirm(response.Name);
+				});
+				
 			}
 
 			function _toogle(scope) {
@@ -36,11 +43,7 @@
 				};
 				genresService.save(newGenre, function (response) {
 					nodeData.Children.push(response);
-					$ngConfirm({
-						title: "Successfully created!",
-						content: "Genre <strong>" + response.Name + "</strong> was created",
-						backgroundDismiss: true
-					});
+					postSaveConfirm(response.Name);
 				});
 			}
 
@@ -93,36 +96,32 @@
 				}
 			}
 			function _remove(genre) {
-				if (genre.Unsaved) {
-					recursivellyDelete($scope.Genres, genre.Id);
-				} else {
-					$ngConfirm({
-						title: 'Confirm!',
-						content: 'Are you sure you want to delete this genre with nested nodes?',
-						backgroundDismiss: true,
-						scope: $scope,
-						buttons: {
-							ok: {
-								text: 'Ok',
-								btnClass: 'btn-blue',
-								action: function () {
-									var safeGenre = genre;
-									genresService.remove(genre, function (response) {
-										recursivellyDelete($scope.Genres, response.Id);
-										$ngConfirm({
-											title: "Successfully removed!",
-											content: "Genre <b>" + safeGenre.Name + "</b> with nested nodes was deleted",
-											backgroundDismiss: true
-										});
+				$ngConfirm({
+					title: 'Confirm!',
+					content: 'Are you sure you want to delete this genre with nested nodes?',
+					backgroundDismiss: true,
+					scope: $scope,
+					buttons: {
+						ok: {
+							text: 'Ok',
+							btnClass: 'btn-blue',
+							action: function () {
+								var safeGenre = genre;
+								genresService.remove(genre, function (response) {
+									recursivellyDelete($scope.Genres, response.Id);
+									$ngConfirm({
+										title: "Successfully removed!",
+										content: "Genre <b>" + safeGenre.Name + "</b> with nested nodes was deleted",
+										backgroundDismiss: true
 									});
-								}
-							},
-							close: {
-								text: "Cancel"
+								});
 							}
+						},
+						close: {
+							text: "Cancel"
 						}
-					});
-				}
+					}
+				});
 			}
 
 
@@ -133,7 +132,7 @@
 					}
 					for (var i = 0, len = children.length; i < len; i++) {
 						var found = recurcivelyFindUnsavedGenres(children[i].Children);
-						if (found || children[i].Unsaved) {
+						if (found) {
 							return true;
 						}
 					}
@@ -146,9 +145,6 @@
 					var result = [];
 					function recursivelyFindUnsavedGenres(children) {
 						for (var i = 0, len = children.length; i < len; i++) {
-							if (children[i].Unsaved) {
-								result.push(children[i]);
-							}
 							recursivelyFindUnsavedGenres(children[i].Children);
 						}
 					}
@@ -165,7 +161,6 @@
 				getAll: _getAll,
 				add: _add,
 				remove: _remove,
-				details: _details,
 				rename: _rename,
 				toogle: _toogle,
 				hasUnsaved: _hasUnsaved,

@@ -51,10 +51,14 @@ namespace Library.Services.Impls
 
 		public override bool Create(Genre entity)
 		{
-			if (Context.Entry(entity.Parent).State == EntityState.Detached)
+			if (entity.Parent != null)
 			{
-				Context.Genres.Attach(entity.Parent);
+				if (Context.Entry(entity.Parent).State == EntityState.Detached)
+				{
+					Context.Genres.Attach(entity.Parent);
+				}
 			}
+
 			return base.Create(entity);
 		}
 	}
