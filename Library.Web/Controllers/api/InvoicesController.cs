@@ -21,5 +21,11 @@ namespace Library.Web.Controllers.api
 			var result = await _invoicesService.GetAll();
 			return result;
 		}
+
+		public async Task<InvoiceDto> Delete(long id)
+		{
+			var result = await _invoicesService.Delete(id);
+			return result;
+		}
 	}
 }

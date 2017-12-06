@@ -12,20 +12,31 @@ namespace Library.Services.Impls.Services
 	public class InvoicesService:IInvoicesService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		public InvoicesService(IUnitOfWork unitOfWork)
+		private readonly IBooksService _booksService;
+		private readonly string _includeProperties = $"{nameof(Invoice.IncomingBooks)}.{nameof(Book)}";
+		public InvoicesService(IUnitOfWork unitOfWork, IBooksService booksService)
 		{
 			_unitOfWork = unitOfWork;
+			_booksService = booksService;
 		}
 		public async Task<IEnumerable<InvoiceDto>> GetAll()
 		{
-			var includeProperties = $"{nameof(Invoice.IncomingBooks)}.{nameof(Book)}";
-			var result = await _unitOfWork.InvoiceRepository.GetAllAsync(null, x => x.OrderBy(y => y.Date), includeProperties);
+			var result = await _unitOfWork.InvoiceRepository.GetAllAsync(null, x => x.OrderBy(y => y.Date), _includeProperties);
 			return Mapper.Map<IEnumerable<InvoiceDto>>(result);
 		}
 
-		public Task<InvoiceDto> Delete(long id)
+		public async Task<InvoiceDto> Delete(long id)
 		{
-			throw new NotImplementedException();
+			var invoice = await _unitOfWork.InvoiceRepository.Get(id, _includeProperties);
+
+			foreach (var incomingBook in invoice.IncomingBooks)
+			{
+				var dto = Mapper.Map<BookDto>(incomingBook.Book);
+				dto.Count = dto.Count - incomingBook.Count;
+				await _booksService.Update(dto.Id, dto);
+			}
+			_unitOfWork.InvoiceRepository.Delete(invoice);
+			return new InvoiceDto() {Id = id};
 		}
 
 		public Task<InvoiceDto> Update(long id, InvoiceDto dto)

@@ -154,14 +154,14 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task Delete_ShouldDelete()
 		{
-			var first = Invoices.SingleOrDefault(x => x.Id == DefaultData.Invoices.First.Id);
-			if (first == null) throw new NullReferenceException($"Invoices collection not has invoice with id: {DefaultData.Invoices.First.Id}");
+			var first = Invoices.First();
+			if (first == null) throw new NullReferenceException($"Invoices collection is empty");
 
-			var booksOldCount = DefaultData.Invoices.First.IncomingBooks.Select(incomingBook => Books.Single(x => x.Id == incomingBook.Book.Id)).ToDictionary(book => book.Id, book => book.Count);
+			var booksOldCount = first.IncomingBooks.Select(incomingBook => Books.Single(x => x.Id == incomingBook.Book.Id)).ToDictionary(book => book.Id, book => book.Count);
 
 			await InvoicesService.Delete(first.Id);
 
-			foreach (var incomingBook in DefaultData.Invoices.First.IncomingBooks)
+			foreach (var incomingBook in first.IncomingBooks)
 			{
 				var book = Books.Single(x => x.Id == incomingBook.Book.Id);
 				var expectedCount = booksOldCount[book.Id] - incomingBook.Count;

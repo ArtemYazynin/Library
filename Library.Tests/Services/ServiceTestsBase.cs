@@ -37,10 +37,14 @@ namespace Library.Tests.Services
 			{
 				DefaultData.Books.JsPocketGuide,
 				DefaultData.Books.JsForProfessionals,
+				DefaultData.Books.JsOptimizingPerfomance,
 				DefaultData.Books.Es6AndNotOnly,
 				DefaultData.Books.ClrVia,
 				DefaultData.Books.MyEvernoteNotes,
-				DefaultData.Books.WithoutAuthorsBook
+				DefaultData.Books.WithoutAuthorsBook,
+				DefaultData.Books.CSharpCompleteGuide,
+				DefaultData.Books.CSharp6AndNetPlatform,
+				DefaultData.Books.AsyncProgrammingCSharp5
 			};
 			Authors = new Collection<Author>()
 			{
@@ -98,7 +102,7 @@ namespace Library.Tests.Services
 			AuthorsService = new AuthorsService(unitOfWork);
 			GenresService = new GenresService(unitOfWork);
 			PublishersService = new PublishersService(unitOfWork);
-			InvoicesService = new InvoicesService(unitOfWork);
+			InvoicesService = new InvoicesService(unitOfWork, BooksService);
 		}
 		private Mock<IGenericRepository<Invoice>> GetInvoicesRepositoryStub()
 		{
