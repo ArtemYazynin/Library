@@ -28,9 +28,6 @@ namespace Library.Services.DTO
 		public int Count { get; set; }
 
 		[DataMember]
-		public int CountAvailable { get; set; }
-
-		[DataMember]
 		public EditionDto Edition { get; set; }
 
 		[DataMember]

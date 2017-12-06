@@ -147,7 +147,6 @@ namespace Library.Tests.Services
 				Isbn = newIsbn,
 				Description = newDescription,
 				Count = newCount,
-				CountAvailable = newCountAvailable,
 				Publisher = newPublisherDto,
 				Edition = newEditionDto,
 				Authors = newAuthors
@@ -158,7 +157,6 @@ namespace Library.Tests.Services
 			Assert.That(DefaultData.Books.ClrVia.Isbn, Is.EqualTo(newIsbn));
 			Assert.That(DefaultData.Books.ClrVia.Description, Is.EqualTo(newDescription));
 			Assert.That(DefaultData.Books.ClrVia.Count, Is.EqualTo(newCount));
-			Assert.That(DefaultData.Books.ClrVia.CountAvailable, Is.EqualTo(newCountAvailable));
 
 			Assert.That(DefaultData.Books.ClrVia.Publisher.Id, Is.EqualTo(newPublisherDto.Id));
 			Assert.That(DefaultData.Books.ClrVia.Publisher.Name, Is.EqualTo(newPublisherDto.Name));

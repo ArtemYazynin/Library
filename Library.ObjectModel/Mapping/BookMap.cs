@@ -16,7 +16,6 @@ namespace Library.ObjectModel.Mapping
 			Property(x => x.Description).HasMaxLength(2000).IsOptional();
 
 			Property(x => x.Count).IsRequired();
-			Property(x => x.CountAvailable).IsRequired();
 
 			HasRequired(x => x.Edition).WithMany(x => x.Books);
 			HasRequired(x => x.Publisher).WithMany(x => x.Books);

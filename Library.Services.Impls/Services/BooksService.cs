@@ -117,7 +117,6 @@ namespace Library.Services.Impls.Services
 			dbEntity.Isbn = entity.Isbn;
 			dbEntity.Description = entity.Description;
 			dbEntity.Count = entity.Count;
-			dbEntity.CountAvailable = entity.CountAvailable;
 
 			if (dbEntity.EditionId != bookDto.Edition.Id)
 			{

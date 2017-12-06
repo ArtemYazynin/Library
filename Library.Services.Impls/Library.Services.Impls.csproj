@@ -70,6 +70,10 @@
     <Compile Include="Migrations\201712041521098_V20171203183722IncomingBooks.Designer.cs">
       <DependentUpon>201712041521098_V20171203183722IncomingBooks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712061432262_RemoveCountAvailableInBook.cs" />
+    <Compile Include="Migrations\201712061432262_RemoveCountAvailableInBook.Designer.cs">
+      <DependentUpon>201712061432262_RemoveCountAvailableInBook.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\AuthorsService.cs" />
     <Compile Include="Services\BooksService.cs" />
@@ -111,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712041521098_V20171203183722IncomingBooks.resx">
       <DependentUpon>201712041521098_V20171203183722IncomingBooks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712061432262_RemoveCountAvailableInBook.resx">
+      <DependentUpon>201712061432262_RemoveCountAvailableInBook.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

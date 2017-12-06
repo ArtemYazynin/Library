@@ -12,8 +12,6 @@ namespace Library.Common
 
 		int Count { get; set; }
 
-		int CountAvailable { get; set; }
-
 		TEdition Edition { get; set; }
 
 		TPublisher Publisher { get; set; }

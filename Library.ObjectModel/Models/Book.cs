@@ -21,8 +21,6 @@ namespace Library.ObjectModel.Models
 
 		public int Count { get; set; }
 
-		public int CountAvailable { get; set; }
-
 		public Edition Edition { get; set; }
 		public long EditionId => Edition.Id;
 

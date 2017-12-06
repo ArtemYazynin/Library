@@ -32,7 +32,6 @@ namespace Library.DefaultData
 			{
 				Id = Rnd.Next(int.MaxValue),
 				Count = 13,
-				CountAvailable = 13,
 				Authors = new List<Author>() { Authors.Flenagan },
 				Name = "JavaScript. Карманный справочник",
 				Genres = new List<Genre>() { Genres.JavaScript },
@@ -48,7 +47,6 @@ namespace Library.DefaultData
 			{
 				Id = Rnd.Next(int.MaxValue),
 				Count = 24,
-				CountAvailable = 24,
 				Authors = new List<Author>() { Authors.Rezig, Authors.Ferguson },
 				Genres = new List<Genre>() { Genres.JavaScript },
 				Name = "JavaScript для профессионалов",
@@ -64,7 +62,6 @@ namespace Library.DefaultData
 			{
 				Id = Rnd.Next(int.MaxValue),
 				Count = 34,
-				CountAvailable = 34,
 				Authors = new List<Author>() { Authors.Zakas },
 				Genres = new List<Genre>() { Genres.JavaScript },
 				Name = "JavaScript. Оптимизация производительности",
@@ -81,7 +78,6 @@ namespace Library.DefaultData
 			{
 				Id = Rnd.Next(int.MaxValue),
 				Count = 18,
-				CountAvailable = 18,
 				Authors = new List<Author>() { Authors.Simpson },
 				Genres = new List<Genre>() { Genres.JavaScript },
 				Name = "ES6 и не только",
@@ -98,7 +94,6 @@ namespace Library.DefaultData
 				Id = Rnd.Next(int.MaxValue),
 				Version = new byte[] { 0, 0, 0, 0, 0, 0, 0, 120 },
 				Count = 56,
-				CountAvailable = 56,
 				Authors = new List<Author>() { Authors.Rihter },
 				Genres = new List<Genre>() { Genres.DotNet },
 				Name = "CLR via C#. Программирование на платформе Microsoft.NET Framework 4.5 на языке C#",
@@ -114,7 +109,6 @@ namespace Library.DefaultData
 			{
 				Id = Rnd.Next(int.MaxValue),
 				Count = 33,
-				CountAvailable = 33,
 				Authors = new List<Author>() { Authors.Shildt },
 				Genres = new List<Genre>() { Genres.CSharp },
 				Name = "C# 4.0. Полное руководство",
@@ -130,7 +124,6 @@ namespace Library.DefaultData
 			{
 				Id = Rnd.Next(int.MaxValue),
 				Count = 20,
-				CountAvailable = 20,
 				Name = "Язык программирования C# 6.0 и платформа .NET 4.6",
 				Isbn = "978-5-8459-2099-7, 978-1-4842-1333-9",
 				Publisher = Publishers.Viliams,
@@ -146,7 +139,6 @@ namespace Library.DefaultData
 			{
 				Id = Rnd.Next(int.MaxValue),
 				Count = 62,
-				CountAvailable = 62,
 				Name = "Асинхронное программирование в C# 5.0",
 				Isbn = "978-5-97060-281-2, 978-1449-33716-2",
 				Publisher = Publishers.DmkPress,
