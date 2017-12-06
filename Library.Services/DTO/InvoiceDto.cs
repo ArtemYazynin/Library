@@ -14,12 +14,17 @@ namespace Library.Services.DTO
 
 		[DataMember]
 		public DateTime Date { get; set; }
+
+		[DataMember]
 		public ICollection<IncomingBookDto> IncomingBooks { get; set; }
 	}
 
 	public class IncomingBookDto : EntityDto
 	{
+		[DataMember]
 		public BookDto Book { get; set; }
+
+		[DataMember]
 		public int Count { get; set; }
 
 	}

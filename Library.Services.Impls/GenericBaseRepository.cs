@@ -19,7 +19,9 @@ namespace Library.Services.Impls
 			DbSet = context.Set<TEntity>();
 		}
 
-		public virtual async Task<IEnumerable<TEntity>> GetAllAsync(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+		public virtual async Task<IEnumerable<TEntity>> GetAllAsync(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, 
+							Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
+							string includeProperties = "")
 		{
 			IQueryable<TEntity> query = DbSet;
 

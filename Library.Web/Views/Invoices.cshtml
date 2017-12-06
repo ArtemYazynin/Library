@@ -6,15 +6,23 @@
 				<thead>
 				<tr>
 					<th>Date</th>
+					<th>Incoming Books</th>
 					<th></th>
 				</tr>
 				</thead>
 				<tbody>
 				<tr ng-repeat="invoice in ctrl.Invoices">
 					<td ng-click="actions.enableEdit($event,invoice)">
-						<span ng-bind="invoice.Date">
+						<span ng-bind="invoice.Date | date: 'yyyy.MM.dd HH:mm:ss'">
 
 							</span>
+					</td>
+					<td>
+						<ul class="list-group">
+							<a href="#/books/{{incomingBook.Book.Id}}/edit" class="list-group-item" ng-repeat="incomingBook in invoice.IncomingBooks" 
+								ng-bind-template="{{incomingBook.Book.Name}} - {{incomingBook.Count}}">
+							</a>
+						</ul>
 					</td>
 					<td style="width: 9%;">
 
