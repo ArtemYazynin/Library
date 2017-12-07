@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Publisher;
 using NUnit.Framework;
@@ -167,6 +169,41 @@ namespace Library.Tests.Services
 				var expectedCount = booksOldCount[book.Id] - incomingBook.Count;
 				Assert.That(book.Count, Is.EqualTo(expectedCount));
 			}
+		}
+
+		#endregion
+
+		#region Create
+
+		[Test]
+		public async Task Create_ShouldCreated()
+		{
+			var oldInvoicesCount = Invoices.Count;
+
+			var dto = new InvoiceDto()
+			{
+				Date = DateTime.Now,
+				IncomingBooks = new List<IncomingBookDto>()
+				{
+					new IncomingBookDto()
+					{
+						Book = Mapper.Map<BookDto>(DefaultData.Books.ClrVia),
+						Count = 50
+					},
+					new IncomingBookDto()
+					{
+						Book = Mapper.Map<BookDto>(DefaultData.Books.JsPocketGuide),
+						Count = 100
+					},
+					new IncomingBookDto()
+					{
+						Book = Mapper.Map<BookDto>(DefaultData.Books.JsForProfessionals),
+						Count = 150
+					}
+				}
+			};
+			var createdInvoice = await InvoicesService.Create(dto);
+			Assert.That(createdInvoice.IncomingBooks.Count, Is.EqualTo(dto.IncomingBooks.Count));
 		}
 
 		#endregion

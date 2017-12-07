@@ -44,7 +44,7 @@ namespace Library.Services.Impls.Services
 			throw new NotImplementedException();
 		}
 
-		public Task<InvoiceDto> Create(long id, InvoiceDto dto)
+		public Task<InvoiceDto> Create(InvoiceDto dto)
 		{
 			throw new NotImplementedException();
 		}
