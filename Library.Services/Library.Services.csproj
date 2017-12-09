@@ -35,6 +35,7 @@
     <Compile Include="DTO\EntityDto.cs" />
     <Compile Include="DTO\FileDto.cs" />
     <Compile Include="DTO\GenreDto.cs" />
+    <Compile Include="DTO\IncomingBookDto.cs" />
     <Compile Include="DTO\InvoiceDto.cs" />
     <Compile Include="DTO\PublisherDto.cs" />
     <Compile Include="DTO\RentDto.cs" />

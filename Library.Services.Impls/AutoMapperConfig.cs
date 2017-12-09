@@ -16,6 +16,10 @@ namespace Library.Services.Impls
 				config.CreateMap<Subscriber, SubscriberDto>()
 					.ReverseMap();
 
+				config.CreateMap<IncomingBook, IncomingBookDto>()
+					.ReverseMap()
+					.MaxDepth(1);
+
 				config.CreateMap<Invoice, InvoiceDto>()
 					.ReverseMap();
 

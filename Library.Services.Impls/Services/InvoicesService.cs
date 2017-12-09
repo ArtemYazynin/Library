@@ -44,9 +44,18 @@ namespace Library.Services.Impls.Services
 			throw new NotImplementedException();
 		}
 
-		public Task<InvoiceDto> Create(InvoiceDto dto)
+		public async Task<InvoiceDto> Create(InvoiceDto dto)
 		{
-			throw new NotImplementedException();
+			foreach (var incomingBook in dto.IncomingBooks)
+			{
+				var book = await _booksService.Get(incomingBook.Book.Id);
+				book.Count += incomingBook.Count;
+				await _booksService.Update(book.Id, book);
+			}
+			var invoice = Mapper.Map<Invoice>(dto);
+			_unitOfWork.InvoiceRepository.Create(invoice);
+			await _unitOfWork.Save();
+			return Mapper.Map<InvoiceDto>(invoice);
 		}
 	}
 }

@@ -178,7 +178,10 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task Create_ShouldCreated()
 		{
-			var oldInvoicesCount = Invoices.Count;
+			var clrViaCsharpOldCount = Books.Single(x => x.Id == DefaultData.Books.ClrVia.Id).Count;
+			var jsPocketGuideOldCount = Books.Single(x => x.Id == DefaultData.Books.JsPocketGuide.Id).Count;
+			var jsForProfessionalsOldCount = Books.Single(x => x.Id == DefaultData.Books.JsForProfessionals.Id).Count;
+
 
 			var dto = new InvoiceDto()
 			{
@@ -202,8 +205,17 @@ namespace Library.Tests.Services
 					}
 				}
 			};
-			var createdInvoice = await InvoicesService.Create(dto);
+			await InvoicesService.Create(dto);
+			var createdInvoice = Invoices.SingleOrDefault(x => x.Date == dto.Date);
+			Assert.That(createdInvoice, Is.Not.Null);
 			Assert.That(createdInvoice.IncomingBooks.Count, Is.EqualTo(dto.IncomingBooks.Count));
+			
+			Assert.That(Books.Single(x=>x.Id == DefaultData.Books.ClrVia.Id).Count, 
+						Is.EqualTo(clrViaCsharpOldCount + dto.IncomingBooks.Single(x=>x.Book.Id == DefaultData.Books.ClrVia.Id).Count));
+			Assert.That(Books.Single(x => x.Id == DefaultData.Books.JsPocketGuide.Id).Count,
+						Is.EqualTo(jsPocketGuideOldCount + dto.IncomingBooks.Single(x => x.Book.Id == DefaultData.Books.JsPocketGuide.Id).Count));
+			Assert.That(Books.Single(x => x.Id == DefaultData.Books.JsForProfessionals.Id).Count,
+						Is.EqualTo(jsForProfessionalsOldCount + dto.IncomingBooks.Single(x => x.Book.Id == DefaultData.Books.JsForProfessionals.Id).Count));
 		}
 
 		#endregion
