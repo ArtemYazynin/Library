@@ -2,6 +2,14 @@
 	<div class="panel-heading">Publishers</div>
 	<div class="panel-body">
 		<div>
+			<div class="tooltip-common">
+				<a href="#/invoices/new" class="btn btn-default glyphicon glyphicon-plus"></a>
+				<span class="tooltiptext">Create new invoice</span>
+			</div>
+
+		</div>
+		<br />
+		<div>
 			<table id="publishers-table" class="table table-hover">
 				<thead>
 				<tr>
@@ -27,7 +35,7 @@
 					<td style="width: 9%;">
 
 						<div>
-							<button type="button" class="btn btn-danger" ng-click="actions.remove(invoice)">
+							<button type="button" class="btn btn-danger" ng-click="ctrl.actions.remove(invoice)">
 								<span class="glyphicon glyphicon-remove"></span>
 							</button>
 						</div>

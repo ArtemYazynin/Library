@@ -1,0 +1,37 @@
+﻿<div class="col-lg-12" ng-cloak>
+	<form name="InvoiceCreateFrom" ng-submit="ctrl.actions.save()" novalidate>
+		<div class="form-group">
+			<label for="Books">Books</label>
+			<oi-select id="Books" name="Books"
+			           oi-options="book.Name for book in ctrl.Books"
+			           ng-model="ctrl.Book"
+			          
+			           placeholder="Select Books...">
+			</oi-select>
+		</div>
+		<div class="form-group" ng-if="ctrl.Book" ng-init="ctrl.Count = 0">
+			<label for="Count">Count</label>
+			<input type="number" class="form-control" name="Count" id="Count" ng-model="ctrl.Count" required />
+			<span style="color: red;" >Count is required</span>
+		</div>
+		<button type="button" class="btn btn-primary" ng-disabled="!ctrl.Book || ctrl.Count === 0" ng-click="ctrl.actions.add()">Add</button>
+		
+		<table class="table table-hover" ng-if="ctrl.vm.IncomingBooks.length > 0">
+			<thead>
+			<tr>
+				<th>Book</th>
+				<th>Count</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="incomingBook in ctrl.vm.IncomingBooks">
+				<td ng-bind="incomingBook.Book.Name"></td>
+				<td ng-bind="incomingBook.Count"></td>
+			</tr>
+			</tbody>
+		</table>
+		@*<button type="submit" class="btn btn-primary" ng-disabled="InvoiceCreateFrom.$pristine || InvoiceCreateFrom.$invalid">Submit</button>
+		<button type="button" class="btn btn-danger" ng-click="ctrl.actions.back()">Back</button>*@
+	</form>
+</div>

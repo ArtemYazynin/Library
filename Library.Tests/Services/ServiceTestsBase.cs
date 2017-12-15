@@ -72,6 +72,28 @@ namespace Library.Tests.Services
 				DefaultData.Genres.Programming,
 				DefaultData.Genres.WebProgramming
 			};
+
+			#region Publishers
+
+			DefaultData.Publishers.Viliams.Books = new List<Book>()
+			{
+				DefaultData.Books.JsPocketGuide,
+				DefaultData.Books.JsForProfessionals,
+				DefaultData.Books.CSharpCompleteGuide,
+				DefaultData.Books.CSharp6AndNetPlatform
+			};
+			DefaultData.Publishers.Self.Books = new List<Book>()
+			{
+				DefaultData.Books.WithoutAuthorsBook,
+				DefaultData.Books.MyEvernoteNotes
+			};
+			DefaultData.Publishers.Piter.Books = new List<Book>()
+			{
+				DefaultData.Books.Es6AndNotOnly,
+				DefaultData.Books.ClrVia
+			};
+			DefaultData.Publishers.DmkPress.Books = new List<Book>() {DefaultData.Books.AsyncProgrammingCSharp5};
+			DefaultData.Publishers.SymbolPlus.Books = new List<Book>() {DefaultData.Books.JsOptimizingPerfomance};
 			Publishers = new Collection<Publisher>()
 			{
 				DefaultData.Publishers.Self,
@@ -81,6 +103,9 @@ namespace Library.Tests.Services
 				DefaultData.Publishers.Viliams,
 
 			};
+
+			#endregion
+
 			Invoices = new Collection<Invoice>()
 			{
 				DefaultData.Invoices.First,

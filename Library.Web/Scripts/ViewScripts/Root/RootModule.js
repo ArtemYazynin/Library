@@ -89,6 +89,13 @@
 			controllerAs: "ctrl"
 		});
 
+		$routeProvider.when("/invoices/new",
+		{
+			templateUrl: "/LibraryView/InvoiceDetails",
+			controller: "InvoicesDetailsController",
+			controllerAs: "ctrl"
+		});
+
 		$routeProvider.when("/authors", {
 			templateUrl: "/LibraryView/Authors",
 			controller: "AuthorsController"

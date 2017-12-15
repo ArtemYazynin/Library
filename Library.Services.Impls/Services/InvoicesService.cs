@@ -31,11 +31,13 @@ namespace Library.Services.Impls.Services
 
 			foreach (var incomingBook in invoice.IncomingBooks)
 			{
-				var dto = Mapper.Map<BookDto>(incomingBook.Book);
-				dto.Count = dto.Count - incomingBook.Count;
-				await _booksService.Update(dto.Id, dto);
+				var book = await _unitOfWork.BookRepository.Get(incomingBook.Book.Id);
+				book.Count = book.Count - incomingBook.Count;
+				_unitOfWork.BookRepository.Update(book);
+				await _unitOfWork.Save();
 			}
 			_unitOfWork.InvoiceRepository.Delete(invoice);
+			await _unitOfWork.Save();
 			return new InvoiceDto() {Id = id};
 		}
 
@@ -48,9 +50,10 @@ namespace Library.Services.Impls.Services
 		{
 			foreach (var incomingBook in dto.IncomingBooks)
 			{
-				var book = await _booksService.Get(incomingBook.Book.Id);
-				book.Count += incomingBook.Count;
-				await _booksService.Update(book.Id, book);
+				var book = await _unitOfWork.BookRepository.Get(incomingBook.Book.Id);
+				book.Count = book.Count + incomingBook.Count;
+				_unitOfWork.BookRepository.Update(book);
+				await _unitOfWork.Save();
 			}
 			var invoice = Mapper.Map<Invoice>(dto);
 			_unitOfWork.InvoiceRepository.Create(invoice);

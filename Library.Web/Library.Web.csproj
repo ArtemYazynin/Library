@@ -220,6 +220,7 @@
     <Content Include="Scripts\ViewScripts\Genres\GenresController.js" />
     <Content Include="Scripts\ViewScripts\Genres\GenresModule.js" />
     <Content Include="Scripts\ViewScripts\Invoices\InvoicesController.js" />
+    <Content Include="Scripts\ViewScripts\Invoices\InvoicesDetailsController.js" />
     <Content Include="Scripts\ViewScripts\Invoices\InvoicesModule.js" />
     <Content Include="Scripts\ViewScripts\Publishers\PublishersController.js" />
     <Content Include="Scripts\ViewScripts\Publishers\PublishersModule.js" />
@@ -249,6 +250,7 @@
     <Content Include="Views\Genres.cshtml" />
     <Content Include="Views\Publishers.cshtml" />
     <Content Include="Views\Invoices.cshtml" />
+    <Content Include="Views\InvoiceDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery\jquery-3.1.1.slim.min.map" />
