@@ -48,17 +48,36 @@ namespace Library.Services.Impls.Services
 
 		public async Task<InvoiceDto> Create(InvoiceDto dto)
 		{
+			var invoice = new Invoice()
+			{
+				Date = DateTime.Now
+			};
+			await FillIncoimingBooks(dto, invoice);
+			_unitOfWork.InvoiceRepository.Create(invoice);
+			await _unitOfWork.Save();
+
+			return Mapper.Map<InvoiceDto>(invoice);
+		}
+
+		private async Task FillIncoimingBooks(InvoiceDto dto, Invoice invoice)
+		{
 			foreach (var incomingBook in dto.IncomingBooks)
 			{
 				var book = await _unitOfWork.BookRepository.Get(incomingBook.Book.Id);
-				book.Count = book.Count + incomingBook.Count;
-				_unitOfWork.BookRepository.Update(book);
-				await _unitOfWork.Save();
+				await UpdateBookCount(book, incomingBook);
+				invoice.IncomingBooks.Add(new IncomingBook()
+				{
+					Book = book,
+					Count = incomingBook.Count,
+				});
 			}
-			var invoice = Mapper.Map<Invoice>(dto);
-			_unitOfWork.InvoiceRepository.Create(invoice);
+		}
+
+		private async Task UpdateBookCount(Book book, IncomingBookDto incomingBook)
+		{
+			book.Count = book.Count + incomingBook.Count;
+			_unitOfWork.BookRepository.Update(book);
 			await _unitOfWork.Save();
-			return Mapper.Map<InvoiceDto>(invoice);
 		}
 	}
 }

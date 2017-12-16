@@ -22,7 +22,7 @@ namespace Library.ObjectModel.Models
 		public int Count { get; set; }
 
 		public Edition Edition { get; set; }
-		public long EditionId => Edition.Id;
+		public long EditionId { get; set; }
 
 		public Publisher Publisher { get; set; }
 		public long PublisherId { get; set; }

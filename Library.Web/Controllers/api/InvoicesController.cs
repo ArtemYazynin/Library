@@ -27,5 +27,10 @@ namespace Library.Web.Controllers.api
 			var result = await _invoicesService.Delete(id);
 			return result;
 		}
+
+		public async Task Post(InvoiceDto dto)
+		{
+			await _invoicesService.Create(dto);
+		}
 	}
 }

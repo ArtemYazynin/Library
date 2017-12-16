@@ -76,7 +76,7 @@ namespace Library.Tests.Services
 				}
 			};
 			await InvoicesService.Create(dto);
-			var createdInvoice = Invoices.SingleOrDefault(x => x.Date == dto.Date);
+			var createdInvoice = Invoices.Last();
 			Assert.That(createdInvoice, Is.Not.Null);
 			Assert.That(createdInvoice.IncomingBooks.Count, Is.EqualTo(dto.IncomingBooks.Count));
 			

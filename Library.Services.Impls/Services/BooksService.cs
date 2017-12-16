@@ -32,7 +32,7 @@ namespace Library.Services.Impls.Services
 		public async Task<IEnumerable<BookDto>> Search(Filters filters)
 		{
 			var expressions = BuildExpressions(filters);
-			var includeProperties = $"{nameof(Publisher)},{nameof(Book.Genres)},{nameof(Book.Authors)}";
+			var includeProperties = $"{nameof(Publisher)},{nameof(Book.Genres)},{nameof(Book.Authors)},{nameof(Book.Edition)}";
 			var books = await _unitOfWork.BookRepository.GetAllAsync(expressions, includeProperties: includeProperties);
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;

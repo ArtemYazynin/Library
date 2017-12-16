@@ -3,10 +3,9 @@
 		<div class="form-group">
 			<label for="Books">Books</label>
 			<oi-select id="Books" name="Books"
-			           oi-options="book.Name for book in ctrl.Books"
+			           oi-options="book.Name for book in ctrl.booksFn()"
 			           ng-model="ctrl.Book"
-			          
-			           placeholder="Select Books...">
+						placeholder="Select Books...">
 			</oi-select>
 		</div>
 		<div class="form-group" ng-if="ctrl.Book" ng-init="ctrl.Count = 0">
@@ -15,7 +14,7 @@
 			<span style="color: red;" >Count is required</span>
 		</div>
 		<button type="button" class="btn btn-primary" ng-disabled="!ctrl.Book || ctrl.Count === 0" ng-click="ctrl.actions.add()">Add</button>
-		
+		<button type="button" class="btn btn-danger" ng-click="ctrl.actions.back()">Back</button>
 		<table class="table table-hover" ng-if="ctrl.vm.IncomingBooks.length > 0">
 			<thead>
 			<tr>
@@ -28,9 +27,15 @@
 			<tr ng-repeat="incomingBook in ctrl.vm.IncomingBooks">
 				<td ng-bind="incomingBook.Book.Name"></td>
 				<td ng-bind="incomingBook.Count"></td>
+				<td>
+					<button type="button" class="btn btn-danger" ng-click="ctrl.actions.remove(incomingBook)">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button>
+				</td>
 			</tr>
 			</tbody>
 		</table>
+		<button type="button" class="btn btn-primary" ng-if="ctrl.vm.IncomingBooks.length > 0"  ng-click="ctrl.actions.save()">Save</button>
 		@*<button type="submit" class="btn btn-primary" ng-disabled="InvoiceCreateFrom.$pristine || InvoiceCreateFrom.$invalid">Submit</button>
 		<button type="button" class="btn btn-danger" ng-click="ctrl.actions.back()">Back</button>*@
 	</form>

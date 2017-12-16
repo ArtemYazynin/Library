@@ -28,8 +28,8 @@
 			vm.$delete(null, successCallback);
 		}
 		function _create(vm, successCallback) {
-			var newAuthor = new resource(vm);
-			newAuthor.$save(null, successCallback);
+			var invoice = new resource(vm);
+			invoice.$save(null, successCallback);
 		}
 		return {
 			get: _get,

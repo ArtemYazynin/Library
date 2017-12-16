@@ -62,6 +62,7 @@
     <Compile Include="GenericBaseRepository.cs" />
     <Compile Include="Exceptions\Author\AuthorDublicateException.cs" />
     <Compile Include="GenresRepository.cs" />
+    <Compile Include="InvoicesRepository.cs" />
     <Compile Include="Migrations\201712041358420_InitialCreate.cs" />
     <Compile Include="Migrations\201712041358420_InitialCreate.Designer.cs">
       <DependentUpon>201712041358420_InitialCreate.cs</DependentUpon>
@@ -73,6 +74,10 @@
     <Compile Include="Migrations\201712061432262_RemoveCountAvailableInBook.cs" />
     <Compile Include="Migrations\201712061432262_RemoveCountAvailableInBook.Designer.cs">
       <DependentUpon>201712061432262_RemoveCountAvailableInBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712161058110_BookEdition.cs" />
+    <Compile Include="Migrations\201712161058110_BookEdition.Designer.cs">
+      <DependentUpon>201712161058110_BookEdition.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\AuthorsService.cs" />
@@ -118,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712061432262_RemoveCountAvailableInBook.resx">
       <DependentUpon>201712061432262_RemoveCountAvailableInBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712161058110_BookEdition.resx">
+      <DependentUpon>201712161058110_BookEdition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

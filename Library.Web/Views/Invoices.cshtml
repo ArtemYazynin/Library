@@ -1,5 +1,5 @@
 ﻿<div class="panel panel-default">
-	<div class="panel-heading">Publishers</div>
+	<div class="panel-heading">Invoices</div>
 	<div class="panel-body">
 		<div>
 			<div class="tooltip-common">
@@ -19,7 +19,7 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr ng-repeat="invoice in ctrl.Invoices">
+				<tr ng-repeat="invoice in ctrl.Invoices | orderBy: '-Date'">
 					<td ng-click="actions.enableEdit($event,invoice)">
 						<span ng-bind="invoice.Date | date: 'yyyy.MM.dd HH:mm:ss'">
 
@@ -41,11 +41,6 @@
 						</div>
 					</td>
 				</tr>
-				@*<tr ng-click="actions.addNew($event)">
-					<td colspan="2">
-						<i>Click to add new publisher...</i>
-					</td>
-				</tr>*@
 				</tbody>
 			</table>
 		</div>

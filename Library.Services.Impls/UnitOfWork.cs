@@ -23,7 +23,7 @@ namespace Library.Services.Impls
 		private GenericRepository<Edition> _editionRepository;
 		private GenericRepository<File> _fileRepository;
 		private GenresRepository _genreRepository;
-		private GenericRepository<Invoice> _invoiceRepository;
+		private InvoicesRepository _invoiceRepository;
 		private GenericRepository<Publisher> _publisherRepository;
 		private GenericRepository<Rent> _rentRepository;
 		private GenericRepository<Subscriber> _subscriberRepository;
@@ -36,7 +36,7 @@ namespace Library.Services.Impls
 		public IGenericRepository<Edition> EditionRepository => _editionRepository ?? (_editionRepository = new GenericRepository<Edition>(_context));
 		public IGenericRepository<File> FileRepository => _fileRepository ?? (_fileRepository = new GenericRepository<File>(_context));
 		public IGenresRepository GenreRepository => _genreRepository ?? (_genreRepository = new GenresRepository(_context));
-		public IGenericRepository<Invoice> InvoiceRepository => _invoiceRepository ?? (_invoiceRepository = new GenericRepository<Invoice>(_context));
+		public IGenericRepository<Invoice> InvoiceRepository => _invoiceRepository ?? (_invoiceRepository = new InvoicesRepository(_context));
 		public IGenericRepository<Publisher> PublisherRepository => _publisherRepository ?? (_publisherRepository = new GenericRepository<Publisher>(_context));
 		public IGenericRepository<Rent> RentRepository => _rentRepository ?? (_rentRepository = new GenericRepository<Rent>(_context));
 		public IGenericRepository<Subscriber> SubscriberRepository => _subscriberRepository ?? (_subscriberRepository = new GenericRepository<Subscriber>(_context));
