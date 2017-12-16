@@ -16,7 +16,7 @@
 					self.Invoices.splice(index, 1);
 					$ngConfirm({
 						title: "Successfully removed!",
-						content: "Invoice was deleted",
+						content: "Invoice was removed",
 						backgroundDismiss: true
 					});
 				});

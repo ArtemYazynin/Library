@@ -90,6 +90,7 @@
     <Compile Include="Services\GenresService.cs" />
     <Compile Include="Services\InvoicesService.cs" />
     <Compile Include="Services\PublishersService.cs" />
+    <Compile Include="Services\SubscribersService.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

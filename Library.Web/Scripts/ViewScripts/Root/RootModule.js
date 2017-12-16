@@ -1,6 +1,6 @@
 ﻿(function (angular) {
 	"use strict";
-	angular.module("RootModule", ["ngRoute", "BooksModule", "AuthorsModule", "GenresModule", "PublishersModule","InvoicesModule", "oi.select", "cp.ngConfirm", "ui.tree"])
+	angular.module("RootModule", ["ngRoute", "BooksModule", "AuthorsModule", "GenresModule", "PublishersModule", "InvoicesModule", "SubscribersModule", "oi.select", "cp.ngConfirm", "ui.tree"])
 	.config(["$routeProvider", "$locationProvider", "$httpProvider", "$ngConfirmProvider", function ($routeProvider, $locationProvider, $httpProvider, $ngConfirmProvider) {
 		$httpProvider.interceptors.push("$q", function ($q) {
 			return {
@@ -81,6 +81,15 @@
 			templateUrl: "/LibraryView/Publishers",
 			controller: "PublishersController"
 		});
+
+		
+		$routeProvider.when("/subscribers",
+		{
+			templateUrl: "LibraryView/Subscribers",
+			controller: "SubscribersController",
+			controllerAs: "ctrl"
+		});
+
 
 		$routeProvider.when("/invoices",
 		{

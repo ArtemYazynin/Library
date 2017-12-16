@@ -1,0 +1,42 @@
+﻿<div class="panel panel-default">
+	<div class="panel-heading">Subscribers</div>
+	<div class="panel-body">
+		<div>
+			<div class="tooltip-common">
+				<a href="#/subscribers/new" class="btn btn-default glyphicon glyphicon-plus"></a>
+				<span class="tooltiptext">Create new subscriber</span>
+			</div>
+			
+		</div>
+		<br />
+		<div>
+			<table class="table table-bordered table-condensed table-hover">
+				<thead>
+					<tr>
+						<th>Subscriber</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="subscriber in Subscribers">
+						<td ng-bind="subscriber.Fio"></td>
+						<td style="width: 9%;">
+							<div class="tooltip-common">
+								<button type="button" class="btn btn-primary" ng-disabled="true" ng-click="actions.details(subscriber)">
+									<span class="glyphicon glyphicon-edit"></span>
+								</button>
+								<span class="tooltiptext">Edit</span>
+							</div>
+							<div class="tooltip-common">
+								<button type="button" class="btn btn-danger" ng-disabled="true" ng-click="actions.remove(subscriber)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+								<span class="tooltiptext">Remove</span>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
