@@ -21,12 +21,14 @@ namespace Library.Tests.Services
 		protected IGenresService GenresService;
 		protected IPublishersService PublishersService;
 		protected IInvoicesService InvoicesService;
+		protected ISubscribersService SubscribersService;
 
 		protected Collection<Book> Books;
 		protected Collection<Author> Authors;
 		protected Collection<Genre> Genres;
 		protected Collection<Publisher> Publishers;
 		protected Collection<Invoice> Invoices;
+		protected Collection<Subscriber> Subscribers;
 
 		protected Random Random = new Random();
 
@@ -112,22 +114,34 @@ namespace Library.Tests.Services
 				DefaultData.Invoices.Second,
 				DefaultData.Invoices.Third
 			};
+
+			Subscribers = new Collection<Subscriber>()
+			{
+				DefaultData.Subscribers.Petrov,
+				DefaultData.Subscribers.Ivanov,
+				DefaultData.Subscribers.Maslov,
+				DefaultData.Subscribers.Sidorov
+			};
 			var stubBookRepository = GetBookRepositoryStub();
 			var stubAuthorRepository = GetAuthorsRepositoryStub();
 			var stubGenresRepository = GetGenresRepositoryStub();
 			var stubPublishersRepository = GetPublishersRepositoryStub();
 			var stubInvoicesRepository = GetInvoicesRepositoryStub();
+			var stubSubscribersRepository = GetSubscribersRepositoryStub();
+
 			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object 
 													&& x.AuthorRepository == stubAuthorRepository.Object
 													&& x.GenreRepository == stubGenresRepository.Object
 													&& x.PublisherRepository == stubPublishersRepository.Object
-													&& x.InvoiceRepository == stubInvoicesRepository.Object);
+													&& x.InvoiceRepository == stubInvoicesRepository.Object
+													&& x.SubscriberRepository == stubSubscribersRepository.Object);
 
 			BooksService = new BooksService(unitOfWork);
 			AuthorsService = new AuthorsService(unitOfWork);
 			GenresService = new GenresService(unitOfWork);
 			PublishersService = new PublishersService(unitOfWork);
 			InvoicesService = new InvoicesService(unitOfWork, BooksService);
+			SubscribersService = new SubscribersService(unitOfWork);
 		}
 		private Mock<IGenericRepository<Invoice>> GetInvoicesRepositoryStub()
 		{
@@ -356,6 +370,55 @@ namespace Library.Tests.Services
 				return true;
 			});
 			return stubAuthorRepository;
+		}
+
+		private Mock<IGenericRepository<Subscriber>> GetSubscribersRepositoryStub()
+		{
+			var stubSubscriberRepository = new Mock<IGenericRepository<Subscriber>>();
+			stubSubscriberRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Subscriber, bool>>>>(),
+					It.IsAny<Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>>>(),
+					It.IsAny<string>()))
+				.ReturnsAsync((IEnumerable<Expression<Func<Subscriber, bool>>> filters,
+					Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>> order, string includeProperties) =>
+				{
+					IEnumerable<Subscriber> localEntities = Subscribers;
+					return GetAllStub(localEntities, filters, order);
+				});
+
+			stubSubscriberRepository.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
+				.ReturnsAsync((long id, string includeProperties) => Subscribers.SingleOrDefault(x => x.Id == id));
+
+			stubSubscriberRepository.Setup(x => x.Create(It.IsAny<Subscriber>()))
+				.Returns((Subscriber x) =>
+				{
+					Subscribers.Add(x);
+					return true;
+				});
+			stubSubscriberRepository.Setup(x => x.Delete(It.IsAny<long>()))
+				.Returns((long id) =>
+				{
+					var subscriber = Subscribers.SingleOrDefault(x => x.Id == id);
+					if (subscriber == null) return false;
+
+					Subscribers.Remove(subscriber);
+					return true;
+				});
+			stubSubscriberRepository.Setup(x => x.Delete(It.IsAny<Subscriber>()))
+				.Returns<Subscriber>(x =>
+				{
+					Subscribers.Remove(x);
+					return true;
+				});
+			stubSubscriberRepository.Setup(x => x.Update(It.IsAny<Subscriber>())).Returns((Subscriber dbentity) =>
+			{
+				var subscriber = Subscribers.Single(x => x.Id == dbentity.Id);
+				subscriber.Lastname = dbentity.Lastname;
+				subscriber.Firstname = dbentity.Firstname;
+				subscriber.Middlename = dbentity.Middlename;
+
+				return true;
+			});
+			return stubSubscriberRepository;
 		}
 
 		private Mock<IGenericRepository<Book>> GetBookRepositoryStub()

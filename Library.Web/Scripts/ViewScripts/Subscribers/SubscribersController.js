@@ -2,32 +2,55 @@
 	"use strict";
 
 	angular.module("SubscribersModule")
-		.controller("SubscribersController", ["subscribersService", "$ngConfirm", function (subscribersService, $ngConfirm) {
-		var self = this;
-
+		.controller("SubscribersController", ["$scope", "subscribersService", "$ngConfirm", function ($scope, subscribersService, $ngConfirm) {
 		subscribersService.get(function(response) {
-			self.Subscribers = response;
+			$scope.Subscribers = response;
 		});
 
-		this.actions = (function () {
+		$scope.actions = (function () {
 			function _remove(subscriber) {
 				subscribersService.remove(subscriber, function (response) {
-					var index = self.Subscribers.indexOf(response);
-					self.Subscribers.splice(index, 1);
+					var index = $scope.Subscribers.indexOf(response);
+					$scope.Subscribers.splice(index, 1);
 					$ngConfirm({
 						title: "Successfully removed!",
 						content: "Subscriber was removed",
 						backgroundDismiss: true
+						
 					});
 				});
 			}
 
-			function _create() {
+			function _save() {
+				if ($scope.selectedSubscriber.Id) {
+					subscribersService.update($scope.selectedSubscriber, function (response) {
+						var s = response;
+						var ms = $scope;
+					});
+				} else {
+					subscribersService.create($scope.selectedSubscriber, function (response) {
+						var s = response;
+						var ms = $scope;
+					});
+				}
 				
+			}
+
+			function _details(subscriber) {
+				$scope.selectedSubscriber = subscriber;
+				$ngConfirm({
+					title: subscriber.Fio,
+					scope: $scope,
+					contentUrl: 'src/subscriberDetails.html',
+					backgroundDismiss: true,
+					closeIcon: true,
+					theme: 'modern'
+				});
 			}
 			return {
 				remove: _remove,
-				create: _create
+				save: _save,
+				details: _details
 			}
 		})();
 	}]);

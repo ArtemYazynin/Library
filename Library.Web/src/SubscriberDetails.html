@@ -1,0 +1,21 @@
+﻿<div style="height: 300px;">
+	<form name="SubscriberDetails" ng-submit="actions.save()" novalidate>
+		<div class="form-group">
+			<label for="Lastname">Lastname</label>
+			<input type="text" class="form-control" name="Lastname" id="Lastname" ng-model="selectedSubscriber.Lastname" required />
+			<span style="color: red;" ng-show="SubscriberDetails.Lastname.$error.required">Lastname is required</span>
+		</div>
+		<div class="form-group">
+			<label for="Firstname">Firstname</label>
+			<input type="text" class="form-control" name="Firstname" id="Firstname" ng-model="selectedSubscriber.Firstname" required />
+			<span style="color: red;" ng-show="SubscriberDetails.Firstname.$error.required">Firstname is required</span>
+		</div>
+		<div class="form-group">
+			<label for="Middlename">Middlename</label>
+			<input type="text" class="form-control" name="Middlename" id="Middlename" ng-model="selectedSubscriber.Middlename" />
+		</div>
+		<div style="text-align: center;">
+			<button type="submit" class="btn btn-primary" ng-disabled="SubscriberDetails.$pristine || SubscriberDetails.$invalid">Save</button>
+		</div>
+	</form>
+</div>

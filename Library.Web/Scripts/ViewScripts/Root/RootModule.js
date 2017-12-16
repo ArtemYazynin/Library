@@ -86,8 +86,7 @@
 		$routeProvider.when("/subscribers",
 		{
 			templateUrl: "LibraryView/Subscribers",
-			controller: "SubscribersController",
-			controllerAs: "ctrl"
+			controller: "SubscribersController"
 		});
 
 
