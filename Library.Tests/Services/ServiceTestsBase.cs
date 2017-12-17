@@ -22,6 +22,7 @@ namespace Library.Tests.Services
 		protected IPublishersService PublishersService;
 		protected IInvoicesService InvoicesService;
 		protected ISubscribersService SubscribersService;
+		protected IRentsService RentsService;
 
 		protected Collection<Book> Books;
 		protected Collection<Author> Authors;
@@ -29,6 +30,7 @@ namespace Library.Tests.Services
 		protected Collection<Publisher> Publishers;
 		protected Collection<Invoice> Invoices;
 		protected Collection<Subscriber> Subscribers;
+		protected Collection<Rent> Rents;
 
 		protected Random Random = new Random();
 
@@ -122,6 +124,16 @@ namespace Library.Tests.Services
 				DefaultData.Subscribers.Maslov,
 				DefaultData.Subscribers.Sidorov
 			};
+			Rents = new Collection<Rent>()
+			{
+				DefaultData.Rents.RentIvanov1,
+				DefaultData.Rents.RentIvanov2,
+				DefaultData.Rents.RentIvanov3,
+				DefaultData.Rents.RentMaslov,
+				DefaultData.Rents.RentPetrov,
+				DefaultData.Rents.RentSidorov
+			};
+
 			var stubBookRepository = GetBookRepositoryStub();
 			var stubAuthorRepository = GetAuthorsRepositoryStub();
 			var stubGenresRepository = GetGenresRepositoryStub();
@@ -142,6 +154,7 @@ namespace Library.Tests.Services
 			PublishersService = new PublishersService(unitOfWork);
 			InvoicesService = new InvoicesService(unitOfWork);
 			SubscribersService = new SubscribersService(unitOfWork);
+			RentsService = new RentsService(unitOfWork);
 		}
 		private Mock<IGenericRepository<Invoice>> GetInvoicesRepositoryStub()
 		{

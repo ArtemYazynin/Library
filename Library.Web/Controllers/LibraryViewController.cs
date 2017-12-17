@@ -47,5 +47,10 @@ namespace Library.Web.Controllers
 		{
 			return PartialView("..//Subscribers");
 		}
+
+		public ActionResult Rents()
+		{
+			return PartialView("..//Rents");
+		}
 	}
 }

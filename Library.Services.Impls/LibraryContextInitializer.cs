@@ -88,28 +88,28 @@ namespace Library.Services.Impls
 					Book = DefaultData.Books.ClrVia,
 					Subscriber = DefaultData.Subscribers.Sidorov,
 					Count = 1,
-					IsActive = true
+					IsActive = false
 				},
 				new Rent()
 				{
 					Book = DefaultData.Books.CSharpCompleteGuide,
 					Subscriber = DefaultData.Subscribers.Maslov,
 					Count = 1,
-					IsActive = true
+					IsActive = false
 				},
 				new Rent()
 				{
 					Book = DefaultData.Books.AsyncProgrammingCSharp5,
 					Subscriber = DefaultData.Subscribers.Maslov,
 					Count = 1,
-					IsActive = true
+					IsActive = false
 				},
 				new Rent()
 				{
 					Book = DefaultData.Books.CSharp6AndNetPlatform,
 					Subscriber = DefaultData.Subscribers.Maslov,
 					Count = 1,
-					IsActive = true
+					IsActive = false
 				},
 			};
 			rents.ForEach(x => context.Rents.Add(x));

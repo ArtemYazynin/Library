@@ -144,6 +144,7 @@
     <Compile Include="Controllers\api\GenresController.cs" />
     <Compile Include="Controllers\api\InvoicesController.cs" />
     <Compile Include="Controllers\api\PublishersController.cs" />
+    <Compile Include="Controllers\api\RentsController.cs" />
     <Compile Include="Controllers\api\SubscribersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibraryViewController.cs" />
@@ -225,6 +226,8 @@
     <Content Include="Scripts\ViewScripts\Invoices\InvoicesModule.js" />
     <Content Include="Scripts\ViewScripts\Publishers\PublishersController.js" />
     <Content Include="Scripts\ViewScripts\Publishers\PublishersModule.js" />
+    <Content Include="Scripts\ViewScripts\Rents\RentsController.js" />
+    <Content Include="Scripts\ViewScripts\Rents\RentsModule.js" />
     <Content Include="Scripts\ViewScripts\Root\RootController.js" />
     <Content Include="Scripts\ViewScripts\Root\RootModule.js" />
     <Content Include="Scripts\ViewScripts\Subscribers\SubscribersController.js" />
@@ -256,6 +259,7 @@
     <Content Include="Views\Invoices.cshtml" />
     <Content Include="Views\InvoiceDetails.cshtml" />
     <Content Include="Views\Subscribers.cshtml" />
+    <Content Include="Views\Rents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery\jquery-3.1.1.slim.min.map" />

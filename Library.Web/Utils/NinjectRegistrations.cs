@@ -20,6 +20,7 @@ namespace Library.Web.Utils
 			Bind<IBooksService>().To<BooksService>();
 			Bind<IInvoicesService>().To<InvoicesService>();
 			Bind<ISubscribersService>().To<SubscribersService>();
+			Bind<IRentsService>().To<RentsService>();
 		}
 	}
 }
