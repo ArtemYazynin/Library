@@ -22,24 +22,40 @@
 			}
 
 			function _save() {
+				function clear() {
+					delete $scope.selectedSubscriber;
+					delete $scope.createDialog;
+				}
+
+				function closeDialog() {
+					$scope.createDialog.close();
+				}
 				if ($scope.selectedSubscriber.Id) {
 					subscribersService.update($scope.selectedSubscriber, function (response) {
-						var s = response;
-						var ms = $scope;
+						var index = $scope.Subscribers.indexOf(response);
+						$scope.Subscribers[index] = response;
+
+						$ngConfirm({
+							title: "Successfully update!",
+							content: "Subscriber was updated",
+							backgroundDismiss: true
+
+						});
 					});
 				} else {
 					subscribersService.create($scope.selectedSubscriber, function (response) {
-						var s = response;
-						var ms = $scope;
+						$scope.Subscribers.push(response);
+						closeDialog();
+						clear();
 					});
 				}
 				
 			}
 
 			function _details(subscriber) {
-				$scope.selectedSubscriber = subscriber;
-				$ngConfirm({
-					title: subscriber.Fio,
+				$scope.selectedSubscriber = subscriber || {};
+				$scope.createDialog = $ngConfirm({
+					title: $scope.selectedSubscriber.Fio || "Create new subscriber",
 					scope: $scope,
 					contentUrl: 'src/subscriberDetails.html',
 					backgroundDismiss: true,

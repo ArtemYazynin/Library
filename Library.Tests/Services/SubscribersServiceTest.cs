@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Subscriber;
 using NUnit.Framework;
@@ -48,12 +50,13 @@ namespace Library.Tests.Services
 
 		#endregion
 
+
 		#region Create
 
 		[Test]
 		public async Task Create_ShouldCreated()
 		{
-			var oldCount = Authors.Count;
+			var oldCount = Subscribers.Count;
 			var subscriber = new SubscriberDto()
 			{
 				Id = Random.Next(int.MaxValue),
@@ -88,6 +91,102 @@ namespace Library.Tests.Services
 		{
 			var dto = new SubscriberDto();
 			Assert.Throws<SubscriberIncorrectException>(async () => await SubscribersService.Create(dto));
+		}
+
+		#endregion
+
+
+		#region Update
+
+		[Test]
+		public async Task Update_ShouldUpdated()
+		{
+			var dto = new SubscriberDto()
+			{
+				Id = DefaultData.Subscribers.Sidorov.Id,
+				Lastname = "updateSubscriberTest_Lastname",
+				Firstname = "updateSubscriberTest_Firstname",
+				Middlename = "updateSubscriberTest_Middlename"
+			};
+			var returnVal = await SubscribersService.Update(dto.Id, dto);
+
+			#region Assert return value
+
+			Assert.That(returnVal.Lastname, Is.EqualTo(dto.Lastname));
+			Assert.That(returnVal.Firstname, Is.EqualTo(dto.Firstname));
+			Assert.That(returnVal.Middlename, Is.EqualTo(dto.Middlename));
+
+			#endregion
+
+			var updatedSubscriber = Subscribers.Single(x => x.Id == dto.Id);
+			Assert.That(updatedSubscriber.Lastname, Is.EqualTo(dto.Lastname));
+			Assert.That(updatedSubscriber.Firstname, Is.EqualTo(dto.Firstname));
+			Assert.That(updatedSubscriber.Middlename, Is.EqualTo(dto.Middlename));
+		}
+
+		[Test]
+		public void Update_ExistsSubscriber_ShouldThrownSubscriberDublicateException()
+		{
+			var dto = new SubscriberDto()
+			{
+				Id = DefaultData.Subscribers.Ivanov.Id,
+				Lastname = DefaultData.Subscribers.Petrov.Lastname,
+				Firstname = DefaultData.Subscribers.Petrov.Firstname,
+				Middlename = DefaultData.Subscribers.Petrov.Middlename
+			};
+
+			Assert.Throws<SubscriberDublicateException>(async () => await SubscribersService.Update(dto.Id, dto));
+		}
+
+		[Test]
+		public void Update_IncorrectSubscriber_ShouldThrownSubscriberIncorrectException()
+		{
+			var dto = new SubscriberDto() {Id = DefaultData.Subscribers.Ivanov.Id};
+			Assert.Throws<SubscriberIncorrectException>(async () => await SubscribersService.Update(dto.Id, dto));
+		}
+
+		[Test]
+		public void Update_IncorrectSubscriber_ShouldThrownSubscriberHasIncorrectIdException()
+		{
+			var dto = new SubscriberDto();
+			Assert.Throws<SubscriberHasIncorrectIdException>(async () => await SubscribersService.Update(dto.Id, dto));
+		}
+
+		#endregion
+
+		#region Delete
+
+		[Test]
+		public async Task Delete_ShouldDeleted()
+		{
+			var oldCount = Subscribers.Count;
+
+			var subscriber = Subscribers.First();
+
+			var returnVal = await SubscribersService.Delete(subscriber.Id);
+
+			#region Assert returnVal
+
+			Assert.That(returnVal.Lastname, Is.EqualTo(subscriber.Lastname));
+			Assert.That(returnVal.Firstname, Is.EqualTo(subscriber.Firstname));
+			Assert.That(returnVal.Middlename, Is.EqualTo(subscriber.Middlename));
+
+			#endregion
+
+			Assert.That(Subscribers.Count, Is.EqualTo(oldCount-1));
+			Assert.That(Subscribers.SingleOrDefault(x=>x.Id == subscriber.Id), Is.Null);
+
+		}
+
+		[Test]
+		public void Delete_ShouldThrownSubscriberHasRentsException()
+		{
+			var subscriber = Subscribers.First();
+			if (!subscriber.Rents.Any())
+			{
+				subscriber.Rents.Add(new Rent());
+			}
+			Assert.Throws<SubscriberHasRentsException>(async () => await SubscribersService.Delete(subscriber.Id));
 		}
 
 		#endregion

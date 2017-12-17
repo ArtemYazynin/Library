@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
+using Library.Services.Impls.Exceptions.Subscriber;
 using Library.Services.Services;
 
 namespace Library.Services.Impls.Services
@@ -31,19 +33,71 @@ namespace Library.Services.Impls.Services
 			return Mapper.Map<SubscriberDto>(subscriber);
 		}
 
-		public Task<SubscriberDto> Delete(long id)
+		public async Task<SubscriberDto> Delete(long id)
 		{
-			throw new NotImplementedException();
+			var subscriber = await _unitOfWork.SubscriberRepository.Get(id, nameof(Subscriber.Rents));
+			ThrowIfHasRents(subscriber);
+			if (_unitOfWork.SubscriberRepository.Delete(subscriber))
+			{
+				await _unitOfWork.Save();
+			}
+			return Mapper.Map<SubscriberDto>(subscriber);
 		}
 
-		public Task<SubscriberDto> Update(long id, SubscriberDto dto)
+		private void ThrowIfHasRents(Subscriber subscriber)
 		{
-			throw new NotImplementedException();
+			if (subscriber.Rents.Any())
+			{
+				throw new SubscriberHasRentsException(subscriber.ToString());
+			}
 		}
 
-		public Task<SubscriberDto> Create(SubscriberDto dto)
+		public async Task<SubscriberDto> Update(long id, SubscriberDto dto)
 		{
-			throw new NotImplementedException();
+			if (id == default(long) || dto.Id == default(long))
+			{
+				throw new SubscriberHasIncorrectIdException(dto.Id);
+			}
+			ThrowIfSubscriberIncorrect(dto);
+			await ThrowIfSubscriberExists(dto);
+			var subscriber = Mapper.Map<Subscriber>(dto);
+			if (_unitOfWork.SubscriberRepository.Update(subscriber))
+			{
+				await _unitOfWork.Save();
+			}
+			return Mapper.Map<SubscriberDto>(subscriber);
+		}
+
+		public async Task<SubscriberDto> Create(SubscriberDto dto)
+		{
+			ThrowIfSubscriberIncorrect(dto);
+			await ThrowIfSubscriberExists(dto);
+			var subscriber = Mapper.Map<Subscriber>(dto);
+			_unitOfWork.SubscriberRepository.Create(subscriber);
+			await _unitOfWork.Save();
+			return Mapper.Map<SubscriberDto>(subscriber);
+		}
+
+		private void ThrowIfSubscriberIncorrect(SubscriberDto dto)
+		{
+			if (string.IsNullOrEmpty(dto.Lastname) || string.IsNullOrEmpty(dto.Firstname))
+			{
+				throw new SubscriberIncorrectException();
+			}
+		}
+
+		private async Task ThrowIfSubscriberExists(SubscriberDto dto)
+		{
+			List<Expression<Func<Subscriber, bool>>> filters = new List<Expression<Func<Subscriber, bool>>>()
+			{
+				x => x.Lastname.ToLower() == dto.Lastname.ToLower(),
+				x => x.Firstname.ToLower() == dto.Firstname.ToLower()
+			};
+			var dublicates = await _unitOfWork.SubscriberRepository.GetAllAsync(filters);
+			if (dublicates.Any())
+			{
+				throw new SubscriberDublicateException();
+			}
 		}
 	}
 }
