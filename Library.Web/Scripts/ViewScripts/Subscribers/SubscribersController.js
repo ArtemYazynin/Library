@@ -11,12 +11,17 @@
 			function _remove(subscriber) {
 				subscribersService.remove(subscriber, function (response) {
 					var index = $scope.Subscribers.indexOf(response);
-					$scope.Subscribers.splice(index, 1);
+					if (response.IsDeleted) {
+						$scope.Subscribers[index] = response;
+						
+					} else {
+						$scope.Subscribers.splice(index, 1);
+					}
 					$ngConfirm({
 						title: "Successfully removed!",
-						content: "Subscriber was removed",
+						content: response.IsDeleted ? "Subscriber mark as removed, because he has Rents" : "Subscriber was removed",
 						backgroundDismiss: true
-						
+
 					});
 				});
 			}

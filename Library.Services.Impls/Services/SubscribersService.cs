@@ -36,19 +36,23 @@ namespace Library.Services.Impls.Services
 		public async Task<SubscriberDto> Delete(long id)
 		{
 			var subscriber = await _unitOfWork.SubscriberRepository.Get(id, nameof(Subscriber.Rents));
-			ThrowIfHasRents(subscriber);
-			if (_unitOfWork.SubscriberRepository.Delete(subscriber))
-			{
-				await _unitOfWork.Save();
+			ThrowIfHasActiveRents(subscriber);
+			if (subscriber.Rents.All(x => !x.IsActive)) {
+				subscriber.IsDeleted = true;
+				_unitOfWork.SubscriberRepository.Update(subscriber);
 			}
+			else {
+				_unitOfWork.SubscriberRepository.Delete(subscriber);
+			}
+			await _unitOfWork.Save();
 			return Mapper.Map<SubscriberDto>(subscriber);
 		}
 
-		private void ThrowIfHasRents(Subscriber subscriber)
+		private void ThrowIfHasActiveRents(Subscriber subscriber)
 		{
-			if (subscriber.Rents.Any())
+			if (subscriber.Rents.Any(x=>x.IsActive))
 			{
-				throw new SubscriberHasRentsException(subscriber.ToString());
+				throw new SubscriberHasActiveRentsException(subscriber.ToString());
 			}
 		}
 
@@ -73,7 +77,10 @@ namespace Library.Services.Impls.Services
 			ThrowIfSubscriberIncorrect(dto);
 			await ThrowIfSubscriberExists(dto);
 			var subscriber = Mapper.Map<Subscriber>(dto);
-			_unitOfWork.SubscriberRepository.Create(subscriber);
+			if (_unitOfWork.SubscriberRepository.Create(subscriber))
+			{
+				await _unitOfWork.Save();
+			}
 			await _unitOfWork.Save();
 			return Mapper.Map<SubscriberDto>(subscriber);
 		}

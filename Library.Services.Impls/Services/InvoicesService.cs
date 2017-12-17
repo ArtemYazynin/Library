@@ -12,12 +12,10 @@ namespace Library.Services.Impls.Services
 	public class InvoicesService:IInvoicesService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IBooksService _booksService;
 		private readonly string _includeProperties = $"{nameof(Invoice.IncomingBooks)}.{nameof(Book)}";
-		public InvoicesService(IUnitOfWork unitOfWork, IBooksService booksService)
+		public InvoicesService(IUnitOfWork unitOfWork)
 		{
 			_unitOfWork = unitOfWork;
-			_booksService = booksService;
 		}
 		public async Task<IEnumerable<InvoiceDto>> GetAll()
 		{
@@ -33,8 +31,11 @@ namespace Library.Services.Impls.Services
 			{
 				var book = await _unitOfWork.BookRepository.Get(incomingBook.Book.Id);
 				book.Count = book.Count - incomingBook.Count;
-				_unitOfWork.BookRepository.Update(book);
-				await _unitOfWork.Save();
+				if (_unitOfWork.BookRepository.Update(book))
+				{
+					await _unitOfWork.Save();
+				}
+				
 			}
 			_unitOfWork.InvoiceRepository.Delete(invoice);
 			await _unitOfWork.Save();
@@ -53,8 +54,10 @@ namespace Library.Services.Impls.Services
 				Date = DateTime.Now
 			};
 			await FillIncoimingBooks(dto, invoice);
-			_unitOfWork.InvoiceRepository.Create(invoice);
-			await _unitOfWork.Save();
+			if (_unitOfWork.InvoiceRepository.Create(invoice))
+			{
+				await _unitOfWork.Save();
+			}
 
 			return Mapper.Map<InvoiceDto>(invoice);
 		}

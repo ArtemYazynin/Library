@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Library.Common;
+using Library.ObjectModel.Models;
 
 namespace Library.Services.DTO
 {
-	public class SubscriberDto:EntityDto, ISubscriber<RentDto>
+	public class SubscriberDto:EntityDto, ISubscriber<RentDto>, IDeletable
 	{
 		public SubscriberDto()
 		{
@@ -24,5 +25,8 @@ namespace Library.Services.DTO
 
 		[DataMember]
 		public string Fio => $"{Lastname} {Firstname} {Middlename ?? string.Empty}";
+
+		[DataMember]
+		public bool IsDeleted { get; set; }
 	}
 }

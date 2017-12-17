@@ -16,6 +16,7 @@ namespace Library.ObjectModel.Mapping
 				.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("UX_LastnameFirstname") { IsUnique = true, Order = 2 }))
 				.IsRequired();
 			Property(x => x.Middlename).HasMaxLength(255).IsOptional();
+			Property(x => x.IsDeleted).IsRequired();
 			HasMany(x => x.Rents).WithRequired(x => x.Subscriber);
 		}
 	}

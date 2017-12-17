@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.ObjectModel.Models;
@@ -154,6 +153,7 @@ namespace Library.Tests.Services
 
 		#endregion
 
+
 		#region Delete
 
 		[Test]
@@ -179,14 +179,39 @@ namespace Library.Tests.Services
 		}
 
 		[Test]
-		public void Delete_ShouldThrownSubscriberHasRentsException()
+		public void Delete_ShouldThrownSubscriberHasActiveRentsException()
 		{
 			var subscriber = Subscribers.First();
 			if (!subscriber.Rents.Any())
 			{
-				subscriber.Rents.Add(new Rent());
+				subscriber.Rents.Add(new Rent() {IsActive = true});
 			}
-			Assert.Throws<SubscriberHasRentsException>(async () => await SubscribersService.Delete(subscriber.Id));
+			Assert.Throws<SubscriberHasActiveRentsException>(async () => await SubscribersService.Delete(subscriber.Id));
+		}
+
+		[Test]
+		public async Task Delete_HasNotActiveRents_ShouldDelete()
+		{
+			var oldCount = Subscribers.Count;
+			var subscriber = Subscribers.First();
+			if (!subscriber.Rents.Any())
+			{
+				subscriber.Rents.Add(new Rent() { IsActive = false });
+			}
+			var returnVal = await SubscribersService.Delete(subscriber.Id);
+			#region Assert returnVal
+
+			Assert.That(returnVal.Lastname, Is.EqualTo(subscriber.Lastname));
+			Assert.That(returnVal.Firstname, Is.EqualTo(subscriber.Firstname));
+			Assert.That(returnVal.Middlename, Is.EqualTo(subscriber.Middlename));
+			Assert.That(returnVal.IsDeleted, Is.True);
+			#endregion
+
+			Assert.That(Subscribers.Count, Is.EqualTo(oldCount));
+
+			var deletedSubscriber = Subscribers.SingleOrDefault(x => x.Id == subscriber.Id);
+			Assert.That(deletedSubscriber, Is.Not.Null);
+			Assert.That(deletedSubscriber.IsDeleted, Is.True);
 		}
 
 		#endregion

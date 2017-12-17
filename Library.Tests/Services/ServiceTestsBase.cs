@@ -140,7 +140,7 @@ namespace Library.Tests.Services
 			AuthorsService = new AuthorsService(unitOfWork);
 			GenresService = new GenresService(unitOfWork);
 			PublishersService = new PublishersService(unitOfWork);
-			InvoicesService = new InvoicesService(unitOfWork, BooksService);
+			InvoicesService = new InvoicesService(unitOfWork);
 			SubscribersService = new SubscribersService(unitOfWork);
 		}
 		private Mock<IGenericRepository<Invoice>> GetInvoicesRepositoryStub()

@@ -55,7 +55,7 @@
     <Compile Include="BooksRepository.cs" />
     <Compile Include="Exceptions\Author\AuthorIncorrectException.cs" />
     <Compile Include="Exceptions\Subscriber\SubscriberHasIncorrectIdException.cs" />
-    <Compile Include="Exceptions\Subscriber\SubscriberHasRentsException.cs" />
+    <Compile Include="Exceptions\Subscriber\SubscriberHasActiveRentsException.cs" />
     <Compile Include="Exceptions\Subscriber\SubscriberIncorrectException.cs" />
     <Compile Include="Exceptions\Subscriber\SubscriberDublicateException.cs" />
     <Compile Include="Exceptions\Genre\GenreDublicateException.cs" />
@@ -82,6 +82,10 @@
     <Compile Include="Migrations\201712161058110_BookEdition.cs" />
     <Compile Include="Migrations\201712161058110_BookEdition.Designer.cs">
       <DependentUpon>201712161058110_BookEdition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712171035509_AddIsDeletedPropertyInSubscriber.cs" />
+    <Compile Include="Migrations\201712171035509_AddIsDeletedPropertyInSubscriber.Designer.cs">
+      <DependentUpon>201712171035509_AddIsDeletedPropertyInSubscriber.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\AuthorsService.cs" />
@@ -131,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712161058110_BookEdition.resx">
       <DependentUpon>201712161058110_BookEdition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712171035509_AddIsDeletedPropertyInSubscriber.resx">
+      <DependentUpon>201712171035509_AddIsDeletedPropertyInSubscriber.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

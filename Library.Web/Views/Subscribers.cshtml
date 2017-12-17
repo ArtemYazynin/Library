@@ -10,19 +10,19 @@
 				<thead>
 					<tr>
 						<th>Subscriber</th>
+						<th>IsDeleted</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="subscriber in Subscribers">
-						<td>
-							<a href="#/authors/{{subscriber.Id}}/edit" ng-bind="subscriber.Fio"></a>
-						</td>
+						<td ng-bind="subscriber.Fio"></td>
+						<td ng-bind="subscriber.IsDeleted ? 'Yep': 'Nope'"></td>
 						<td style="width: 9%;">
-							<button type="button" class="btn btn-primary" ng-click="actions.details(subscriber)">
+							<button type="button" class="btn btn-primary" ng-disabled="subscriber.IsDeleted" ng-click="actions.details(subscriber)">
 								<span class="glyphicon glyphicon-edit"></span>
 							</button>
-							<button type="button" class="btn btn-danger" ng-click="actions.remove(subscriber)">
+							<button type="button" class="btn btn-danger" ng-disabled="subscriber.IsDeleted" ng-click="actions.remove(subscriber)">
 								<span class="glyphicon glyphicon-remove"></span>
 							</button>
 						</td>

@@ -3,7 +3,7 @@ using Library.Common;
 
 namespace Library.ObjectModel.Models
 {
-	public class Subscriber:Entity, ISubscriber<Rent>
+	public class Subscriber:Entity, ISubscriber<Rent>, IDeletable
 	{
 		public Subscriber()
 		{
@@ -20,5 +20,6 @@ namespace Library.ObjectModel.Models
 		}
 
 		public ICollection<Rent> Rents { get; set; }
+		public bool IsDeleted { get; set; }
 	}
 }
