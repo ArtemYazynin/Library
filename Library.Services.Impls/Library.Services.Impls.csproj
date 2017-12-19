@@ -54,6 +54,8 @@
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="BooksRepository.cs" />
     <Compile Include="Exceptions\Author\AuthorIncorrectException.cs" />
+    <Compile Include="Exceptions\Rent\RentNotHasBookOrSubscriberException.cs" />
+    <Compile Include="Exceptions\Rent\RentNotHasZeroCountException.cs" />
     <Compile Include="Exceptions\Subscriber\SubscriberHasIncorrectIdException.cs" />
     <Compile Include="Exceptions\Subscriber\SubscriberHasActiveRentsException.cs" />
     <Compile Include="Exceptions\Subscriber\SubscriberIncorrectException.cs" />

@@ -140,13 +140,14 @@ namespace Library.Tests.Services
 			var stubPublishersRepository = GetPublishersRepositoryStub();
 			var stubInvoicesRepository = GetInvoicesRepositoryStub();
 			var stubSubscribersRepository = GetSubscribersRepositoryStub();
-
+			var stubRentsRepository = GetRentsRepositoryStub();
 			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object 
 													&& x.AuthorRepository == stubAuthorRepository.Object
 													&& x.GenreRepository == stubGenresRepository.Object
 													&& x.PublisherRepository == stubPublishersRepository.Object
 													&& x.InvoiceRepository == stubInvoicesRepository.Object
-													&& x.SubscriberRepository == stubSubscribersRepository.Object);
+													&& x.SubscriberRepository == stubSubscribersRepository.Object
+													&& x.RentRepository == stubRentsRepository.Object);
 
 			BooksService = new BooksService(unitOfWork);
 			AuthorsService = new AuthorsService(unitOfWork);
@@ -156,6 +157,71 @@ namespace Library.Tests.Services
 			SubscribersService = new SubscribersService(unitOfWork);
 			RentsService = new RentsService(unitOfWork);
 		}
+		private Mock<IGenericRepository<Rent>> GetRentsRepositoryStub()
+		{
+			var stub = new Mock<IGenericRepository<Rent>>();
+			stub.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Rent, bool>>>>(),
+										It.IsAny<Func<IQueryable<Rent>, IOrderedQueryable<Rent>>>(),
+										It.IsAny<string>()))
+				.ReturnsAsync((IEnumerable<Expression<Func<Rent, bool>>> filters,
+					Func<IQueryable<Rent>, IOrderedQueryable<Rent>> orders
+					, string includeProperties) => GetAllStub(Rents, filters, orders));
+
+			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
+				.ReturnsAsync((long id, string includeProperties) =>
+				{
+					return Rents.SingleOrDefault(x => x.Id == id);
+				});
+			stub.Setup(x => x.Create(It.IsAny<Rent>()))
+				.Returns((Rent x) =>
+				{
+					Rents.Add(x);
+					return true;
+				});
+			stub.Setup(x => x.Delete(It.IsAny<long>()))
+				.Returns((long id) =>
+				{
+					var deletedRent = Rents.SingleOrDefault(x => x.Id == id);
+					if (deletedRent == null)
+					{
+						return false;
+					}
+
+					Rents.Remove(deletedRent);
+					return true;
+				});
+			stub.Setup(x => x.Delete(It.IsAny<Rent>()))
+				.Returns((Rent x) =>
+				{
+					try
+					{
+						Rents.Remove(x);
+						return true;
+					}
+					catch (Exception)
+					{
+
+						return false;
+					}
+				});
+			stub.Setup(x => x.Update(It.IsAny<Rent>()))
+				.Returns((Rent x) =>
+				{
+					try
+					{
+						var rent = Rents.Single(n => n.Id == x.Id);
+						rent.IsActive = x.IsActive;
+
+						return true;
+					}
+					catch (Exception)
+					{
+						return false;
+					}
+				});
+			return stub;
+		}
+
 		private Mock<IGenericRepository<Invoice>> GetInvoicesRepositoryStub()
 		{
 			var stub = new Mock<IGenericRepository<Invoice>>();
