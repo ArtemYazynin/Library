@@ -75,8 +75,8 @@ namespace Library.Tests.Services
 			Assert.That(created.IsActive, Is.EqualTo(rent.IsActive));
 			Assert.That(created.Date, Is.EqualTo(created.Date));
 
-			Assert.That(created.Subscriber, Is.EqualTo(rent.Subscriber));
-			Assert.That(created.Book, Is.EqualTo(rent.Book));
+			Assert.That(created.Subscriber.ToString(), Is.EqualTo(rent.Subscriber.ToString()));
+			Assert.That(created.Book.Id, Is.EqualTo(rent.Book.Id));
 		}
 
 		[Test]
@@ -101,7 +101,7 @@ namespace Library.Tests.Services
 			var rent = new RentDto()
 			{
 				Id = Random.Next(int.MaxValue),
-				Count = 0,
+				Count = 55,
 				IsActive = true,
 				Subscriber = Mapper.Map<SubscriberDto>(DefaultData.Subscribers.Maslov),
 				Date = DateTime.Now
@@ -116,13 +116,28 @@ namespace Library.Tests.Services
 			var rent = new RentDto()
 			{
 				Id = Random.Next(int.MaxValue),
-				Count = 0,
+				Count = 55,
 				IsActive = true,
 				Book = Mapper.Map<BookDto>(DefaultData.Books.ClrVia),
 				Date = DateTime.Now
 			};
 
 			Assert.Throws<RentNotHasBookOrSubscriberException>(async () => await RentsService.Create(rent));
+		}
+
+		[Test]
+		public void Create_CountMoreCountOfBooks_ShouldThrownRentCountMoreCountOfBookException()
+		{
+			var rent = new RentDto()
+			{
+				Id = Random.Next(int.MaxValue),
+				Count = DefaultData.Books.ClrVia.Count+1,
+				IsActive = true,
+				Book = Mapper.Map<BookDto>(DefaultData.Books.ClrVia),
+				Subscriber = Mapper.Map<SubscriberDto>(DefaultData.Subscribers.Maslov),
+				Date = DateTime.Now
+			};
+			Assert.Throws<RentCountMoreCountOfBookException>(async () => await RentsService.Create(rent));
 		}
 
 		#endregion

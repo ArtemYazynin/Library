@@ -162,6 +162,8 @@ namespace Library.Tests.Services
 			var oldCount = Subscribers.Count;
 
 			var subscriber = Subscribers.First();
+			subscriber.Rents.Clear();
+
 
 			var returnVal = await SubscribersService.Delete(subscriber.Id);
 

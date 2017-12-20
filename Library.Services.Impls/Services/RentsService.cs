@@ -42,14 +42,21 @@ namespace Library.Services.Impls.Services
 			throw new NotImplementedException();
 		}
 
-		public Task<RentDto> Create(RentDto dto)
+		public async Task<RentDto> Create(RentDto dto)
 		{
 			ThrowIfCountIsZero(dto);
-			ThrowIfBookOrDescriberIsNull(dto);
-			throw new NotImplementedException();
+			ThrowIfBookOrSubscriberIsNull(dto);
+
+			var rent = Mapper.Map<Rent>(dto);
+			if (rent.Count > rent.Book.Count) throw new RentCountMoreCountOfBookException(rent.Book.Name);
+			if (_unitOfWork.RentRepository.Create(rent))
+			{
+				await _unitOfWork.Save();
+			}
+			return Mapper.Map<RentDto>(rent);
 		}
 
-		private void ThrowIfBookOrDescriberIsNull(RentDto dto)
+		private void ThrowIfBookOrSubscriberIsNull(RentDto dto)
 		{
 			if (dto.Subscriber == null || dto.Book == null)
 			{

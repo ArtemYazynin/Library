@@ -11,6 +11,7 @@ namespace Library.Services.Impls
 			Mapper.Initialize((config) =>
 			{
 				config.CreateMap<Rent, RentDto>()
+					.MaxDepth(1)
 					.ReverseMap();
 
 				config.CreateMap<Subscriber, SubscriberDto>()

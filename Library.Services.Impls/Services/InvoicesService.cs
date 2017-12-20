@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
+using Library.Services.Impls.Exceptions.Invoice;
 using Library.Services.Services;
 
 namespace Library.Services.Impls.Services
@@ -29,7 +31,9 @@ namespace Library.Services.Impls.Services
 
 			foreach (var incomingBook in invoice.IncomingBooks)
 			{
-				var book = await _unitOfWork.BookRepository.Get(incomingBook.Book.Id);
+				var book = await RecalculateCount(incomingBook);
+
+
 				book.Count = book.Count - incomingBook.Count;
 				if (_unitOfWork.BookRepository.Update(book))
 				{
@@ -40,6 +44,31 @@ namespace Library.Services.Impls.Services
 			_unitOfWork.InvoiceRepository.Delete(invoice);
 			await _unitOfWork.Save();
 			return new InvoiceDto() {Id = id};
+		}
+
+		private async Task<Book> RecalculateCount(IncomingBook incomingBook)
+		{
+			var reservedCount = await GetReservedCountOfBook(incomingBook);
+
+			var book = await _unitOfWork.BookRepository.Get(incomingBook.Book.Id);
+			ThrowIfRemainCountIsNegative(incomingBook, book, reservedCount);
+			return book;
+		}
+
+		private void ThrowIfRemainCountIsNegative(IncomingBook incomingBook, Book book, int reservedCount)
+		{
+			if (book.Count - reservedCount - incomingBook.Count < 0)
+			{
+				throw new InvoiceCountException(book.Name);
+			}
+		}
+
+		private async Task<int> GetReservedCountOfBook(IncomingBook incomingBook)
+		{
+			var filters = new List<Expression<Func<Rent, bool>>>() {x => x.Book.Id == incomingBook.Book.Id};
+			var rents = await _unitOfWork.RentRepository.GetAllAsync(filters, null, $"{nameof(Rent.Book)}");
+			var reservedCount = rents.Sum(x => x.Count);
+			return reservedCount;
 		}
 
 		public Task<InvoiceDto> Update(long id, InvoiceDto dto)

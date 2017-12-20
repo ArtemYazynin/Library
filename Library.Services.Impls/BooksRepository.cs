@@ -47,7 +47,10 @@ namespace Library.Services.Impls
 
 		public override bool Update(Book entity)
 		{
-			if(entity.Edition != null) Context.Editions.Attach(entity.Edition);
+			if (entity.Edition != null)
+			{
+				Context.Editions.Attach(entity.Edition);
+			}
 			if (entity.Publisher != null) Context.Publishers.Attach(entity.Publisher);
 
 

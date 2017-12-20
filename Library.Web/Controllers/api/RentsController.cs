@@ -18,7 +18,8 @@ namespace Library.Web.Controllers.api
 
 		public async Task<IEnumerable<RentDto>> Get()
 		{
-			return await _rentsService.GetAll();
+			var rents = await _rentsService.GetAll();
+			return rents;
 		}
 
 		public async Task<RentDto> Post(RentDto dto)

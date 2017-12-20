@@ -28,5 +28,10 @@ namespace Library.Services.DTO
 
 		[DataMember]
 		public bool IsDeleted { get; set; }
+
+		public override string ToString()
+		{
+			return $"{Lastname} {Firstname} {Middlename ?? string.Empty}";
+		}
 	}
 }

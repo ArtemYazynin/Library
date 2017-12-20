@@ -6,6 +6,7 @@ namespace Library.Services.DTO
 {
 	public class RentDto: EntityDto, IRent<BookDto, SubscriberDto>
 	{
+		[DataMember]
 		public BookDto Book { get; set; }
 
 		[DataMember]

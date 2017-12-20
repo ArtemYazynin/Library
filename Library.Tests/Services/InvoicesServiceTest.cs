@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Library.ObjectModel.Models;
 using Library.Services.DTO;
+using Library.Services.Impls.Exceptions.Invoice;
 using NUnit.Framework;
 
 namespace Library.Tests.Services
 {
 	sealed class InvoicesServiceTest: ServiceTestsBase
 	{
+		private Random _random = new Random();
 		#region GetAll
 
 		[Test]
@@ -27,9 +30,17 @@ namespace Library.Tests.Services
 		public async Task Delete_ShouldDelete()
 		{
 			var first = Invoices.First();
-			if (first == null) throw new NullReferenceException($"Invoices collection is empty");
-
 			var booksOldCount = first.IncomingBooks.Select(incomingBook => Books.Single(x => x.Id == incomingBook.Book.Id)).ToDictionary(book => book.Id, book => book.Count);
+
+			foreach (KeyValuePair<long, int> pair in booksOldCount)
+			{
+				var rents = Rents.Where(x => x.Book.Id == pair.Key).ToList();
+				foreach (var rent in rents)
+				{
+					Rents.Remove(rent);
+				}
+			}
+
 
 			await InvoicesService.Delete(first.Id);
 
@@ -39,6 +50,23 @@ namespace Library.Tests.Services
 				var expectedCount = booksOldCount[book.Id] - incomingBook.Count;
 				Assert.That(book.Count, Is.EqualTo(expectedCount));
 			}
+		}
+
+		[Test]
+		public void Delete_HasRents_ShouldThrowInvalidCountException()
+		{
+			var first = Invoices.First();
+			var incomingBook = first.IncomingBooks.First();
+
+			Rents.Add(new Rent()
+			{
+				Id = _random.Next(int.MaxValue),
+				Book = incomingBook.Book,
+				Subscriber = Subscribers.First(),
+				Count = Books.Single(x=>x.Id == incomingBook.Book.Id).Count
+			});
+
+			Assert.Throws<InvoiceCountException>(async ()=> await InvoicesService.Delete(first.Id));
 		}
 
 		#endregion

@@ -37,7 +37,8 @@ namespace Library.Services.Impls.Services
 		{
 			var subscriber = await _unitOfWork.SubscriberRepository.Get(id, nameof(Subscriber.Rents));
 			ThrowIfHasActiveRents(subscriber);
-			if (subscriber.Rents.All(x => !x.IsActive)) {
+
+			if (subscriber.Rents.Any() && subscriber.Rents.All(x => !x.IsActive)) {
 				subscriber.IsDeleted = true;
 				_unitOfWork.SubscriberRepository.Update(subscriber);
 			}
