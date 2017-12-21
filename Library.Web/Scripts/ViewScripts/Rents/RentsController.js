@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("RentsModule")
-		.controller("RentsController", ["$scope", "rentsService", "$ngConfirm", function ($scope, rentsService, $ngConfirm) {
+		.controller("RentsController", ["$scope", "rentsService", "subscribersService", "booksService", "$ngConfirm", function ($scope, rentsService, subscribersService, booksService, $ngConfirm) {
 		rentsService.get(function(response) {
 			$scope.Rents = response;
 		});
@@ -59,13 +59,19 @@
 
 			function _details(rent) {
 				$scope.selectedRent = rent || {};
+
+				subscribersService.get(function (response) { $scope.Subscribers = response; });
+				booksService.getAll(function (response) { $scope.Books = response; });
+
 				$scope.createDialog = $ngConfirm({
-					title: $scope.selectedRent.Fio || "Create new rent",
+					title: "Rent",
 					scope: $scope,
-					contentUrl: 'src/subscriberDetails.html',
+					contentUrl: 'src/rentDetails.html',
 					backgroundDismiss: true,
+					type: 'blue',
 					closeIcon: true,
-					theme: 'modern'
+					theme: 'modern',
+					columnClass: 'col-lg-12'
 				});
 			}
 			return {

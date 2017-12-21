@@ -55,6 +55,7 @@
     <Compile Include="BooksRepository.cs" />
     <Compile Include="Exceptions\Author\AuthorIncorrectException.cs" />
     <Compile Include="Exceptions\Invoice\InvoiceCountException.cs" />
+    <Compile Include="Exceptions\Rent\NotHasAvailableBooksCountException.cs" />
     <Compile Include="Exceptions\Rent\RentCountMoreCountOfBookException.cs" />
     <Compile Include="Exceptions\Rent\RentNotHasBookOrSubscriberException.cs" />
     <Compile Include="Exceptions\Rent\RentNotHasZeroCountException.cs" />
@@ -92,6 +93,7 @@
       <DependentUpon>201712171035509_AddIsDeletedPropertyInSubscriber.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="RentsRepository.cs" />
     <Compile Include="Services\AuthorsService.cs" />
     <Compile Include="Services\BooksService.cs" />
     <Compile Include="Services\EditionsService.cs" />

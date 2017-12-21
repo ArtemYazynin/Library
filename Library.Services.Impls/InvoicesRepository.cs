@@ -14,7 +14,6 @@ namespace Library.Services.Impls
 			foreach (var incomingBook in entity.IncomingBooks)
 			{
 				Context.Entry(incomingBook.Book).State = EntityState.Unchanged;
-				//Context.Books.Attach(incomingBook.Book);
 			}
 			DbSet.Add(entity);
 			return true;

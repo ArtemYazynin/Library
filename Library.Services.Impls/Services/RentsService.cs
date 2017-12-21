@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
@@ -44,16 +45,43 @@ namespace Library.Services.Impls.Services
 
 		public async Task<RentDto> Create(RentDto dto)
 		{
-			ThrowIfCountIsZero(dto);
-			ThrowIfBookOrSubscriberIsNull(dto);
+			await Check(dto);
 
 			var rent = Mapper.Map<Rent>(dto);
-			if (rent.Count > rent.Book.Count) throw new RentCountMoreCountOfBookException(rent.Book.Name);
+			await InternalCreate(dto, rent);
+			return Mapper.Map<RentDto>(rent);
+		}
+
+		private async Task InternalCreate(RentDto dto, Rent rent)
+		{
+			rent.Date = dto.Date.ToLocalTime();
 			if (_unitOfWork.RentRepository.Create(rent))
 			{
 				await _unitOfWork.Save();
 			}
-			return Mapper.Map<RentDto>(rent);
+		}
+
+		private async Task Check(RentDto dto)
+		{
+			ThrowIfCountIsZero(dto);
+			ThrowIfBookOrSubscriberIsNull(dto);
+			ThrowIfRentCountMoreBookCount(dto);
+			await ThrowIfCountOfReservedMoreOrEqualCountOfBook(dto);
+		}
+
+		private void ThrowIfRentCountMoreBookCount(RentDto dto)
+		{
+			if (dto.Count > dto.Book.Count) throw new RentCountMoreCountOfBookException(dto.Book.Name);
+		}
+
+		private async Task ThrowIfCountOfReservedMoreOrEqualCountOfBook(RentDto dto)
+		{
+			var rents =
+				await
+					_unitOfWork.RentRepository.GetAllAsync(new List<Expression<Func<Rent, bool>>>() {x => x.Book.Id == dto.Book.Id}, null,
+						$"{nameof(Rent.Book)}");
+			var reserved = rents.Sum(x => x.Count);
+			if (reserved >= dto.Count) throw new NotHasAvailableBooksCountException();
 		}
 
 		private void ThrowIfBookOrSubscriberIsNull(RentDto dto)

@@ -25,7 +25,7 @@ namespace Library.Services.Impls
 		private GenresRepository _genreRepository;
 		private InvoicesRepository _invoiceRepository;
 		private GenericRepository<Publisher> _publisherRepository;
-		private GenericRepository<Rent> _rentRepository;
+		private RentsRepository _rentRepository;
 		private GenericRepository<Subscriber> _subscriberRepository;
 
 		#endregion
@@ -38,7 +38,7 @@ namespace Library.Services.Impls
 		public IGenresRepository GenreRepository => _genreRepository ?? (_genreRepository = new GenresRepository(_context));
 		public IGenericRepository<Invoice> InvoiceRepository => _invoiceRepository ?? (_invoiceRepository = new InvoicesRepository(_context));
 		public IGenericRepository<Publisher> PublisherRepository => _publisherRepository ?? (_publisherRepository = new GenericRepository<Publisher>(_context));
-		public IGenericRepository<Rent> RentRepository => _rentRepository ?? (_rentRepository = new GenericRepository<Rent>(_context));
+		public IGenericRepository<Rent> RentRepository => _rentRepository ?? (_rentRepository = new RentsRepository(_context));
 		public IGenericRepository<Subscriber> SubscriberRepository => _subscriberRepository ?? (_subscriberRepository = new GenericRepository<Subscriber>(_context));
 
 		public async Task<int> Save()

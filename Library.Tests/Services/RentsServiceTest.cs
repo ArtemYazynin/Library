@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Rent;
 using NUnit.Framework;
@@ -77,6 +78,31 @@ namespace Library.Tests.Services
 
 			Assert.That(created.Subscriber.ToString(), Is.EqualTo(rent.Subscriber.ToString()));
 			Assert.That(created.Book.Id, Is.EqualTo(rent.Book.Id));
+		}
+
+		[Test]
+		public void Create_BookNotHasAvailableCount_ShouldThrownBookNotHasAvailableCountException()
+		{
+			var book = Books.First();
+			var reserved = Rents.Where(x => x.Book.Id == book.Id).Sum(x=>x.Count);
+
+			Rents.Add(new Rent()
+			{
+				Id = Random.Next(int.MaxValue),
+				Book = book,
+				Date = DateTime.Now,
+				Subscriber = Subscribers.First(),
+				Count = book.Count - reserved
+			});
+
+			var dto = new RentDto()
+			{
+				Subscriber = Mapper.Map<SubscriberDto>(Subscribers.First()),
+				Book = Mapper.Map<BookDto>(book),
+				Count = 1,
+				Date = DateTime.Now,
+			};
+			Assert.Throws<NotHasAvailableBooksCountException>(async () => await RentsService.Create(dto));
 		}
 
 		[Test]
