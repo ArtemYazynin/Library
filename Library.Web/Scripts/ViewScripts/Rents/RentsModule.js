@@ -13,29 +13,29 @@
 		function _get(successCallback) {
 			resource.query(successCallback);
 		}
-		function _update(vm, successCallback) {
+		function _create(vm, successCallback) {
+			var invoice = new resource(vm);
+			invoice.$save(null, successCallback);
+		}
+
+		function _activate(vm, successCallback) {
 			if (!vm.$update) {
 				vm = new resource(vm);
 			}
 			vm.$update(successCallback);
 		}
-		function _remove(vm, successCallback) {
-			if (!vm) return;
-			if (!vm.$delete) {
+
+		function _deactivate(vm, successCallback) {
+			if (!vm.$update) {
 				vm = new resource(vm);
 			}
-
-			vm.$delete(null, successCallback);
-		}
-		function _create(vm, successCallback) {
-			var invoice = new resource(vm);
-			invoice.$save(null, successCallback);
+			vm.$update(successCallback);
 		}
 		return {
 			get: _get,
-			update: _update,
-			remove: _remove,
-			create: _create
+			create: _create,
+			activate: _activate,
+			deactivate: _deactivate
 		}
 	}]);
 })(angular);

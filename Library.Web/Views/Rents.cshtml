@@ -18,7 +18,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="rent in Rents | orderBy: '-Date'">
+					<tr ng-repeat="rent in Rents | orderBy: ['IsActive','-Date']">
 						<td ng-bind="rent.Date | date: 'yyyy.MM.dd HH:mm:ss'">
 						</td>
 						<td>
@@ -29,8 +29,8 @@
 						<td ng-bind="rent.IsActive ? 'Yep' : 'Nope'"></td>
 						<td style="width: 9%;">
 							<div>
-								<button type="button" class="btn btn-danger" ng-click="actions.remove(rent)">
-									<span class="glyphicon glyphicon-remove"></span>
+								<button type="button" ng-class="rent.IsActive ? 'btn btn-dark': 'btn btn-green'" ng-click="actions.activateOrDeactivate(rent)">
+									<span>{{rent.IsActive ? 'Deactivate': 'Activate'}}</span>
 								</button>
 							</div>
 						</td>

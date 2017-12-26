@@ -38,9 +38,14 @@ namespace Library.Services.Impls.Services
 			throw new NotImplementedException();
 		}
 
-		public Task<RentDto> Update(long id, RentDto dto)
+		public async Task<RentDto> Update(long id, RentDto dto)
 		{
-			throw new NotImplementedException();
+			var rent = Mapper.Map<Rent>(dto);
+			if (_unitOfWork.RentRepository.Update(rent))
+			{
+				await _unitOfWork.Save();
+			}
+			return Mapper.Map<RentDto>(rent);
 		}
 
 		public async Task<RentDto> Create(RentDto dto)
@@ -81,7 +86,7 @@ namespace Library.Services.Impls.Services
 					_unitOfWork.RentRepository.GetAllAsync(new List<Expression<Func<Rent, bool>>>() {x => x.Book.Id == dto.Book.Id}, null,
 						$"{nameof(Rent.Book)}");
 			var reserved = rents.Sum(x => x.Count);
-			if (reserved >= dto.Count) throw new NotHasAvailableBooksCountException();
+			if ((reserved + dto.Count) > dto.Book.Count) throw new NotHasAvailableBooksCountException();
 		}
 
 		private void ThrowIfBookOrSubscriberIsNull(RentDto dto)

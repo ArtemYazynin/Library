@@ -23,7 +23,7 @@ namespace Library.Services.Impls
 							Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
 							string includeProperties = "")
 		{
-			IQueryable<TEntity> query = DbSet;
+			IQueryable<TEntity> query = DbSet.AsNoTracking();
 
 			if (filters != null)
 			{

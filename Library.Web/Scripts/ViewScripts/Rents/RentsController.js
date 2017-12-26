@@ -8,24 +8,6 @@
 		});
 
 		$scope.actions = (function () {
-			function _remove(rent) {
-				rentsService.remove(rent, function (response) {
-					var index = $scope.Rents.indexOf(response);
-					if (response.IsDeleted) {
-						$scope.Rents[index] = response;
-						
-					} else {
-						$scope.Rents.splice(index, 1);
-					}
-					$ngConfirm({
-						title: "Successfully removed!",
-						content: response.IsDeleted ? "Rent mark as removed, because he has Rents" : "Rent was removed",
-						backgroundDismiss: true
-
-					});
-				});
-			}
-
 			function _save() {
 				function clear() {
 					delete $scope.selectedRent;
@@ -56,28 +38,25 @@
 				}
 				
 			}
-
-			function _details(rent) {
-				$scope.selectedRent = rent || {};
-
-				subscribersService.get(function (response) { $scope.Subscribers = response; });
-				booksService.getAll(function (response) { $scope.Books = response; });
-
-				$scope.createDialog = $ngConfirm({
-					title: "Rent",
-					scope: $scope,
-					contentUrl: 'src/rentDetails.html',
-					backgroundDismiss: true,
-					type: 'blue',
-					closeIcon: true,
-					theme: 'modern',
-					columnClass: 'col-lg-12'
-				});
+			function _activateOrDeactivate(rent) {
+				rent.IsActive = !rent.IsActive;
+				if (rent.IsActive) {
+					rentsService.deactivate(rent,
+						function(response) {
+							var index = $scope.Rents.indexOf(response);
+							$scope.Rents[index] = response;
+						});
+				} else {
+					rentsService.activate(rent,
+						function (response) {
+							var index = $scope.Rents.indexOf(response);
+							$scope.Rents[index] = response;
+						});
+				}
 			}
 			return {
-				remove: _remove,
 				save: _save,
-				details: _details
+				activateOrDeactivate: _activateOrDeactivate
 			}
 		})();
 	}]);

@@ -169,5 +169,32 @@ namespace Library.Tests.Services
 		#endregion
 
 
+		#region Update
+
+		[Test]
+		public async Task Update_Activate_SuccessfullyActivated()
+		{
+			var rent = Rents.First(x => !x.IsActive);
+			rent.IsActive = true;
+			var dto = Mapper.Map<RentDto>(rent);
+			await RentsService.Update(rent.Id, dto);
+
+			var updatedRent = Rents.First(x => x.Id == rent.Id);
+			Assert.That(updatedRent.IsActive, Is.True);
+		}
+
+		[Test]
+		public async Task Update_Deactivate_SuccessfullyDeactivated()
+		{
+			var rent = Rents.First(x => x.IsActive);
+			rent.IsActive = false;
+			var dto = Mapper.Map<RentDto>(rent);
+			await RentsService.Update(rent.Id, dto);
+
+			var updatedRent = Rents.First(x => x.Id == rent.Id);
+			Assert.That(updatedRent.IsActive, Is.False);
+		}
+
+		#endregion
 	}
 }
