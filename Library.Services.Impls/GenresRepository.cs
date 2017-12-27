@@ -30,7 +30,9 @@ namespace Library.Services.Impls
 		{
 			foreach (var genre in genres)
 			{
+				Context.Genres.Attach(genre);
 				var entry = Context.Entry(genre);
+				
 				if (!entry.Collection(nameof(genre.Children)).IsLoaded)
 				{
 					await entry.Collection(nameof(Genre.Children)).LoadAsync();
