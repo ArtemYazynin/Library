@@ -186,7 +186,7 @@ namespace Library.Tests.Services
 			var subscriber = Subscribers.First();
 			if (!subscriber.Rents.Any())
 			{
-				subscriber.Rents.Add(new Rent() {IsActive = true});
+				subscriber.Rents.Add(new Rent(null,null) {IsActive = true});
 			}
 			Assert.Throws<SubscriberHasActiveRentsException>(async () => await SubscribersService.Delete(subscriber.Id));
 		}
@@ -198,7 +198,7 @@ namespace Library.Tests.Services
 			var subscriber = Subscribers.First();
 			if (!subscriber.Rents.Any())
 			{
-				subscriber.Rents.Add(new Rent() { IsActive = false });
+				subscriber.Rents.Add(new Rent(null,null) { IsActive = false });
 			}
 			var returnVal = await SubscribersService.Delete(subscriber.Id);
 			#region Assert returnVal

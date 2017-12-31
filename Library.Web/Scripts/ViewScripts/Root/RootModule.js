@@ -6,7 +6,8 @@
 			return {
 				responseError: function (rejection) {
 					$ngConfirmProvider.$get()({
-						title: rejection.statusText,
+						//title: rejection.statusText, server msg
+						title: "Attention!",
 						content: rejection.data.ExceptionMessage,
 						type: 'red',
 						typeAnimated: true,

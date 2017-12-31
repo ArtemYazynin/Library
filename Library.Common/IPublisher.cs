@@ -4,7 +4,7 @@ namespace Library.Common
 {
 	public interface IPublisher<TBook>
 	{
-		string Name { get; set; }
-		ICollection<TBook> Books { get; set; }
+		string Name { get; }
+		ICollection<TBook> Books { get; }
 	}
 }

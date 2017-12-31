@@ -10,34 +10,26 @@ namespace Library.DefaultData
 
 		static Publishers()
 		{
-			Viliams = new Publisher()
+			Viliams = new Publisher("Вильямс")
+			{
+				Id = Rnd.Next(int.MaxValue)
+			};
+			Self = new Publisher("Язынин Артем Дмитриевич")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "Вильямс",
+			};
+			Piter = new Publisher("Питер")
+			{
+				Id = Rnd.Next(int.MaxValue),
 
 			};
-			Self = new Publisher()
+			DmkPress = new Publisher("ДМК Пресс")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "Язынин Артем Дмитриевич",
-
 			};
-			Piter = new Publisher()
+			SymbolPlus = new Publisher("Символ-Плюс")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "Питер",
-
-			};
-			DmkPress = new Publisher()
-			{
-				Id = Rnd.Next(int.MaxValue),
-				Name = "ДМК Пресс",
-				
-			};
-			SymbolPlus = new Publisher()
-			{
-				Id = Rnd.Next(int.MaxValue),
-				Name = "Символ-Плюс",
 			};
 		}
 

@@ -86,6 +86,7 @@ namespace Library.Tests.Services
 				DefaultData.Books.CSharpCompleteGuide,
 				DefaultData.Books.CSharp6AndNetPlatform
 			};
+
 			DefaultData.Publishers.Self.Books = new List<Book>()
 			{
 				DefaultData.Books.WithoutAuthorsBook,
@@ -96,8 +97,11 @@ namespace Library.Tests.Services
 				DefaultData.Books.Es6AndNotOnly,
 				DefaultData.Books.ClrVia
 			};
-			DefaultData.Publishers.DmkPress.Books = new List<Book>() {DefaultData.Books.AsyncProgrammingCSharp5};
-			DefaultData.Publishers.SymbolPlus.Books = new List<Book>() {DefaultData.Books.JsOptimizingPerfomance};
+			
+			DefaultData.Publishers.DmkPress.Books = new List<Book>() { DefaultData.Books.AsyncProgrammingCSharp5 };
+
+
+			DefaultData.Publishers.SymbolPlus.Books = new List<Book>() { DefaultData.Books.JsOptimizingPerfomance };
 			Publishers = new Collection<Publisher>()
 			{
 				DefaultData.Publishers.Self,
@@ -277,7 +281,6 @@ namespace Library.Tests.Services
 						var invoice = Invoices.Single(n => n.Id == x.Id);
 						invoice.Date = x.Date;
 						invoice.IncomingBooks = x.IncomingBooks;
-
 						return true;
 					}
 					catch (Exception)

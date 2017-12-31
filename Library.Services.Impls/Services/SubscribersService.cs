@@ -53,7 +53,7 @@ namespace Library.Services.Impls.Services
 		{
 			if (subscriber.Rents.Any(x=>x.IsActive))
 			{
-				throw new SubscriberHasActiveRentsException(subscriber.ToString());
+				throw new SubscriberHasActiveRentsException(subscriber.Fio);
 			}
 		}
 

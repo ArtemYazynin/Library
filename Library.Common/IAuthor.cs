@@ -4,6 +4,6 @@ namespace Library.Common
 {
 	public interface IAuthor<TBook>: IPerson
 	{
-		ICollection<TBook> Books { get; set; }
+		ICollection<TBook> Books { get; }
 	}
 }

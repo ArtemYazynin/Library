@@ -31,7 +31,19 @@ namespace Library.Services.Impls
 		#endregion
 
 
-		public IGenericRepository<Author> AuthorRepository => _authorRepository ?? (_authorRepository = new GenericRepository<Author>(_context));
+		public IGenericRepository<Author> AuthorRepository
+		{
+			get
+			{
+				if (_authorRepository == null)
+				{
+					_authorRepository = new GenericRepository<Author>(_context);
+				}
+				return _authorRepository;
+			}
+		}
+
+	
 		public IGenericRepository<Book> BookRepository => _bookRepository ?? (_bookRepository = new BooksRepository(_context));
 		public IGenericRepository<Edition> EditionRepository => _editionRepository ?? (_editionRepository = new GenericRepository<Edition>(_context));
 		public IGenericRepository<File> FileRepository => _fileRepository ?? (_fileRepository = new GenericRepository<File>(_context));

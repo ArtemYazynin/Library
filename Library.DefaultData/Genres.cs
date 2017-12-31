@@ -10,76 +10,57 @@ namespace Library.DefaultData
 
 		static Genres()
 		{
-			ComputersAndTecnology = new Genre()
+			ComputersAndTecnology = new Genre("Computers & Technology")
 			{
-				Id = Rnd.Next(int.MaxValue),
-				Name = "Computers & Technology",
-				
+				Id = Rnd.Next(int.MaxValue)
 			};
-			Programming = new Genre()
+			Programming = new Genre("Programming")
 			{
 				Id = Rnd.Next(int.MaxValue),
 				Version = new byte[] { 0, 0, 0, 0, 0, 0, 0, 120 },
-				Name = "Programming",
 				Parent = ComputersAndTecnology,
 
 			};
-			LanguageAndTools = new Genre()
+			LanguageAndTools = new Genre("Languages & Tools")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "Languages & Tools",
 				Parent = Programming,
 			};
-			CSharp = new Genre()
+			CSharp = new Genre("C#")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "C#",
 				Parent = LanguageAndTools
 			};
-			MicrosoftProgramming = new Genre()
+			MicrosoftProgramming = new Genre("Microsoft Programming")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "Microsoft Programming",
 				Parent = Programming,
 			};
-			DotNet = new Genre()
+			DotNet = new Genre(".NET")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = ".NET",
 				Parent = MicrosoftProgramming
 			};
-			WebProgramming = new Genre()
+			WebProgramming = new Genre("Web Programming")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "Web Programming",
 				Parent = Programming
 			};
-			JavaScript = new Genre()
+			JavaScript = new Genre("JavaScript")
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Name = "JavaScript",
 				Parent = WebProgramming
 			};
 
-			ComputersAndTecnology.Children = new List<Genre>() { Programming };
-			Programming.Children = new List<Genre>()
-			{
-				WebProgramming,
-				MicrosoftProgramming,
-				LanguageAndTools
-			};
-			LanguageAndTools.Children = new List<Genre>()
-			{
-				CSharp
-			};
-			MicrosoftProgramming.Children = new List<Genre>()
-			{
-				DotNet
-			};
-			WebProgramming.Children = new List<Genre>()
-			{
-				JavaScript
-			};
+			ComputersAndTecnology.AddChild(Programming);
+
+			Programming.AddChild(WebProgramming);
+			Programming.AddChild(MicrosoftProgramming);
+			Programming.AddChild(LanguageAndTools);
+
+			LanguageAndTools.AddChild(CSharp);
+			MicrosoftProgramming.AddChild(DotNet);
+			WebProgramming.AddChild(JavaScript);
 		}
 		public static Genre ComputersAndTecnology { get; }
 		public static Genre Programming { get; }

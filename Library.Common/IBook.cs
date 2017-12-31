@@ -4,23 +4,23 @@ namespace Library.Common
 {
 	public interface IBook<TEdition,TPublisher, TGenre, TAuthor, TRent, TInvoice, TFile>
 	{
-		string Name { get; set; }
+		string Name { get; }
 
-		string Isbn { get; set; }
+		string Isbn { get; }
 
-		string Description { get; set; }
+		string Description { get; }
 
-		int Count { get; set; }
+		int Count { get; }
 
-		TEdition Edition { get; set; }
+		TEdition Edition { get; }
 
-		TPublisher Publisher { get; set; }
-		TFile Cover { get; set; }
+		TPublisher Publisher { get; }
+		TFile Cover { get; }
 
-		ICollection<TGenre> Genres { get; set; }
+		ICollection<TGenre> Genres { get; }
 
-		ICollection<TAuthor> Authors { get; set; }
-		ICollection<TRent> Rents { get; set; }
-		ICollection<TInvoice> IncomingBooks { get; set; }
+		ICollection<TAuthor> Authors { get; }
+		ICollection<TRent> Rents { get; }
+		ICollection<TInvoice> IncomingBooks { get; }
 	}
 }

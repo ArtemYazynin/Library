@@ -58,12 +58,9 @@ namespace Library.Tests.Services
 			var first = Invoices.First();
 			var incomingBook = first.IncomingBooks.First();
 
-			Rents.Add(new Rent()
+			Rents.Add(new Rent(incomingBook.Book, Subscribers.First(), Books.Single(x => x.Id == incomingBook.Book.Id).Count)
 			{
-				Id = _random.Next(int.MaxValue),
-				Book = incomingBook.Book,
-				Subscriber = Subscribers.First(),
-				Count = Books.Single(x=>x.Id == incomingBook.Book.Id).Count
+				Id = _random.Next(int.MaxValue)
 			});
 
 			Assert.Throws<InvoiceCountException>(async ()=> await InvoicesService.Delete(first.Id));

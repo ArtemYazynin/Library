@@ -4,12 +4,12 @@ namespace Library.Common
 {
 	public interface IRent<TBook, TSubscriber>
 	{
-		TBook Book { get; set; }
-		TSubscriber Subscriber { get; set; }
-		int Count { get; set; }
+		TBook Book { get;  }
+		TSubscriber Subscriber { get; }
+		int Count { get; }
 
-		bool IsActive { get; set; }
+		bool IsActive { get; }
 
-		DateTime Date { get; set; }
+		DateTime Date { get; }
 	}
 }

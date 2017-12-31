@@ -5,21 +5,72 @@ namespace Library.ObjectModel.Models
 {
 	public class Subscriber:Entity, ISubscriber<Rent>, IDeletable
 	{
-		public Subscriber()
+		private string _lastname;
+		private string _firstname;
+		private ICollection<Rent> _rents;
+
+		protected Subscriber()
 		{
-			Rents = new List<Rent>();
+			_rents = new List<Rent>();
 		}
 
-		public string Lastname { get; set; }
-		public string Firstname { get; set; }
+		public Subscriber(string lastname, string firstname)
+		{
+			_lastname = lastname;
+			_firstname = firstname;
+			_rents = new List<Rent>();
+		}
+
+		public string Lastname
+		{
+			get { return _lastname; }
+			set
+			{
+				if (!string.IsNullOrEmpty(value))
+				{
+					_lastname = value;
+				}
+			}
+		}
+
+		public string Firstname
+		{
+			get { return _firstname; }
+			set
+			{
+				if (!string.IsNullOrEmpty(value))
+				{
+					_firstname = value;
+				}
+			}
+		}
+
 		public string Middlename { get; set; }
 
-		public override string ToString()
+		public string Fio => $"{Lastname} {Firstname} {Middlename ?? string.Empty}";
+
+		public ICollection<Rent> Rents
 		{
-			return $"{Lastname} {Firstname} {Middlename ?? string.Empty}";
+			get { return _rents; }
+			set
+			{
+				if (value == null)
+				{
+					_rents.Clear();
+				}
+				else
+				{
+					foreach (var rent in value)
+					{
+						if (rent!=null)
+						{
+							_rents.Add(rent);
+						}
+					}
+				}
+			}
 		}
 
-		public ICollection<Rent> Rents { get; set; }
 		public bool IsDeleted { get; set; }
 	}
 }

@@ -76,7 +76,7 @@ namespace Library.Tests.Services
 			Assert.That(created.IsActive, Is.EqualTo(rent.IsActive));
 			Assert.That(created.Date, Is.EqualTo(created.Date));
 
-			Assert.That(created.Subscriber.ToString(), Is.EqualTo(rent.Subscriber.ToString()));
+			Assert.That(created.Subscriber.Fio, Is.EqualTo(rent.Subscriber.ToString()));
 			Assert.That(created.Book.Id, Is.EqualTo(rent.Book.Id));
 		}
 
@@ -86,13 +86,10 @@ namespace Library.Tests.Services
 			var book = Books.First();
 			var reserved = Rents.Where(x => x.Book.Id == book.Id).Sum(x=>x.Count);
 
-			Rents.Add(new Rent()
+			Rents.Add(new Rent(book, Subscribers.First(), book.Count - reserved)
 			{
 				Id = Random.Next(int.MaxValue),
-				Book = book,
 				Date = DateTime.Now,
-				Subscriber = Subscribers.First(),
-				Count = book.Count - reserved
 			});
 
 			var dto = new RentDto()

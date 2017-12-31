@@ -5,6 +5,7 @@ namespace Library.ObjectModel.Models
 {
 	public class Entity
 	{
+		
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public long Id { get; set; }
 		

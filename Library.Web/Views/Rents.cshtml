@@ -19,7 +19,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="rent in Rents | orderBy: ['IsActive','-Date']">
-						<td ng-bind="rent.Date | date: 'yyyy.MM.dd HH:mm:ss'">
+						<td ng-bind="rent.Date | date: 'dd.MM.yyyy HH:mm:ss'">
 						</td>
 						<td>
 							<a href="#/books/{{rent.Book.Id}}/edit" ng-bind="rent.Book.Name"></a>

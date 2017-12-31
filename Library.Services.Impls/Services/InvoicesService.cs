@@ -97,11 +97,7 @@ namespace Library.Services.Impls.Services
 			{
 				var book = await _unitOfWork.BookRepository.Get(incomingBook.Book.Id);
 				await UpdateBookCount(book, incomingBook);
-				invoice.IncomingBooks.Add(new IncomingBook()
-				{
-					Book = book,
-					Count = incomingBook.Count,
-				});
+				invoice.IncomingBooks.Add(new IncomingBook(invoice, book, incomingBook.Count));
 			}
 		}
 
