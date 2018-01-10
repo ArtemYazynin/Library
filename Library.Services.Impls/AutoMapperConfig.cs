@@ -11,15 +11,13 @@ namespace Library.Services.Impls
 			Mapper.Initialize((config) =>
 			{
 				config.CreateMap<Rent, RentDto>()
-					.MaxDepth(1)
 					.ReverseMap();
 
 				config.CreateMap<Subscriber, SubscriberDto>()
 					.ReverseMap();
 
 				config.CreateMap<IncomingBook, IncomingBookDto>()
-					.ReverseMap()
-					.MaxDepth(1);
+					.ReverseMap();
 
 				config.CreateMap<Invoice, InvoiceDto>()
 					.ReverseMap();
@@ -33,7 +31,6 @@ namespace Library.Services.Impls
 				config.CreateMap<Genre, GenreDto>()
 					.ReverseMap();
 				config.CreateMap<Genre, GenreSimpleDto>()
-					.MaxDepth(0)
 					.ReverseMap();
 
 				config.CreateMap<Edition, EditionDto>()
@@ -43,8 +40,9 @@ namespace Library.Services.Impls
 					.ReverseMap();
 
 				config.CreateMap<Book, BookDto>()
-					.MaxDepth(1)
-					.ReverseMap();
+					.MaxDepth(10)
+					.ReverseMap()
+					.MaxDepth(10);
 			});
 			Mapper.AssertConfigurationIsValid();
 		}

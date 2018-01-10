@@ -5,7 +5,7 @@ namespace Library.Common
 {
 	public interface IInvoice<TIncomingBook>
 	{
-		DateTime Date { get; set; }
-		ICollection<TIncomingBook> IncomingBooks { get; set; }
+		DateTime Date { get; }
+		ICollection<TIncomingBook> IncomingBooks { get; }
 	}
 }

@@ -113,6 +113,7 @@ namespace Library.Services.Impls.Services
 		{
 			var dbEntity = await GetInternal(id);
 			var entity = Mapper.Map<BookDto, Book>(bookDto);
+
 			dbEntity.Name = entity.Name;
 			dbEntity.Isbn = entity.Isbn;
 			dbEntity.Description = entity.Description;

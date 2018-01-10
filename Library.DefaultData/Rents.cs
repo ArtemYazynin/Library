@@ -9,62 +9,38 @@ namespace Library.DefaultData
 
 		static Rents()
 		{
-			RentIvanov1 = new Rent()
+			RentIvanov1 = new Rent(Books.ClrVia, Subscribers.Ivanov, 1, true)
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Subscriber = Subscribers.Ivanov,
-				Book = Books.ClrVia,
-				Count = 1,
-				IsActive = true,
 				Date = new DateTime(2017, 12, 17)
 			};
-			RentIvanov2 = new Rent()
+			RentIvanov2 = new Rent(Books.MyEvernoteNotes, Subscribers.Ivanov,1,true)
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Subscriber = Subscribers.Ivanov,
-				Book = Books.MyEvernoteNotes,
-				Count = 1,
-				IsActive = true,
 				Date = new DateTime(2017, 12, 17)
 			};
 
-			RentIvanov3 = new Rent()
+			RentIvanov3 = new Rent(Books.CSharp6AndNetPlatform, Subscribers.Ivanov,2,true)
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Subscriber = Subscribers.Ivanov,
-				Book = Books.CSharp6AndNetPlatform,
-				Count = 2,
-				IsActive = true,
 				Date = new DateTime(2017, 12, 20)
 			};
 
-			RentPetrov = new Rent()
+			RentPetrov = new Rent(Books.JsPocketGuide, Subscribers.Petrov,2,true)
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Subscriber = Subscribers.Petrov,
-				Book = Books.JsPocketGuide,
-				Count = 2,
-				IsActive = true,
 				Date = new DateTime(2017, 12, 18)
 			};
 
-			RentSidorov = new Rent()
+			RentSidorov = new Rent(Books.JsOptimizingPerfomance, Subscribers.Sidorov,4)
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Subscriber = Subscribers.Sidorov,
-				Book = Books.JsOptimizingPerfomance,
-				Count = 4,
-				IsActive = false,
 				Date = new DateTime(2017, 12, 16)
 			};
 
-			RentMaslov = new Rent()
+			RentMaslov = new Rent(Books.AsyncProgrammingCSharp5, Subscribers.Maslov,1)
 			{
 				Id = Rnd.Next(int.MaxValue),
-				Subscriber = Subscribers.Maslov,
-				Book = Books.AsyncProgrammingCSharp5,
-				Count = 1,
-				IsActive = false,
 				Date = new DateTime(2017, 12, 15)
 			};
 		}

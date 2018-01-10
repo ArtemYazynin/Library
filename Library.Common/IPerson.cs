@@ -2,8 +2,8 @@
 {
 	public interface IPerson
 	{
-		string Lastname { get; set; }
-		string Firstname { get; set; }
-		string Middlename { get; set; }
+		string Lastname { get; }
+		string Firstname { get; }
+		string Middlename { get; }
 	}
 }

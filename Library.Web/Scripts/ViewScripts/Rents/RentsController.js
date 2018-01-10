@@ -38,6 +38,25 @@
 				}
 				
 			}
+
+			function _details(rent) {
+				$scope.selectedRent = rent || {};
+
+				subscribersService.get(function(response) { $scope.Subscribers = response; });
+				booksService.getAll(function(response) { $scope.Books = response; });
+
+				$scope.createDialog = $ngConfirm({
+					title: "Rent",
+					scope: $scope,
+					contentUrl: 'src/rentDetails.html',
+					backgroundDismiss: true,
+					type: 'blue',
+					closeIcon: true,
+					theme: 'modern',
+					columnClass: 'col-lg-12'
+				});
+			}
+
 			function _activateOrDeactivate(rent) {
 				rent.IsActive = !rent.IsActive;
 				if (rent.IsActive) {
@@ -56,6 +75,7 @@
 			}
 			return {
 				save: _save,
+				details: _details,
 				activateOrDeactivate: _activateOrDeactivate
 			}
 		})();

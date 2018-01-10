@@ -56,7 +56,6 @@
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Edition.cs" />
-    <Compile Include="Models\EditionTypeEnum.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IDeletable.cs" />
     <Compile Include="Models\IncomingBook.cs" />

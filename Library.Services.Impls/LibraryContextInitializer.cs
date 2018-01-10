@@ -55,62 +55,14 @@ namespace Library.Services.Impls
 		{
 			List<Rent> rents = new List<Rent>()
 			{
-				new Rent()
-				{
-					Book = DefaultData.Books.JsPocketGuide,
-					Subscriber = DefaultData.Subscribers.Ivanov,
-					Count = 1,
-					IsActive = true
-				},
-				new Rent()
-				{
-					Book = DefaultData.Books.JsOptimizingPerfomance,
-					Subscriber = DefaultData.Subscribers.Ivanov,
-					Count = 1,
-					IsActive = true
-				},
-				new Rent()
-				{
-					Book = DefaultData.Books.CSharp6AndNetPlatform,
-					Subscriber = DefaultData.Subscribers.Petrov,
-					Count = 2,
-					IsActive = true
-				},
-				new Rent()
-				{
-					Book = DefaultData.Books.AsyncProgrammingCSharp5,
-					Subscriber = DefaultData.Subscribers.Petrov,
-					Count = 1,
-					IsActive = true
-				},
-				new Rent()
-				{
-					Book = DefaultData.Books.ClrVia,
-					Subscriber = DefaultData.Subscribers.Sidorov,
-					Count = 1,
-					IsActive = false
-				},
-				new Rent()
-				{
-					Book = DefaultData.Books.CSharpCompleteGuide,
-					Subscriber = DefaultData.Subscribers.Maslov,
-					Count = 1,
-					IsActive = false
-				},
-				new Rent()
-				{
-					Book = DefaultData.Books.AsyncProgrammingCSharp5,
-					Subscriber = DefaultData.Subscribers.Maslov,
-					Count = 1,
-					IsActive = false
-				},
-				new Rent()
-				{
-					Book = DefaultData.Books.CSharp6AndNetPlatform,
-					Subscriber = DefaultData.Subscribers.Maslov,
-					Count = 1,
-					IsActive = false
-				},
+				new Rent( DefaultData.Books.JsPocketGuide, DefaultData.Subscribers.Ivanov,1,true),
+				new Rent(DefaultData.Books.JsOptimizingPerfomance,DefaultData.Subscribers.Ivanov,1,true),
+				new Rent(DefaultData.Books.CSharp6AndNetPlatform,DefaultData.Subscribers.Petrov,2,true),
+				new Rent(DefaultData.Books.AsyncProgrammingCSharp5, DefaultData.Subscribers.Petrov,1,true),
+				new Rent(DefaultData.Books.ClrVia,DefaultData.Subscribers.Sidorov,1),
+				new Rent(DefaultData.Books.CSharpCompleteGuide,DefaultData.Subscribers.Maslov,1),
+				new Rent(DefaultData.Books.AsyncProgrammingCSharp5,DefaultData.Subscribers.Maslov,1),
+				new Rent( DefaultData.Books.CSharp6AndNetPlatform, DefaultData.Subscribers.Maslov,1)
 			};
 			rents.ForEach(x => context.Rents.Add(x));
 		}
