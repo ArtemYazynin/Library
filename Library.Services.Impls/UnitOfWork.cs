@@ -65,6 +65,8 @@ namespace Library.Services.Impls
 		public void Dispose()
 		{
 			Dispose(true);
+			/*Typically, this is done to prevent the finalizer from releasing unmanaged resources 
+			  that have already been freed by the IDisposable.Dispose implementation.*/
 			GC.SuppressFinalize(this);
 		}
 
