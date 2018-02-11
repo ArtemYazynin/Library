@@ -10,21 +10,12 @@
 				});
 			}
 
-			function postSaveConfirm(genreName) {
-				$ngConfirm({
-					title: "Successfully created!",
-					content: "Genre <strong>" + genreName + "</strong> was created",
-					backgroundDismiss: true
-				});
-			}
-
 			function _init() {
 				var emptyGenre = {
 					Name: "New Genre"
 				};
 				genresService.save(emptyGenre, function (response) {
 					$scope.Genres.push(response);
-					postSaveConfirm(response.Name);
 				});
 				
 			}
@@ -43,7 +34,6 @@
 				};
 				genresService.save(newGenre, function (response) {
 					nodeData.Children.push(response);
-					postSaveConfirm(response.Name);
 				});
 			}
 
@@ -83,7 +73,7 @@
 				el[0].focus();
 			}
 			function recursivellyDelete(genres, id) {
-				for (var i = 0, len = genres.length; i < len; i++) {
+				for (var i = 0; i < genres.length; i++) {
 					if (genres[i].Children && genres[i].Children.length > 0) {
 						recursivellyDelete(genres[i].Children, id);
 					}
@@ -124,22 +114,6 @@
 				});
 			}
 
-
-			function _hasUnsaved() {
-				function recurcivelyFindUnsavedGenres(children) {
-					if (!children || children.length === 0) {
-						return false;
-					}
-					for (var i = 0, len = children.length; i < len; i++) {
-						var found = recurcivelyFindUnsavedGenres(children[i].Children);
-						if (found) {
-							return true;
-						}
-					}
-				}
-				var result = recurcivelyFindUnsavedGenres($scope.Genres);
-				return result;
-			}
 			function _save() {
 				var unsavedGenres = (function() {
 					var result = [];
@@ -163,7 +137,6 @@
 				remove: _remove,
 				rename: _rename,
 				toogle: _toogle,
-				hasUnsaved: _hasUnsaved,
 				save: _save
 			}
 		})();
