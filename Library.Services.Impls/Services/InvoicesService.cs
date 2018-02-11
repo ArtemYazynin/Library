@@ -39,7 +39,7 @@ namespace Library.Services.Impls.Services
 				{
 					await _unitOfWork.Save();
 				}
-				
+
 			}
 			_unitOfWork.InvoiceRepository.Delete(invoice);
 			await _unitOfWork.Save();

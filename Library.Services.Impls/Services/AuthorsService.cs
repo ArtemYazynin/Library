@@ -44,7 +44,7 @@ namespace Library.Services.Impls.Services
 
 		public async Task<AuthorDto> Update(long id, AuthorDto authorDto)
 		{
-			ThrowIfDtoIncorrect(authorDto);
+			ThrowIfAuthorIncorrect(authorDto);
 			await ThrowIfSameAuthorExists(authorDto);
 			var author = Mapper.Map<AuthorDto,Author>(authorDto);
 			if (_unitOfWork.AuthorRepository.Update(author))
@@ -56,7 +56,7 @@ namespace Library.Services.Impls.Services
 
 		public async Task<EntityDto> Create(AuthorDto authorDto)
 		{
-			ThrowIfDtoIncorrect(authorDto);
+			ThrowIfAuthorIncorrect(authorDto);
 			await ThrowIfSameAuthorExists(authorDto);
 			var author = Mapper.Map<AuthorDto, Author>(authorDto);
 			if (_unitOfWork.AuthorRepository.Create(author))
@@ -70,9 +70,9 @@ namespace Library.Services.Impls.Services
 			};
 		}
 
-		private void ThrowIfDtoIncorrect(AuthorDto dto)
+		private void ThrowIfAuthorIncorrect(AuthorDto author)
 		{
-			if (string.IsNullOrEmpty(dto.Lastname) || string.IsNullOrEmpty(dto.Firstname))
+			if (string.IsNullOrEmpty(author.Lastname) || string.IsNullOrEmpty(author.Firstname))
 			{
 				throw new AuthorIncorrectException();
 			}

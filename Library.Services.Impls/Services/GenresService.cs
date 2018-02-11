@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -40,8 +41,9 @@ namespace Library.Services.Impls.Services
 
 		public async Task<EntityDto> Delete(long id, bool recursivelly)
 		{
-			var includeProperties = $"{nameof(Genre.Children)}, {nameof(Genre.Parent)}";
+			var includeProperties = $"{nameof(Genre.Children)}, {nameof(Genre.Parent)}, {nameof(Genre.Books)}";
 			var genre = await _unitOfWork.GenreRepository.Get(id, includeProperties);
+			ThrowIfGenreHasUsed(genre);
 			if (recursivelly)
 			{
 				DeleteChildrenGenres(genre.Children.ToList());
@@ -52,6 +54,14 @@ namespace Library.Services.Impls.Services
 			{
 				Id = id
 			};
+		}
+
+		private void ThrowIfGenreHasUsed(Genre genre)
+		{
+			if (genre.Books.Any())
+			{
+				throw new GenreIsUsedException(genre.Books.Select(x => x.Name));
+			}
 		}
 
 		public async Task<GenreDto> Update(long id, GenreDto dto)

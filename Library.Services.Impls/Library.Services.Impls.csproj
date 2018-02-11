@@ -54,6 +54,7 @@
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="BooksRepository.cs" />
     <Compile Include="Exceptions\Author\AuthorIncorrectException.cs" />
+    <Compile Include="Exceptions\Genre\GenreIsUsedException.cs" />
     <Compile Include="Exceptions\Invoice\InvoiceCountException.cs" />
     <Compile Include="Exceptions\Rent\NotHasAvailableBooksCountException.cs" />
     <Compile Include="Exceptions\Rent\RentCountMoreCountOfBookException.cs" />

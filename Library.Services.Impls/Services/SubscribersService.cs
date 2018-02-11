@@ -63,7 +63,7 @@ namespace Library.Services.Impls.Services
 				throw new SubscriberHasIncorrectIdException(dto.Id);
 			}
 			ThrowIfSubscriberIncorrect(dto);
-			await ThrowIfSubscriberExists(dto);
+			await ThrowIfSameSubscriberExists(dto);
 			var subscriber = Mapper.Map<Subscriber>(dto);
 			if (_unitOfWork.SubscriberRepository.Update(subscriber))
 			{
@@ -75,7 +75,7 @@ namespace Library.Services.Impls.Services
 		public async Task<SubscriberDto> Create(SubscriberDto dto)
 		{
 			ThrowIfSubscriberIncorrect(dto);
-			await ThrowIfSubscriberExists(dto);
+			await ThrowIfSameSubscriberExists(dto);
 			var subscriber = Mapper.Map<Subscriber>(dto);
 			if (_unitOfWork.SubscriberRepository.Create(subscriber))
 			{
@@ -93,12 +93,13 @@ namespace Library.Services.Impls.Services
 			}
 		}
 
-		private async Task ThrowIfSubscriberExists(SubscriberDto dto)
+		private async Task ThrowIfSameSubscriberExists(SubscriberDto dto)
 		{
 			List<Expression<Func<Subscriber, bool>>> filters = new List<Expression<Func<Subscriber, bool>>>()
 			{
 				x => x.Lastname.ToLower() == dto.Lastname.ToLower(),
-				x => x.Firstname.ToLower() == dto.Firstname.ToLower()
+				x => x.Firstname.ToLower() == dto.Firstname.ToLower(),
+				x => x.Middlename.ToLower() == dto.Middlename.ToLower()
 			};
 			var dublicates = await _unitOfWork.SubscriberRepository.GetAllAsync(filters);
 			if (dublicates.Any())
