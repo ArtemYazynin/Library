@@ -19,41 +19,6 @@
 					return $q.reject(rejection);
 				},
 				response: function (response) {
-					var removedProperty = "$id";
-					if ((typeof response.data) === "string") return response;
-					function internalRemove(data) {
-						if (!data) return;
-						if ((typeof data) === "object") {
-							if (data instanceof Array) {
-								removeReferenceIndicator(data);
-							} else {
-								delete data[removedProperty];
-							}
-							for (var innerProp in data) {
-								if (data.hasOwnProperty(innerProp)) {
-									internalRemove(data[innerProp]);
-								}
-							}
-						}
-					}
-					function removeReferenceIndicator(data) {
-						/*
-						[DataContract(IsReference = true)]
-						EntityDto
-						*/
-						for (var prop in data) {
-							if (data.hasOwnProperty(prop)) {
-								if (data[prop] === null || data[prop] === undefined) continue;
-								if (prop === removedProperty) {
-									delete data[prop];
-									continue;
-								}
-								internalRemove(data[prop]);
-							}
-							
-						}
-					}
-					removeReferenceIndicator(response.data);
 					return response;
 				}
 			}
