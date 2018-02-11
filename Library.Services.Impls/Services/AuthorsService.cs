@@ -84,7 +84,9 @@ namespace Library.Services.Impls.Services
 			{
 				x => x.Lastname.ToLower() == authorDto.Lastname.ToLower()
 				     && x.Firstname.ToLower() == authorDto.Firstname.ToLower()
+					 && x.Middlename.ToLower() == authorDto.Middlename.ToLower()
 			};
+
 			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(filters);
 			if (authors.Any()) throw new AuthorDublicateException();
 		}

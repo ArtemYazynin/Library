@@ -21,8 +21,7 @@ namespace Library.Services.Impls.Services
 		public async Task<IEnumerable<SubscriberDto>> GetAll()
 		{
 			var orderBy = new Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>>(x=>x.OrderBy(y=>y.Lastname));
-			var includeProperties = nameof(Subscriber.Rents);
-			var subscribers = await _unitOfWork.SubscriberRepository.GetAllAsync(null, orderBy, includeProperties);
+			var subscribers = await _unitOfWork.SubscriberRepository.GetAllAsync(null, orderBy);
 			var result = Mapper.Map<IEnumerable<SubscriberDto>>(subscribers);
 			return result;
 		}

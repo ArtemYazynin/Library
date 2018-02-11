@@ -21,17 +21,15 @@
 					<tr ng-repeat="author in Authors">
 						<td ng-bind="author.Fio"></td>
 						<td style="width: 9%;">
-							<div class="tooltip-common">
+							<div>
 								<button type="button" class="btn btn-primary" ng-click="actions.details(author)">
 									<span class="glyphicon glyphicon-edit"></span>
 								</button>
-								<span class="tooltiptext">Edit</span>
 							</div>
-							<div class="tooltip-common">
+							<div>
 								<button type="button" class="btn btn-danger" ng-click="actions.remove(author)">
 									<span class="glyphicon glyphicon-remove"></span>
 								</button>
-								<span class="tooltiptext">Remove</span>
 							</div>
 						</td>
 					</tr>
