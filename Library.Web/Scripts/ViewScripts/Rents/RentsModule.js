@@ -1,7 +1,7 @@
 ﻿(function(angular) {
 	"use strict";
 
-	angular.module("RentsModule", ["ngRoute", "ngResource", "cp.ngConfirm"])
+	angular.module("RentsModule", ["ngRoute", "ngResource", "cp.ngConfirm", "ui.date"])
 		.factory("rentsService", ["$resource",function ($resource) {
 		var baseUrl = "api/Rents";
 		var config = {

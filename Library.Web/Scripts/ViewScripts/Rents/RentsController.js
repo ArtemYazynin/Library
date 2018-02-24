@@ -3,6 +3,11 @@
 
 	angular.module("RentsModule")
 		.controller("RentsController", ["$scope", "rentsService", "subscribersService", "booksService", "$ngConfirm", function ($scope, rentsService, subscribersService, booksService, $ngConfirm) {
+		$scope.dateOptions = {
+			changeYear: true,
+			changeMonth: true,
+			dateFormat: 'dd.mm.yy'
+		};
 		rentsService.get(function(response) {
 			$scope.Rents = response;
 		});

@@ -1,8 +1,8 @@
 ﻿<div style="height: 400px;">
 	<form name="RentDetails" ng-submit="actions.save()" novalidate>
 		<div class="form-group">
-			<label for="Date">Date</label>
-			<input type="date" class="form-control" name="Date" id="Date" ng-model="selectedRent.Date" required />
+			<label for="rentDate">Date</label>
+			<input id="rentDate" name="rentDate" ui-date="dateOptions" ng-model="selectedRent.Date" required/>
 			<span style="color: red;" ng-show="RentDetails.Date.$error.required">Date is required</span>
 		</div>
 		<div class="form-group">
