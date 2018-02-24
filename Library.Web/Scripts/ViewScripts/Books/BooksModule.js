@@ -1,7 +1,7 @@
 ﻿(function (angular) {
 	"use strict";
 
-	angular.module("BooksModule", ["ngRoute", "ngResource", "oi.select", "cp.ngConfirm"])
+	angular.module("BooksModule", ["ngRoute", "ngResource", "oi.select", "cp.ngConfirm", "ui.grid", "ui.grid.pagination"])
 	.factory("genresService", ["$resource", function ($resource) {
 		var baseUrl = "api/Genres";
 		var genresResource = $resource(baseUrl + "/:id", { id: "@Id" });
@@ -12,7 +12,6 @@
 			getAll: _getAll
 		}
 	}])
-
 	.factory("publishersService", ["$resource", function ($resource) {
 		var baseUrl = "api/Publishers";
 		var publishersResource = $resource(baseUrl + "/:id", { id: "@Id" });

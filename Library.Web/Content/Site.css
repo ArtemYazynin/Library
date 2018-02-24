@@ -1,4 +1,14 @@
-﻿body {
+﻿.myGrid {
+    width: 1100px;
+    
+  }
+.myGrid > .ui-grid-row{
+}
+.operatinCell {
+	text-align: center !important;
+	padding: 3px;
+}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }

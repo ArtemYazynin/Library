@@ -39,35 +39,7 @@
 		</div>
 		<br />
 		<div>
-			<table class="table table-bordered table-condensed table-hover">
-				<thead>
-					<tr>
-						<th>Title</th>
-						<th>Genres</th>
-						<th>Authors</th>
-						<th>Publisher</th>
-						<th>Count</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="book in Books | orderBy:'Name'">
-						<td ng-bind="book.Name"></td>
-						<td ng-bind="book.GenresStr"></td>
-						<td ng-bind="book.AuthorsStr"></td>
-						<td ng-bind="book.Publisher.Name"></td>
-						<td ng-bind="book.Count">Count</td>
-						<td style="width: 9%;">
-							<button type="button" class="btn btn-primary" ng-click="actions.details(book)">
-								<span class="glyphicon glyphicon-edit"></span>
-							</button>
-							<button type="button" class="btn btn-danger" ng-click="actions.remove(book)">
-								<span class="glyphicon glyphicon-remove"></span>
-							</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="grid1" ui-grid="gridOptions" class="myGrid"></div>
 		</div>
 	</div>
 </div>

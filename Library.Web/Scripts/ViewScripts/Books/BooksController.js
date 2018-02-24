@@ -3,13 +3,83 @@
 	angular.module("BooksModule")
 	.controller("BooksController", ["$scope", "$location", "booksService", "$ngConfirm",
 		function ($scope, $location, booksService, $ngConfirm) {
+			//var paginationOptions = {
+			//	pageNumber: 1,
+			//	pageSize: 3,
+			//	sort: null
+			//};
 			function init() {
-				booksService.getAll(function (response) { $scope.Books = response; });
+				booksService.getAll(function (response) {
+					$scope.gridOptions.data = response;
+					//var data = response;
+
+					//$scope.gridOptions.totalItems = response.length;
+					//var firstRow = (paginationOptions.pageNumber - 1) * paginationOptions.pageSize;
+					//$scope.gridOptions.data = data.slice(firstRow, firstRow + paginationOptions.pageSize);
+				});
 			}
+			//var getPage = function () {
+			//	var url;
+			//	switch (paginationOptions.sort) {
+			//		case "ASC":
+			//			url = '/data/100_ASC.json';
+			//			break;
+			//		case "DESC":
+			//			url = '/data/100_DESC.json';
+			//			break;
+			//		default:
+			//			url = '/data/100.json';
+			//			break;
+			//	}
+			//	init();
+			//};
+			$scope.gridOptions = {
+				rowHeight: "40px",
+				//paginationPageSizes: [3, 5, 10],
+				//paginationPageSize: 3,
+				//useExternalPagination: true,
+				//useExternalSorting: true,
+				//onRegisterApi: function (gridApi) {
+				//	$scope.gridApi = gridApi;
+				//	$scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
+				//		if (sortColumns.length == 0) {
+				//			paginationOptions.sort = null;
+				//		} else {
+				//			paginationOptions.sort = sortColumns[0].sort.direction;
+				//		}
+				//		init();
+				//	});
+				//	gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+				//		paginationOptions.pageNumber = newPage;
+				//		paginationOptions.pageSize = pageSize;
+				//		init();
+				//	});
+				//},
+				columnDefs: [
+					{ name: "Name" },
+					{ name: 'Genres', field: 'GenresStr' },
+					{ name: 'Authors', field: 'AuthorsStr' },
+					{ name: 'Publisher', field: 'Publisher.Name' },
+					{ name: 'Count' },
+					{
+						name: ' ',
+						enableSorting: false,
+						cellTemplate:
+						'<button type="button" class="btn btn-primary" ng-click="grid.appScope.actions.details(row.entity)">' +
+							'<span class="glyphicon glyphicon-edit"></span>' +
+						'</button>' +
+						'<button type="button" class="btn btn-danger" ng-click="grid.appScope.actions.remove(row.entity)">' +
+							'<span class="glyphicon glyphicon-remove"></span>' +
+						'</button>',
+						cellClass: function () { return "operatinCell"; }
+					}
+				]
+			};
+
 			$scope.actions = (function () {
 				function _search() {
 					booksService.search($scope.filters).then(function (data) {
-						$scope.Books = data;
+						$scope.gridOptions.data = data;
 					});
 				}
 				function _remove(book) {
@@ -24,8 +94,8 @@
 								action: function (scope, button) {
 									var bookname = book.Name;
 									booksService.remove(book, function(deletedBook) {
-										var index = scope.Books.indexOf(deletedBook);
-										scope.Books.splice(index, 1);
+										var index = scope.gridOptions.data.indexOf(deletedBook);
+										scope.gridOptions.data.splice(index, 1);
 										$ngConfirm({
 											title: "Successfully removed!",
 											content: "Book <strong>" + bookname + "</strong> was removed",

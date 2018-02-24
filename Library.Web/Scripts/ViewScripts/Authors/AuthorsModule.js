@@ -9,9 +9,9 @@
 					method: 'PUT' // this method issues a PUT request
 				}
 			}
-			var authorsResource = $resource(baseUrl + "/:isReverse/:id", { id: "@Id", isReverse: "@isReverse"}, config);
-			function _getAll(isReverse, successCallback) {
-				authorsResource.query({ isReverse: isReverse}, successCallback);
+			var authorsResource = $resource(baseUrl + "/:id", { id: "@Id" }, config);
+			function _getAll(successCallback) {
+				authorsResource.query(successCallback);
 			}
 			function _get(id, successCallback) {
 				authorsResource.get({ Id: id }, successCallback);

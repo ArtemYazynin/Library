@@ -3,10 +3,9 @@
 
 	angular.module("AuthorsModule")
 		.controller("AuthorsController", ["$scope", "$location", "authorsService", "$ngConfirm", function ($scope, $location, authorsService, $ngConfirm) {
-		$scope.isReverse = false;
 		$scope.actions = (function () {
 			function _init() {
-				authorsService.getAll($scope.isReverse,function (response) { $scope.Authors = response; });
+				authorsService.getAll(function (response) { $scope.Authors = response; });
 			}
 			function _details(author) {
 				$location.path("/authors/" + author.Id + "/edit");

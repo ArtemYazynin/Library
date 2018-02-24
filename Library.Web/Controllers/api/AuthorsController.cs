@@ -19,8 +19,7 @@ namespace Library.Web.Controllers.api
 		}
 
 		[HttpGet]
-		[Route("{isReverse}")]
-		public async Task<IEnumerable<AuthorDto>> Get(bool isReverse)
+		public async Task<IEnumerable<AuthorDto>> Get()
 		{
 			var authors = await _authorsService.GetAll();
 			return authors;
@@ -33,6 +32,7 @@ namespace Library.Web.Controllers.api
 			return author;
 		}
 
+		[HttpDelete]
 		public async Task<EntityDto> Delete(long id)
 		{
 			var deletedBook = await _authorsService.Delete(id);
