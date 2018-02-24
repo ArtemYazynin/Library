@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -26,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
+    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -203,17 +205,12 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\ui-grid.css" />
+    <Content Include="Content\ui-grid.min.css" />
+    <Content Include="Content\ui-grid.svg" />
     <Content Include="favicon.ico" />
-    <Content Include="Global.asax" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Global.asax" />
     <Content Include="Scripts\angular-ui-tree\angular-ui-tree.min.js" />
     <Content Include="Scripts\angular\angular-cookies.js" />
     <Content Include="Scripts\angular\angular-cookies.min.js" />
@@ -231,6 +228,50 @@
     <Content Include="Scripts\angular\angular-sanitize.min.js.map" />
     <Content Include="Scripts\angular\angular-resource.min.js.map" />
     <Content Include="Scripts\angular\angular-cookies.min.js.map" />
+    <Content Include="Content\ui-grid.woff" />
+    <Content Include="Content\ui-grid.ttf" />
+    <Content Include="Content\ui-grid.eot" />
+    <Content Include="Content\less\variables.less" />
+    <Content Include="Content\less\validate\less\validate.less" />
+    <Content Include="Content\less\tree-view\less\tree-view.less" />
+    <Content Include="Content\less\tree-base\less\tree-base.less" />
+    <Content Include="Content\less\sorting.less" />
+    <Content Include="Content\less\selection\less\selection.less" />
+    <Content Include="Content\less\rtl.less" />
+    <Content Include="Content\less\row-edit\less\rowEdit.less" />
+    <Content Include="Content\less\resize-columns\less\column-resizer.less" />
+    <Content Include="Content\less\pinning\less\pinning.less" />
+    <Content Include="Content\less\pagination\less\pagination.less" />
+    <Content Include="Content\less\move-columns\less\colMovable.less" />
+    <Content Include="Content\less\menu.less" />
+    <Content Include="Content\less\main.less" />
+    <Content Include="Content\less\importer\less\importer.less" />
+    <Content Include="Content\less\icons.less" />
+    <Content Include="Content\less\header.less" />
+    <Content Include="Content\less\grouping\less\grouping.less" />
+    <Content Include="Content\less\grid.less" />
+    <Content Include="Content\less\goups.less" />
+    <Content Include="Content\less\footer.less" />
+    <Content Include="Content\less\exporter\less\exporter.less" />
+    <Content Include="Content\less\expandable\less\expandable.less" />
+    <Content Include="Content\less\empty-base-layer\less\emptyBaseLayer.less" />
+    <Content Include="Content\less\elements.less" />
+    <Content Include="Content\less\edit\less\edit.less" />
+    <Content Include="Content\less\cellnav\less\cellNav.less" />
+    <Content Include="Content\less\cell.less" />
+    <Content Include="Content\less\bootstrap\bootstrap.less" />
+    <Content Include="Content\less\body.less" />
+    <Content Include="Content\less\animation.less" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery\jquery-3.3.1.min.js" />
@@ -251,6 +292,8 @@
     <Content Include="Content\select.min.css" />
     <Content Include="Scripts\oi.date\date.js" />
     <Content Include="Scripts\oi.select\select.min.js" />
+    <Content Include="Scripts\ui-grid.js" />
+    <Content Include="Scripts\ui-grid.min.js" />
     <Content Include="Scripts\ViewScripts\Authors\AuthorDetailsController.js" />
     <Content Include="Scripts\ViewScripts\Authors\AuthorsController.js" />
     <Content Include="Scripts\ViewScripts\Authors\AuthorsModule.js" />
@@ -318,11 +361,15 @@
       <Name>Library.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
