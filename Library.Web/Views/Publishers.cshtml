@@ -10,7 +10,7 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr ng-repeat="publisher in Publishers">
+				<tr ng-repeat="publisher in Publishers | orderBy:'Name'">
 					<td ng-click="actions.enableEdit($event,publisher)">
 						<span ng-bind="publisher.Name">
 

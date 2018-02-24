@@ -15,7 +15,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="subscriber in Subscribers">
+					<tr ng-repeat="subscriber in Subscribers | orderBy:'Fio'">
 						<td ng-bind="subscriber.Fio"></td>
 						<td ng-bind="subscriber.IsDeleted ? 'Yep': 'Nope'"></td>
 						<td style="width: 9%;">

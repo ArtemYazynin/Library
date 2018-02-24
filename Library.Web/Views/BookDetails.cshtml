@@ -17,7 +17,7 @@
 		<div class="form-group">
 			<label for="Edition">Edition</label>
 			<select class="form-control" name="Edition" id="Edition" ng-model="vm.Edition"
-			        ng-options="edition.Name +' '+ edition.Year for edition in Editions track by edition.Id"
+			        ng-options="edition.Name +' '+ edition.Year for edition in Editions | orderBy: 'Name' track by edition.Id"
 			        required>
 				<option value="">-Chose-</option>
 			</select>
@@ -26,7 +26,7 @@
 		<div class="form-group">
 			<label for="Publisher">Publisher</label>
 			<select class="form-control" name="Publisher" id="Publisher" ng-model="vm.Publisher"
-			        ng-options="publisher.Name for publisher in Publishers track by publisher.Id"
+			        ng-options="publisher.Name for publisher in Publishers | orderBy: 'Name' track by publisher.Id"
 			        required>
 				<option value="">-Chose-</option>
 			</select>
@@ -35,7 +35,7 @@
 		<div class="form-group">
 			<label for="Authors">Authors</label>
 			<oi-select id="Authors" name="Authors"
-			           oi-options="author.Lastname +' '+ author.Firstname + ' ' + (author.Middlename || '') for author in Authors"
+			           oi-options="author.Lastname +' '+ author.Firstname + ' ' + (author.Middlename || '') for author in Authors | orderBy: 'Lastname'"
 			           ng-model="vm.Authors"
 			           multiple
 			           placeholder="Select Authors...">
@@ -43,7 +43,7 @@
 		</div>
 		<div class="form-group">
 			<label for="Genres">Genres</label>
-			<oi-select id="Genres" name="Genres" oi-options="genre.Name for genre in Genres"
+			<oi-select id="Genres" name="Genres" oi-options="genre.Name for genre in Genres | orderBy: 'Name'"
 			           ng-model="vm.Genres"
 			           multiple
 			           placeholder="Select Genres..."

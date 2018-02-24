@@ -47,18 +47,16 @@
 						<th>Authors</th>
 						<th>Publisher</th>
 						<th>Count</th>
-						<th>Count available</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="book in Books">
+					<tr ng-repeat="book in Books | orderBy:'Name'">
 						<td ng-bind="book.Name"></td>
 						<td ng-bind="book.GenresStr"></td>
 						<td ng-bind="book.AuthorsStr"></td>
 						<td ng-bind="book.Publisher.Name"></td>
 						<td ng-bind="book.Count">Count</td>
-						<td ng-bind="book.CountAvailable"></td>
 						<td style="width: 9%;">
 							<button type="button" class="btn btn-primary" ng-click="actions.details(book)">
 								<span class="glyphicon glyphicon-edit"></span>

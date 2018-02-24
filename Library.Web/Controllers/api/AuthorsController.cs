@@ -18,7 +18,9 @@ namespace Library.Web.Controllers.api
 			_booksService = booksService;
 		}
 
-		public async Task<IEnumerable<AuthorDto>> Get()
+		[HttpGet]
+		[Route("{isReverse}")]
+		public async Task<IEnumerable<AuthorDto>> Get(bool isReverse)
 		{
 			var authors = await _authorsService.GetAll();
 			return authors;

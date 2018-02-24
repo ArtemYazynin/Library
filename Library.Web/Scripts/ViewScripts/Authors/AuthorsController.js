@@ -2,10 +2,11 @@
 	"use strict";
 
 	angular.module("AuthorsModule")
-	.controller("AuthorsController", ["$scope", "$location", "authorsService", "$ngConfirm", function ($scope, $location, authorsService, $ngConfirm) {
+		.controller("AuthorsController", ["$scope", "$location", "authorsService", "$ngConfirm", function ($scope, $location, authorsService, $ngConfirm) {
+		$scope.isReverse = false;
 		$scope.actions = (function () {
 			function _init() {
-				authorsService.getAll(function (response) { $scope.Authors = response; });
+				authorsService.getAll($scope.isReverse,function (response) { $scope.Authors = response; });
 			}
 			function _details(author) {
 				$location.path("/authors/" + author.Id + "/edit");
@@ -70,10 +71,15 @@
 				});
 
 			}
+
+			function _sort() {
+				
+			}
 			return {
 				init: _init,
 				details: _details,
-				remove: _remove
+				remove: _remove,
+				sort: _sort
 			}
 		})();
 		$scope.actions.init();

@@ -13,13 +13,18 @@
 			<table class="table table-bordered table-condensed table-hover">
 				<thead>
 					<tr>
-						<th>Author</th>
+						<th>
+							<span style="cursor: pointer; text-decoration: underline;" ng-click="isReverse = !isReverse; actions.init()">Authors</span>
+							<span ng-class="isReverse ? 'glyphicon glyphicon-arrow-down' : 'glyphicon glyphicon-arrow-up'"></span>
+						</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="author in Authors">
-						<td ng-bind="author.Fio"></td>
+					<tr ng-repeat="author in Authors | orderBy:'Fio'">
+						<td ng-bind="author.Fio">
+							
+						</td>
 						<td style="width: 9%;">
 							<div>
 								<button type="button" class="btn btn-primary" ng-click="actions.details(author)">
