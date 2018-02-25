@@ -64,14 +64,13 @@
 					{
 						name: ' ',
 						enableSorting: false,
+						cellClass: function () { return "operatinCell"; },
 						cellTemplate:
-						'<button type="button" class="btn btn-primary" ng-click="grid.appScope.actions.details(row.entity)">' +
-							'<span class="glyphicon glyphicon-edit"></span>' +
-						'</button>' +
-						'<button type="button" class="btn btn-danger" ng-click="grid.appScope.actions.remove(row.entity)">' +
-							'<span class="glyphicon glyphicon-remove"></span>' +
-						'</button>',
-						cellClass: function () { return "operatinCell"; }
+						'<grid-row-operations ' +
+							'details="grid.appScope.actions.details(row.entity)" ' +
+							'remove="grid.appScope.actions.remove(row.entity)">' +
+						'</grid-row-operations>'
+						
 					}
 				]
 			};

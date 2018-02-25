@@ -10,7 +10,8 @@
 		</div>
 		<br />
 		<div>
-			<table class="table table-bordered table-condensed table-hover">
+			<div id="gridAuthors" ui-grid="ctrl.gridOptions" class="myGrid"></div>
+			@*<table class="table table-bordered table-condensed table-hover">
 				<thead>
 					<tr>
 						<th>
@@ -20,25 +21,25 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="author in Authors | orderBy:'Fio'">
+					<tr ng-repeat="author in ctrl.Authors | orderBy:'Fio'">
 						<td ng-bind="author.Fio">
 							
 						</td>
 						<td style="width: 9%;">
 							<div>
-								<button type="button" class="btn btn-primary" ng-click="actions.details(author)">
+								<button type="button" class="btn btn-primary" ng-click="ctrl.actions.details(author)">
 									<span class="glyphicon glyphicon-edit"></span>
 								</button>
 							</div>
 							<div>
-								<button type="button" class="btn btn-danger" ng-click="actions.remove(author)">
+								<button type="button" class="btn btn-danger" ng-click="ctrl.actions.remove(author)">
 									<span class="glyphicon glyphicon-remove"></span>
 								</button>
 							</div>
 						</td>
 					</tr>
 				</tbody>
-			</table>
+			</table>*@
 		</div>
 	</div>
 </div>

@@ -313,6 +313,7 @@
     <Content Include="Scripts\ViewScripts\Root\RootModule.js" />
     <Content Include="Scripts\ViewScripts\Subscribers\SubscribersController.js" />
     <Content Include="Scripts\ViewScripts\Subscribers\SubscribersModule.js" />
+    <Content Include="src\gridRowOperations.html" />
     <Content Include="src\rentDetails.html" />
     <Content Include="src\template.html" />
     <Content Include="src\subscriberDetails.html" />

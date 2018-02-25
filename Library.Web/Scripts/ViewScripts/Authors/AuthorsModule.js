@@ -1,7 +1,7 @@
 ﻿(function(angular) {
 	"use strict";
 
-	angular.module("AuthorsModule", ["ngRoute", "ngResource", "oi.select", "cp.ngConfirm"])
+	angular.module("AuthorsModule", ["ngRoute", "ngResource", "oi.select", "cp.ngConfirm","ui.grid", "ui.grid.pagination"])
 		.factory("authorsService", ["$resource", "$http", function ($resource, $http) {
 			var baseUrl = "api/Authors";
 			var config = {

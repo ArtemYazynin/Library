@@ -76,7 +76,8 @@
 
 		$routeProvider.when("/authors", {
 			templateUrl: "/LibraryView/Authors",
-			controller: "AuthorsController"
+			controller: "AuthorsController",
+			controllerAs: "ctrl"
 		});
 		$routeProvider.when("/authors/:authorId/edit", {
 			templateUrl: "/LibraryView/AuthorDetails",
@@ -93,5 +94,15 @@
 				window.location = "#/books";
 			}
 		});
+	}])
+	.directive("gridRowOperations", [function() {
+		return {
+			restrict: 'E',
+			templateUrl:"src/gridRowOperations.html",
+			scope: {
+				details: "&",
+				remove: "&"
+			}
+		};
 	}]);
 })(angular);
