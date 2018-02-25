@@ -51,7 +51,8 @@
 		$routeProvider.when("/subscribers",
 		{
 			templateUrl: "LibraryView/Subscribers",
-			controller: "SubscribersController"
+			controller: "SubscribersController",
+			controllerAs: "ctrl"
 		});
 
 		$routeProvider.when("/rents",

@@ -2,33 +2,11 @@
 	<div class="panel-heading">Subscribers</div>
 	<div class="panel-body">
 		<div>
-			<button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="actions.details()"></button>
+			<button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="ctrl.actions.details()"></button>
 		</div>
 		<br />
 		<div>
-			<table class="table table-bordered table-condensed table-hover">
-				<thead>
-					<tr>
-						<th>Subscriber</th>
-						<th>IsDeleted</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="subscriber in Subscribers | orderBy:'Fio'">
-						<td ng-bind="subscriber.Fio"></td>
-						<td ng-bind="subscriber.IsDeleted ? 'Yep': 'Nope'"></td>
-						<td style="width: 9%;">
-							<button type="button" class="btn btn-primary" ng-disabled="subscriber.IsDeleted" ng-click="actions.details(subscriber)">
-								<span class="glyphicon glyphicon-edit"></span>
-							</button>
-							<button type="button" class="btn btn-danger" ng-disabled="subscriber.IsDeleted" ng-click="actions.remove(subscriber)">
-								<span class="glyphicon glyphicon-remove"></span>
-							</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="gridOptions" ui-grid="ctrl.gridOptions" class="myGrid"></div>
 		</div>
 	</div>
 </div>
