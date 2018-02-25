@@ -111,9 +111,8 @@
 						scope: $scope,
 						contentUrl: 'src/publisherDetails.html',
 						backgroundDismiss: true,
-						type: 'blue',
+						theme: 'light',
 						closeIcon: true,
-						theme: 'modern',
 						columnClass: 'col-lg-4'
 					});
 				}

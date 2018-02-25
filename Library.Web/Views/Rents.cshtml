@@ -2,41 +2,11 @@
 	<div class="panel-heading">Rents</div>
 	<div class="panel-body">
 		<div>
-			<button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="actions.details()"></button>
+			<button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="ctrl.actions.details()"></button>
 		</div>
 		<br />
 		<div>
-			<table id="publishers-table" class="table table-hover">
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>Book</th>
-						<th>Subscriber</th>
-						<th>Count</th>
-						<th>IsActive</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="rent in Rents | orderBy: ['IsActive','-Date']">
-						<td ng-bind="rent.Date | date: 'dd.MM.yyyy'">
-						</td>
-						<td>
-							<a href="#/books/{{rent.Book.Id}}/edit" ng-bind="rent.Book.Name"></a>
-						</td>
-						<td ng-bind="rent.Subscriber.Fio"></td>
-						<td ng-bind="rent.Count"></td>
-						<td ng-bind="rent.IsActive ? 'Yep' : 'Nope'"></td>
-						<td style="width: 9%;">
-							<div>
-								<button type="button" ng-class="rent.IsActive ? 'btn btn-dark': 'btn btn-green'" ng-click="actions.activateOrDeactivate(rent)">
-									<span>{{rent.IsActive ? 'Deactivate': 'Activate'}}</span>
-								</button>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="gridRents" ui-grid="ctrl.gridOptions" class="myGrid"></div>
 		</div>
 	</div>
 </div>

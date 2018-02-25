@@ -6,14 +6,14 @@
 			var self = this;
 
 			self.gridOptions = (function () {
-				function getDataClass() { return "dataCell"; }
+				
 				return{
 					appScopeProvider: self,
 					rowHeight: "40px",
 					columnDefs: [
-						{ name: "Lastname", cellClass: getDataClass },
-						{ name: "Firstname", cellClass: getDataClass },
-						{ name: "Middlename", cellClass: getDataClass },
+						{ name: "Lastname", cellClass: function () { return "dataCell"; } },
+						{ name: "Firstname", cellClass: function () { return "dataCell"; } },
+						{ name: "Middlename", cellClass: function () { return "dataCell"; } },
 						{ name: "Deleted", field: "IsDeleted" },
 						{
 							name: ' ',
@@ -29,7 +29,7 @@
 				};
 			})();
 
-			subscribersService.get(function(response) {
+			subscribersService.get().then(function(response) {
 				self.gridOptions.data = response;
 			});
 
@@ -90,6 +90,7 @@
 						contentUrl: 'src/subscriberDetails.html',
 						backgroundDismiss: true,
 						closeIcon: true,
+						theme: 'light',
 						onScopeReady: function (scope) {
 							scope.actions = self.actions;
 							scope.selectedSubscriber = self.selectedSubscriber;

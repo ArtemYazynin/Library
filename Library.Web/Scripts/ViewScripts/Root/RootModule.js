@@ -58,7 +58,8 @@
 		$routeProvider.when("/rents",
 		{
 			templateUrl: "LibraryView/Rents",
-			controller: "RentsController"
+			controller: "RentsController",
+			controllerAs: "ctrl"
 		});
 
 		$routeProvider.when("/invoices",

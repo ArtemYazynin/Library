@@ -47,6 +47,9 @@
 		function _getAll(successCallback) {
 			bookResource.query(successCallback);
 		}
+		function _getAllPromise() {
+			return bookResource.query().$promise;
+		}
 		function _search(filters) {
 			var url = baseUrl + "/Search";
 			var request = {
@@ -72,6 +75,7 @@
 		return {
 			get: _get,
 			getAll: _getAll,
+			getAllPromise: _getAllPromise,
 			search: _search,
 			create: _create,
 			update:_update,
