@@ -1,6 +1,6 @@
-﻿<button type="button" class="btn btn-primary" ng-click="details(row.entity)">
+﻿<button type="button" class="btn btn-primary" ng-if="showDetails" ng-click="details(row.entity)">
 	<span class="glyphicon glyphicon-edit"></span>'
 </button>
-<button type="button" class="btn btn-danger" ng-click="remove(row.entity)">
+<button type="button" class="btn btn-danger" ng-if="showRemove" ng-click="remove(row.entity)">
 	<span class="glyphicon glyphicon-remove"></span>
 </button>

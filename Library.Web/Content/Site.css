@@ -1,10 +1,11 @@
 ﻿.myGrid {
     width: 1100px;
-    
+	height: 600px;
   }
-.myGrid > .ui-grid-row{
+.dataCell {
+	padding: 3px;
 }
-.operatinCell {
+.operationCell {
 	text-align: center !important;
 	padding: 3px;
 }

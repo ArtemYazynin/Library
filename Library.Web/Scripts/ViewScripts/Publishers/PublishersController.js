@@ -2,108 +2,142 @@
 	"use strict";
 
 	angular.module("PublishersModule")
-		.controller("PublishersController", ["$scope","$compile", "publishersService", "$ngConfirm", function ($scope, $compile, publishersService, $ngConfirm) {
+		.controller("PublishersController", ["$compile", "$scope", "publishersService", "$ngConfirm", function ($compile, $scope, publishersService, $ngConfirm) {
 			var inputhtml = "<input class='form-control' type='text' ng-model='editingPublisher.beginValue' ng-keypress='editingPublisher.keypress($event)' ng-blur='editingPublisher.blur($event)' />";
+
+			$scope.gridPublishers = {
+				appScopeProvider: $scope,
+				rowHeight: "40px",
+				enableCellEdit: true,
+				columnDefs: [
+					{
+						name: "Publisher",
+						cellClass: function () { return "dataCell"; },
+						width: "90%",
+						field: "Name",
+						cellTemplate:
+						'<div class="ui-grid-cell-contents ng-binding ng-scope" ng-click="grid.appScope.actions.enableEdit($event,row.entity)">' +
+							'<span ng-bind="row.entity.Name"></span>' +
+						'</div>'
+					},
+					{
+						name: ' ',
+						enableSorting: false,
+						cellClass: function () { return "operationCell"; },
+						cellTemplate:
+						'<grid-row-operations remove="grid.appScope.actions.remove(row.entity)">' +
+						'</grid-row-operations>'
+					}
+				]
+			};
 
 			function EditingPublisher(entity) {
 				this.entity = entity;
 				this.beginValue = entity.Name;
 			}
-			EditingPublisher.prototype.keypress = function (event) {
+
+			EditingPublisher.prototype.keypress = function(event) {
 				if (event.which === 13) {
 					var vm = angular.extend(this.entity, {
 						Name: this.beginValue
 					});
 					var self = this;
-					if (vm.Id) {
-						publishersService.update(vm, function (updatedPublisher) {
-							var index = $scope.Publishers.indexOf(updatedPublisher);
-							$scope.Publishers[index] = updatedPublisher;
-							self.blur(event);
-							$ngConfirm({
-								title: "Successfully updated!",
-								content: "Publisher <strong>" + updatedPublisher.Name + "</strong> was updated",
-								backgroundDismiss: true
-							});
+					publishersService.update(vm, function(updatedPublisher) {
+						var index = $scope.gridPublishers.data.indexOf(updatedPublisher);
+						$scope.gridPublishers.data[index] = updatedPublisher;
+						self.blur(event);
+						$ngConfirm({
+							title: "Successfully updated!",
+							content: "Publisher <strong>" + updatedPublisher.Name + "</strong> was updated",
+							backgroundDismiss: true
 						});
-					} else {
-						publishersService.create(vm, function (createdPublisher) {
-							$scope.Publishers.push(createdPublisher);
-							self.blur(event);
-							$ngConfirm({
-								title: "Successfully created!",
-								content: "Publisher <strong>" + createdPublisher.Name + "</strong> was created",
-								backgroundDismiss: true
-							});
-						});
-					}
+					});
 				}
-			}
+			};
 			EditingPublisher.prototype.blur = function (event) {
-				if (!event.currentTarget.previousElementSibling.style) {
-					event.preventDefault();
-					return;
-				}
-				event.currentTarget.previousElementSibling.style.display = "";
-				event.currentTarget.remove();
-				event.preventDefault();
-			}
-			$scope.actions = (function () {
-			function _remove(publisher) {
-				$ngConfirm({
-					title: 'Confirm!',
-					content: 'Are you sure you want to delete this publisher?',
-					backgroundDismiss: true,
-					buttons: {
-						ok: {
-							text: 'Ok',
-							btnClass: 'btn-blue',
-							action: function () {
-								publishersService.remove(publisher, function (deletedPublisher) {
-									var index = $scope.Publishers.indexOf(deletedPublisher);
-									$scope.Publishers.splice(index, 1);
-									$ngConfirm({
-										title: "Successfully removed!",
-										content: "Publisher <strong>" + deletedPublisher.Name + "</strong> was deleted",
-										backgroundDismiss: true
-									});
-								});
-							}
-						},
-						close: {
-							text: "Cancel"
-						}
+					if (!event.currentTarget.previousElementSibling.style) {
+						event.preventDefault();
+						return;
 					}
-				});
-				
-			}
-
-			function _enableEdit(e, publisher) {
-				if (e.currentTarget.children.length !== 1) {
-					return;
+					event.currentTarget.previousElementSibling.style.display = "";
+					event.currentTarget.remove();
+					event.preventDefault();
 				}
-				$scope.editingPublisher = new EditingPublisher(publisher);
-				var el = angular.element(inputhtml);
-				$compile(el)($scope);
-				e.currentTarget.firstElementChild.style.display = "none";
-				e.currentTarget.appendChild(el[0]);
-				e.currentTarget.children[1].focus();
-			}
+			$scope.actions = (function () {
+				function _remove(publisher) {
+					$ngConfirm({
+						title: 'Confirm!',
+						content: 'Are you sure you want to delete this publisher?',
+						backgroundDismiss: true,
+						buttons: {
+							ok: {
+								text: 'Ok',
+								btnClass: 'btn-blue',
+								action: function () {
+									publishersService.remove(publisher, function (deletedPublisher) {
+										var index = $scope.gridPublishers.data.indexOf(deletedPublisher);
+										$scope.gridPublishers.data.splice(index, 1);
+										$ngConfirm({
+											title: "Successfully removed!",
+											content: "Publisher <strong>" + deletedPublisher.Name + "</strong> was deleted",
+											backgroundDismiss: true
+										});
+									});
+								}
+							},
+							close: {
+								text: "Cancel"
+							}
+						}
+					});
+				
+				}
+				function _enableEdit(e, publisher) {
+					publisher = publisher || {};
+					if (e.currentTarget.children.length !== 1) {
+						return;
+					}
+					$scope.editingPublisher = new EditingPublisher(publisher);
+					var el = angular.element(inputhtml);
+					$compile(el)($scope);
+					e.currentTarget.firstElementChild.style.display = "none";
+					e.currentTarget.appendChild(el[0]);
+					e.currentTarget.children[1].focus();
+				}
+				function _showAddForm() {
+					$scope.selectedRent = {};
+					$scope.createDialog = $ngConfirm({
+						title: "Publisher",
+						scope: $scope,
+						contentUrl: 'src/publisherDetails.html',
+						backgroundDismiss: true,
+						type: 'blue',
+						closeIcon: true,
+						theme: 'modern',
+						columnClass: 'col-lg-4'
+					});
+				}
+				function _save() {
+					publishersService.create($scope.selectedRent, function (createdPublisher) {
+						$scope.gridPublishers.data.push(createdPublisher);
+						$scope.createDialog.close();
+						$ngConfirm({
+							title: "Successfully created!",
+							content: "Publisher <strong>" + createdPublisher.Name + "</strong> was created",
+							backgroundDismiss: true
+						});
+					});
+				}
+				return {
+					remove: _remove,
+					enableEdit: _enableEdit,
+					showAddForm: _showAddForm,
+					save: _save
+				}
+			})();
 
-			function _addNew(e) {
-				_enableEdit(e, {});
-
-			}
-			return {
-				remove: _remove,
-				enableEdit: _enableEdit,
-				addNew: _addNew
-			}
-		})();
-
-		publishersService.get(function(response) {
-			$scope.Publishers = response;
-		});
-
+			publishersService.get(function(response) {
+				$scope.gridPublishers.data = response;
+			});
 	}]);
 })(angular);

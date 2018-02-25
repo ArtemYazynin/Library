@@ -102,6 +102,10 @@
 			scope: {
 				details: "&",
 				remove: "&"
+			},
+			link: function(scope, elements, attrs) {
+				scope.showDetails = !!attrs.details;
+				scope.showRemove = !!attrs.remove;
 			}
 		};
 	}]);

@@ -1,0 +1,12 @@
+﻿<div style="height: 150px;">
+	<form name="PublisherDetails" ng-submit="actions.save()" novalidate>
+		<div class="form-group">
+			<label for="Name">Name</label>
+			<input type="text" class="form-control" name="Name" id="Name" ng-model="selectedRent.Name" min="1" required />
+			<span style="color: red;" ng-show="PublisherDetails.Name.$error.required">Name is required</span>
+		</div>
+		<div style="text-align: center;">
+			<button type="submit" class="btn btn-primary" ng-disabled="PublisherDetails.$pristine || PublisherDetails.$invalid">Save</button>
+		</div>
+	</form>
+</div>

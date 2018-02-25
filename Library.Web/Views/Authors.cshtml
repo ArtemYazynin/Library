@@ -2,44 +2,11 @@
 	<div class="panel-heading">Authors</div>
 	<div class="panel-body">
 		<div>
-			<div class="tooltip-common">
-				<a href="#/authors/new" class="btn btn-default glyphicon glyphicon-plus"></a>
-				<span class="tooltiptext">Create new author</span>
-			</div>
-			
+			<a href="#/authors/new" class="btn btn-default glyphicon glyphicon-plus"></a>
 		</div>
 		<br />
 		<div>
 			<div id="gridAuthors" ui-grid="ctrl.gridOptions" class="myGrid"></div>
-			@*<table class="table table-bordered table-condensed table-hover">
-				<thead>
-					<tr>
-						<th>
-							<span style="cursor: pointer; text-decoration: underline;">Authors</span>
-						</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="author in ctrl.Authors | orderBy:'Fio'">
-						<td ng-bind="author.Fio">
-							
-						</td>
-						<td style="width: 9%;">
-							<div>
-								<button type="button" class="btn btn-primary" ng-click="ctrl.actions.details(author)">
-									<span class="glyphicon glyphicon-edit"></span>
-								</button>
-							</div>
-							<div>
-								<button type="button" class="btn btn-danger" ng-click="ctrl.actions.remove(author)">
-									<span class="glyphicon glyphicon-remove"></span>
-								</button>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>*@
 		</div>
 	</div>
 </div>

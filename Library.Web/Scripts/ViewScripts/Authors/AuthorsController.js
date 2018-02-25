@@ -92,7 +92,7 @@
 				{
 					name: ' ',
 					enableSorting: false,
-					cellClass: function () { return "operatinCell"; },
+					cellClass: function () { return "operationCell"; },
 					cellTemplate:
 					'<grid-row-operations ' +
 						'details="grid.appScope.actions.details(row.entity)" ' +
