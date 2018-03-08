@@ -1,7 +1,16 @@
 ﻿(function (angular) {
 	"use strict";
-	angular.module("RootModule", ["ngRoute", "BooksModule", "AuthorsModule", "GenresModule", "PublishersModule", "InvoicesModule", "SubscribersModule", "RentsModule", "oi.select", "cp.ngConfirm", "ui.tree"])
-	.config(["$routeProvider", "$locationProvider", "$httpProvider", "$ngConfirmProvider", function ($routeProvider, $locationProvider, $httpProvider, $ngConfirmProvider) {
+	angular.module("RootModule", ["ngRoute", "BooksModule", "AuthorsModule", "GenresModule", "PublishersModule", "InvoicesModule", "SubscribersModule", "RentsModule", "oi.select", "cp.ngConfirm", "ui.tree", "ui-notification"])
+	.config(["$routeProvider", "$locationProvider", "$httpProvider", "$ngConfirmProvider", "NotificationProvider", function ($routeProvider, $locationProvider, $httpProvider, $ngConfirmProvider, notificationProvider) {
+		notificationProvider.setOptions({
+			delay: 2000,
+			startTop: 20,
+			startRight: 10,
+			verticalSpacing: 20,
+			horizontalSpacing: 20,
+			positionX: 'right',
+			positionY: 'top'
+		});
 		$httpProvider.interceptors.push("$q", function ($q) {
 			return {
 				responseError: function (rejection) {

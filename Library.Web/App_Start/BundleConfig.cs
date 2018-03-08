@@ -20,6 +20,7 @@ namespace Library.Web
 						.Include("~/Scripts/oi.select/select.min.js")
 						.Include("~/Scripts/craftpip/angular-confirm.min.js")
 						.Include("~/Scripts/angular-ui-tree/angular-ui-tree.min.js")
+						.Include("~/Scripts/angular-ui-notification.min.js")
 						.Include("~/Scripts/oi.date/date.js")
 						.Include("~/Scripts/ui-grid.min.js")
 						.Include("~/Scripts/ViewScripts/Root/RootModule.js")
@@ -44,6 +45,7 @@ namespace Library.Web
 					  "~/Content/select.min.css",
 					  "~/Content/angular-confirm.min.css",
 					  "~/Content/angular-ui-tree.min.css",
+					  "~/Content/angular-ui-notification.min.css",
 					  "~/Content/ui-grid.min.css")
 					  .IncludeDirectory("~/Content/themes/base", "*.css", true));
 		}
