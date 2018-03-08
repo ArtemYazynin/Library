@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("AuthorsModule")
-		.controller("AuthorsController", ["$location", "authorsService", "$ngConfirm", function ($location, authorsService, $ngConfirm) {
+		.controller("AuthorsController", ["$location", "authorsService", "$ngConfirm", "Notification", function ($location, authorsService, $ngConfirm,notification) {
 			var self = this;
 
 			self.actions = (function () {
@@ -18,11 +18,7 @@
 						authorsService.remove(author, function (deletedAuthor) {
 							var index = self.gridOptions.data.indexOf(deletedAuthor);
 							self.gridOptions.data.splice(index, 1);
-							$ngConfirm({
-								title: "Successfully removed!",
-								content: "Author <strong>" + fio + "</strong> was removed",
-								backgroundDismiss: true
-							});
+							notification.success("Author <strong>" + fio + "</strong> was removed");
 						});
 					}
 					function removeConfirm(author) {

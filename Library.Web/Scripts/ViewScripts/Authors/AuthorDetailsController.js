@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("AuthorsModule")
-	.controller("AuthorDetailsController", ["$location", "$routeParams", "authorsService", "$ngConfirm", function ($location, $routeParams, authorsService, $ngConfirm) {
+	.controller("AuthorDetailsController", ["$location", "$routeParams", "authorsService", "Notification", function ($location, $routeParams, authorsService, notification) {
 		var self = this;
 		function stepBack() {
 			$location.path("/authors");
@@ -12,20 +12,12 @@
 				if ($routeParams.authorId) {
 					authorsService.update(self.vm, function (response) {
 						self.vm = response;
-						$ngConfirm({
-							title: "Successfully updated!",
-							content: "Author <strong>" + self.vm.Fio + "</strong> was updated",
-							backgroundDismiss: true
-						});
+						notification.success("Author <strong>" + self.vm.Fio + "</strong> was updated");
 					});
 				} else {
 					authorsService.create(self.vm, function() {
 						stepBack();
-						$ngConfirm({
-							title: "Successfully created!",
-							content: "Author <strong>" + self.vm.Fio() + "</strong> was created",
-							backgroundDismiss: true
-						});
+						notification.success("Author <strong>" + self.vm.Fio() + "</strong> was created");
 					});
 				}
 

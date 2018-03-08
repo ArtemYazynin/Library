@@ -1,8 +1,8 @@
 ﻿(function (angular) {
 	"use strict";
 	angular.module("BooksModule")
-	.controller("BooksController", ["$scope", "$location", "booksService", "$ngConfirm",
-		function ($scope, $location, booksService, $ngConfirm) {
+	.controller("BooksController", ["$scope", "$location", "booksService", "$ngConfirm", "Notification",
+		function ($scope, $location, booksService, $ngConfirm, notification) {
 			//var paginationOptions = {
 			//	pageNumber: 1,
 			//	pageSize: 3,
@@ -95,11 +95,7 @@
 									booksService.remove(book, function(deletedBook) {
 										var index = scope.gridOptions.data.indexOf(deletedBook);
 										scope.gridOptions.data.splice(index, 1);
-										$ngConfirm({
-											title: "Successfully removed!",
-											content: "Book <strong>" + bookname + "</strong> was removed",
-											backgroundDismiss: true
-										});
+										notification.success({ title: "Successfully removed", message: "Book <strong>" + bookname + "</strong> was removed" });
 									});
 									
 								}

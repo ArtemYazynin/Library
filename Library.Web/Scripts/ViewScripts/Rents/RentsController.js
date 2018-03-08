@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("RentsModule")
-		.controller("RentsController", ["$q", "rentsService", "subscribersService", "booksService", "$ngConfirm", function ($q, rentsService, subscribersService, booksService, $ngConfirm) {
+		.controller("RentsController", ["$q", "rentsService", "subscribersService", "booksService", "$ngConfirm", "Notification", function ($q, rentsService, subscribersService, booksService, $ngConfirm, notification) {
 			var self = this;
 			self.dateOptions = { changeYear: true, changeMonth: true, dateFormat: 'dd.mm.yy' };
 			self.gridOptions = {
@@ -70,18 +70,14 @@
 							var index = self.gridOptions.data.indexOf(response);
 							self.gridOptions.data[index] = response;
 
-							$ngConfirm({
-								title: "Successfully update!",
-								content: "Rent was updated",
-								backgroundDismiss: true
-
-							});
+							notification.success('Successfully updated');
 						});
 					} else {
 						rentsService.create(self.selectedRent, function (response) {
 							self.gridOptions.data.push(response);
 							closeDialog();
 							clear();
+							notification.success('Successfully created');
 						});
 					}
 				
@@ -99,7 +95,6 @@
 
 						self.createDialog = $ngConfirm({
 							title: "Rent",
-							//scope: self,
 							contentUrl: 'src/rentDetails.html',
 							backgroundDismiss: true,
 							theme: 'light',
@@ -118,6 +113,10 @@
 					
 				}
 
+				function successNotify() {
+					notification.success('Saved');
+				}
+
 				function _activateOrDeactivate(rent) {
 					rent.IsActive = !rent.IsActive;
 					if (rent.IsActive) {
@@ -125,12 +124,14 @@
 							function(response) {
 								var index = self.gridOptions.data.indexOf(response);
 								self.gridOptions.data[index] = response;
+								successNotify();
 							});
 					} else {
 						rentsService.activate(rent,
 							function (response) {
 								var index = self.gridOptions.data.indexOf(response);
 								self.gridOptions.data[index] = response;
+								successNotify();
 							});
 					}
 				}

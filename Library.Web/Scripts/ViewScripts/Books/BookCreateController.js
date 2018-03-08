@@ -2,29 +2,19 @@
 	"use strict";
 	angular.module("BooksModule")
 	.controller("BookCreateController", ["$scope", "$filter", "$location", "editionsService", "publishersService", "authorsService",
-		"genresService", "booksService", "$ngConfirm", "$routeParams",
+		"genresService", "booksService", "$routeParams", "Notification",
 	function ($scope, $filter, $location, editionsService, publishersService, authorsService,
-				genresService, booksService, $ngConfirm, $routeParams) {
+				genresService, booksService, $routeParams, notification) {
 		$scope.actions = (function () {
 			function _save() {
 				if ($routeParams.bookId) {
 					booksService.update($scope.vm, function (response) {
-						$ngConfirm({
-							title: "Successfully updated!",
-							content: "Book <strong>{{vm.Name}}</strong> was updated",
-							scope:$scope,
-							backgroundDismiss: true
-						});
+						notification.success("Book <strong>" + $scope.vm.Name + "</strong> was updated");
 					});
 				} else {
 					booksService.create($scope.vm, function () {
 						$location.path("/");
-						$ngConfirm({
-							title: "Successfully created!",
-							content: "Book <strong>{{vm.Name}}</strong> was created",
-							scope: $scope,
-							backgroundDismiss: true
-						});
+						notification.success("Book <strong>" + $scope.vm.Name + "</strong> was created");
 					});
 				}
 

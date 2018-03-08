@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("GenresModule")
-	.controller("GenresController", ["$scope", "$q", "$compile", "genresService", "$ngConfirm", function ($scope, $q, $compile, genresService, $ngConfirm) {
+	.controller("GenresController", ["$scope", "$q", "$compile", "genresService", "$ngConfirm", "Notification", function ($scope, $q, $compile, genresService, $ngConfirm, notification) {
 		$scope.actions = (function () {
 			function _getAll() {
 				genresService.getTree().then(function (response) {
@@ -53,12 +53,8 @@
 							angular.extend(genre, {
 								Name: e.target.innerHTML
 							});
-							genresService.update(genre, function() {
-								$ngConfirm({
-									title: "Successfully updated!",
-									content: "Genre <b>" + genre.Name + "</b> was updated",
-									backgroundDismiss: true
-								});
+							genresService.update(genre, function () {
+								notification.success("Genre <b>" + genre.Name + "</b> was updated");
 							});
 						}
 					},
@@ -96,14 +92,10 @@
 							text: 'Ok',
 							btnClass: 'btn-blue',
 							action: function () {
-								var safeGenre = genre;
+								var safeGenre = angular.copy(genre);
 								genresService.remove(genre, function (response) {
 									recursivellyDelete($scope.Genres, response.Id);
-									$ngConfirm({
-										title: "Successfully removed!",
-										content: "Genre <b>" + safeGenre.Name + "</b> with nested nodes was deleted",
-										backgroundDismiss: true
-									});
+									notification.success("Genre <b>" + safeGenre.Name + "</b> with nested nodes was deleted");
 								});
 							}
 						},
