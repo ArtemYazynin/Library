@@ -166,7 +166,7 @@ namespace Library.Tests.Services
 			var stub = new Mock<IGenericRepository<Rent>>();
 			stub.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Rent, bool>>>>(),
 										It.IsAny<Func<IQueryable<Rent>, IOrderedQueryable<Rent>>>(),
-										It.IsAny<string>()))
+										It.IsAny<string>(),0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Rent, bool>>> filters,
 					Func<IQueryable<Rent>, IOrderedQueryable<Rent>> orders
 					, string includeProperties) => GetAllStub(Rents, filters, orders));
@@ -231,7 +231,7 @@ namespace Library.Tests.Services
 			var stub = new Mock<IGenericRepository<Invoice>>();
 			stub.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Invoice, bool>>>>(),
 										It.IsAny<Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>>>(),
-										It.IsAny<string>()))
+										It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Invoice, bool>>> filters,
 					Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>> orders
 					, string includeProperties) => GetAllStub(Invoices, filters, orders));
@@ -296,7 +296,7 @@ namespace Library.Tests.Services
 			var stub = new Mock<IGenericRepository<Publisher>>();
 			stub.Setup(x=>x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Publisher, bool>>>>(),
 										It.IsAny<Func<IQueryable<Publisher>, IOrderedQueryable<Publisher>>>(),
-										It.IsAny<string>()))
+										It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Publisher, bool>>> filters,
 					Func<IQueryable<Publisher>, IOrderedQueryable<Publisher>> orders
 					, string includeProperties) => GetAllStub(Publishers, filters,orders));
@@ -361,7 +361,7 @@ namespace Library.Tests.Services
 			var stub = new Mock<IGenresRepository>();
 			stub.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Genre, bool>>>>(),
 					It.IsAny<Func<IQueryable<Genre>, IOrderedQueryable<Genre>>>(),
-					It.IsAny<string>()))
+					It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Genre, bool>>> filters,
 					Func<IQueryable<Genre>, IOrderedQueryable<Genre>> order, string includeProperties) =>
 				{
@@ -410,7 +410,7 @@ namespace Library.Tests.Services
 			var stubAuthorRepository = new Mock<IGenericRepository<Author>>();
 			stubAuthorRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Author, bool>>>>(),
 					It.IsAny<Func<IQueryable<Author>, IOrderedQueryable<Author>>>(),
-					It.IsAny<string>()))
+					It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Author, bool>>> filters,
 					Func<IQueryable<Author>, IOrderedQueryable<Author>> order, string includeProperties) =>
 				{
@@ -459,7 +459,7 @@ namespace Library.Tests.Services
 			var stubSubscriberRepository = new Mock<IGenericRepository<Subscriber>>();
 			stubSubscriberRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Subscriber, bool>>>>(),
 					It.IsAny<Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>>>(),
-					It.IsAny<string>()))
+					It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Subscriber, bool>>> filters,
 					Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>> order, string includeProperties) =>
 				{
@@ -509,7 +509,7 @@ namespace Library.Tests.Services
 
 			stubBookRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Book, bool>>>>(),
 					It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
-					It.IsAny<string>()))
+					It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Book, bool>>> filters,
 					Func<IQueryable<Book>, IOrderedQueryable<Book>> order, string includeProperties) =>
 				{
@@ -544,6 +544,7 @@ namespace Library.Tests.Services
 					return true;
 				});
 			stubBookRepository.Setup(x => x.Update(It.IsAny<Book>())).Returns((Book dbentity) => true);
+			stubBookRepository.Setup(x => x.Count()).ReturnsAsync(() => Books.Count);
 			return stubBookRepository;
 		}
 

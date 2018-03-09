@@ -7,7 +7,7 @@ namespace Library.Services.Services
 {
 	public interface IBooksService
 	{
-		Task<IEnumerable<BookDto>> GetAll();
+		Task<IEnumerable<BookDto>> GetAll(int skip = 0, int? take = null);
 
 		Task<IEnumerable<BookDto>> Search(Filters filters);
 		Task<BookDto> Get(long id);
@@ -20,5 +20,6 @@ namespace Library.Services.Services
 
 		Task<IEnumerable<string>> BooksByAuthor(long id);
 
+		Task<long> Count();
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Library.Services.DTO;
@@ -18,10 +19,17 @@ namespace Library.Web.Controllers.api
 		}
 
 		[HttpGet]
-		public async Task<IEnumerable<BookDto>> Get()
+		public async Task<IEnumerable<BookDto>> Get(int skip = 0, int take = 3)
 		{
-			var books = await _booksService.GetAll();
+			var books = await _booksService.GetAll(skip, take);
 			return books;
+		}
+
+		[HttpGet]
+		[Route("Count")]
+		public async Task<long> Count()
+		{
+			return await _booksService.Count();
 		}
 
 		[HttpGet]

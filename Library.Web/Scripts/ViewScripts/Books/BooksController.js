@@ -3,19 +3,18 @@
 	angular.module("BooksModule")
 	.controller("BooksController", ["$scope", "$location", "booksService", "$ngConfirm", "Notification",
 		function ($scope, $location, booksService, $ngConfirm, notification) {
-			//var paginationOptions = {
-			//	pageNumber: 1,
-			//	pageSize: 3,
-			//	sort: null
-			//};
+			var paginationOptions = {
+				pageNumber: 1,
+				pageSize: 3,
+				sort: null
+			};
 			function init() {
-				booksService.getAll(function (response) {
+				booksService.count().then(function(response) {
+					$scope.gridOptions.totalItems = response.data;
+				});
+				var skip = paginationOptions.pageNumber - 1;
+				booksService.getAll(skip, paginationOptions.pageSize, function (response) {
 					$scope.gridOptions.data = response;
-					//var data = response;
-
-					//$scope.gridOptions.totalItems = response.length;
-					//var firstRow = (paginationOptions.pageNumber - 1) * paginationOptions.pageSize;
-					//$scope.gridOptions.data = data.slice(firstRow, firstRow + paginationOptions.pageSize);
 				});
 			}
 			//var getPage = function () {
@@ -35,26 +34,28 @@
 			//};
 			$scope.gridOptions = {
 				rowHeight: "40px",
-				//paginationPageSizes: [3, 5, 10],
-				//paginationPageSize: 3,
-				//useExternalPagination: true,
+				paginationPageSizes: [3, 5, 10],
+				paginationPageSize: 3,
+
+
+				useExternalPagination: true,
 				//useExternalSorting: true,
-				//onRegisterApi: function (gridApi) {
-				//	$scope.gridApi = gridApi;
-				//	$scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
-				//		if (sortColumns.length == 0) {
-				//			paginationOptions.sort = null;
-				//		} else {
-				//			paginationOptions.sort = sortColumns[0].sort.direction;
-				//		}
-				//		init();
-				//	});
-				//	gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-				//		paginationOptions.pageNumber = newPage;
-				//		paginationOptions.pageSize = pageSize;
-				//		init();
-				//	});
-				//},
+				onRegisterApi: function (gridApi) {
+					$scope.gridApi = gridApi;
+					gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+						paginationOptions.pageNumber = newPage;
+						paginationOptions.pageSize = pageSize;
+						init();
+					});
+					//$scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
+					//	if (sortColumns.length == 0) {
+					//		paginationOptions.sort = null;
+					//	} else {
+					//		paginationOptions.sort = sortColumns[0].sort.direction;
+					//	}
+					//	init();
+					//});
+				},
 				columnDefs: [
 					{ name: "Name" },
 					{ name: 'Genres', field: 'GenresStr' },

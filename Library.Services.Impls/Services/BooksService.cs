@@ -17,23 +17,23 @@ namespace Library.Services.Impls.Services
 	public class BooksService : IBooksService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-
+		private readonly string _allIncludes = $"{nameof(Publisher)},{nameof(Book.Genres)},{nameof(Book.Authors)},{nameof(Book.Edition)}";
 		public BooksService(IUnitOfWork unitOfWork)
 		{
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<IEnumerable<BookDto>> GetAll()
+		public async Task<IEnumerable<BookDto>> GetAll(int skip = 0, int? take = null)
 		{
-			var books = await Search(new Filters());
-			return books;
+			var books = await _unitOfWork.BookRepository.GetAllAsync(null, includeProperties: _allIncludes,orderBy: null, skip: skip, take: take);
+			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
+			return booksDto;
 		}
 
 		public async Task<IEnumerable<BookDto>> Search(Filters filters)
 		{
 			var expressions = BuildExpressions(filters);
-			var includeProperties = $"{nameof(Publisher)},{nameof(Book.Genres)},{nameof(Book.Authors)},{nameof(Book.Edition)}";
-			var books = await _unitOfWork.BookRepository.GetAllAsync(expressions, includeProperties: includeProperties);
+			var books = await _unitOfWork.BookRepository.GetAllAsync(expressions, includeProperties: _allIncludes);
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;
 		}
@@ -166,6 +166,11 @@ namespace Library.Services.Impls.Services
 			var books = await _unitOfWork.BookRepository.GetAllAsync(filters);
 			var booksDto = Mapper.Map<IEnumerable<Book>, IEnumerable<BookDto>>(books);
 			return booksDto.Select(x => x.Name);
+		}
+
+		public async Task<long> Count()
+		{
+			return await _unitOfWork.BookRepository.Count();
 		}
 	}
 }

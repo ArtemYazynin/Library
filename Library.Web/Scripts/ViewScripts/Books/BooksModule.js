@@ -44,11 +44,15 @@
 		function _get(id, successCallback) {
 			bookResource.get({ Id: id }, successCallback);
 		}
-		function _getAll(successCallback) {
-			bookResource.query(successCallback);
+		function _getAll(skip, take, successCallback) {
+			bookResource.query({ skip: skip, take: take },successCallback);
 		}
 		function _getAllPromise() {
 			return bookResource.query().$promise;
+		}
+		function _count() {
+			var url = baseUrl + "/Count";
+			return $http.get(url);
 		}
 		function _search(filters) {
 			var url = baseUrl + "/Search";
@@ -76,6 +80,7 @@
 			get: _get,
 			getAll: _getAll,
 			getAllPromise: _getAllPromise,
+			count: _count,
 			search: _search,
 			create: _create,
 			update:_update,

@@ -19,11 +19,19 @@ namespace Library.Services.Impls
 			DbSet = context.Set<TEntity>();
 		}
 
+
 		public virtual async Task<IEnumerable<TEntity>> GetAllAsync(IEnumerable<Expression<Func<TEntity, bool>>> filters = null, 
 							Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
-							string includeProperties = "")
+							string includeProperties = "",
+							int skip = 0,
+							int? take = null)
 		{
 			IQueryable<TEntity> query = DbSet.AsNoTracking();
+
+			//if (skip != 0) query = query.Skip(skip);
+			//if (take.HasValue) query = query.Take(take.Value);
+
+			#region filters
 
 			if (filters != null)
 			{
@@ -33,16 +41,33 @@ namespace Library.Services.Impls
 				}
 			}
 
-			foreach (var includeProperty in includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+			#endregion
+
+
+			#region includes
+
+			foreach (var includeProperty in includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries))
 			{
 				query = query.Include(includeProperty);
 			}
 			ApplyIncludeProperties(includeProperties, ref query);
+
+			#endregion
+
 			if (orderBy == null)
 			{
-				return await query.ToListAsync();
+				if (!take.HasValue) return await query.ToListAsync();
+				return await query.OrderBy(x => x.Version)
+								  .Skip(skip * take.Value)
+								  .Take(take.Value)
+								  .ToListAsync();
 			}
-			return await orderBy.Invoke(query).ToListAsync();
+			if (!take.HasValue)
+				return await orderBy.Invoke(query).ToListAsync();
+			return await orderBy.Invoke(query)
+								.Skip(skip*take.Value)
+								.Take(take.Value)
+								.ToListAsync();
 		}
 		private void ApplyIncludeProperties(string includeProperties, ref IQueryable<TEntity> query)
 		{
@@ -94,6 +119,12 @@ namespace Library.Services.Impls
 			DbSet.Attach(entity);
 			Context.Entry(entity).State = EntityState.Modified;
 			return true;
+		}
+
+		public async Task<int> Count()
+		{
+			var result = await DbSet.CountAsync();
+			return result;
 		}
 	}
 }

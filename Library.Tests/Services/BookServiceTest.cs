@@ -23,8 +23,14 @@ namespace Library.Tests.Services
 			}
 		}
 
-
 		#endregion
+
+		[Test]
+		public async Task Count_ShouldReturnCountOfBooks()
+		{
+			var result = await BooksService.Count();
+			Assert.That(result, Is.EqualTo(Books.Count));
+		}
 
 		#region By Author
 
