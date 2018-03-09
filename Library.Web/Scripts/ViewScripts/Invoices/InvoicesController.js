@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("InvoicesModule")
-		.controller("InvoicesController", ["invoicesService","$ngConfirm", function (invoicesService, $ngConfirm) {
+		.controller("InvoicesController", ["invoicesService", "Notification", function (invoicesService, notification) {
 		var self = this;
 
 		invoicesService.get(function(response) {
@@ -14,11 +14,7 @@
 				invoicesService.remove(invoice, function (response) {
 					var index = self.Invoices.indexOf(response);
 					self.Invoices.splice(index, 1);
-					$ngConfirm({
-						title: "Successfully removed!",
-						content: "Invoice was removed",
-						backgroundDismiss: true
-					});
+					notification.success("Invoice was removed");
 				});
 			}
 

@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("PublishersModule")
-		.controller("PublishersController", ["$compile", "$scope", "publishersService", "$ngConfirm", function ($compile, $scope, publishersService, $ngConfirm) {
+		.controller("PublishersController", ["$compile", "$scope", "publishersService", "$ngConfirm", "Notification", function ($compile, $scope, publishersService, $ngConfirm, notification) {
 			var inputhtml = "<input class='form-control' type='text' ng-model='editingPublisher.beginValue' ng-keypress='editingPublisher.keypress($event)' ng-blur='editingPublisher.blur($event)' />";
 
 			$scope.gridPublishers = {
@@ -46,11 +46,7 @@
 						var index = $scope.gridPublishers.data.indexOf(updatedPublisher);
 						$scope.gridPublishers.data[index] = updatedPublisher;
 						self.blur(event);
-						$ngConfirm({
-							title: "Successfully updated!",
-							content: "Publisher <strong>" + updatedPublisher.Name + "</strong> was updated",
-							backgroundDismiss: true
-						});
+						notification.success("Publisher <strong>" + updatedPublisher.Name + "</strong> was updated");
 					});
 				}
 			};
@@ -77,11 +73,7 @@
 									publishersService.remove(publisher, function (deletedPublisher) {
 										var index = $scope.gridPublishers.data.indexOf(deletedPublisher);
 										$scope.gridPublishers.data.splice(index, 1);
-										$ngConfirm({
-											title: "Successfully removed!",
-											content: "Publisher <strong>" + deletedPublisher.Name + "</strong> was deleted",
-											backgroundDismiss: true
-										});
+										notification.success("Publisher <strong>" + deletedPublisher.Name + "</strong> was deleted");
 									});
 								}
 							},
@@ -120,11 +112,7 @@
 					publishersService.create($scope.selectedRent, function (createdPublisher) {
 						$scope.gridPublishers.data.push(createdPublisher);
 						$scope.createDialog.close();
-						$ngConfirm({
-							title: "Successfully created!",
-							content: "Publisher <strong>" + createdPublisher.Name + "</strong> was created",
-							backgroundDismiss: true
-						});
+						notification.success("Publisher <strong>" + createdPublisher.Name + "</strong> was created");
 					});
 				}
 				return {

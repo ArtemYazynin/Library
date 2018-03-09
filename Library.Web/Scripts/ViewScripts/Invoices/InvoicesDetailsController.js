@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("InvoicesModule")
-		.controller("InvoicesDetailsController", ["$location", "booksService", "invoicesService", "$ngConfirm", function ($location, booksService, invoicesService, $ngConfirm) {
+		.controller("InvoicesDetailsController", ["$location", "booksService", "invoicesService", "Notification", function ($location, booksService, invoicesService, notification) {
 			var self = this;
 			this.booksFn = function () {
 				if (!self.Books || !self.vm.IncomingBooks) return self.Books;
@@ -44,12 +44,7 @@
 				function _save() {
 					invoicesService.create(self.vm, function () {
 						_back();
-						$ngConfirm({
-							title: "Successfully created!",
-							content: "Invoice was created",
-							backgroundDismiss: true
-						});
-
+						notification.success("Invoice was created");
 					});
 				}
 

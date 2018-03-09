@@ -2,7 +2,7 @@
 	"use strict";
 
 	angular.module("SubscribersModule")
-		.controller("SubscribersController", ["subscribersService", "$ngConfirm", function (subscribersService, $ngConfirm) {
+		.controller("SubscribersController", ["subscribersService", "$ngConfirm", "Notification", function (subscribersService, $ngConfirm, notification) {
 			var self = this;
 
 			self.gridOptions = (function () {
@@ -43,12 +43,7 @@
 						} else {
 							self.gridOptions.data.splice(index, 1);
 						}
-						$ngConfirm({
-							title: "Successfully removed!",
-							content: response.IsDeleted ? "Subscriber mark as removed, because he has Rents" : "Subscriber was removed",
-							backgroundDismiss: true
-
-						});
+						notification.success(response.IsDeleted ? "Subscriber mark as removed, because he has Rents" : "Subscriber was removed");
 					});
 				}
 
@@ -66,18 +61,14 @@
 							var index = self.gridOptions.data.indexOf(response);
 							self.gridOptions.data[index] = response;
 							closeDialog();
-							$ngConfirm({
-								title: "Successfully update!",
-								content: "Subscriber was updated",
-								backgroundDismiss: true
-
-							});
+							notification.success("Subscriber was updated");
 						});
 					} else {
 						subscribersService.create(self.selectedSubscriber, function (response) {
 							self.gridOptions.data.push(response);
 							closeDialog();
 							clear();
+							notification.success("Subscriber was created");
 						});
 					}
 				

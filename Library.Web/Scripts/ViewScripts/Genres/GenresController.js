@@ -34,6 +34,7 @@
 				};
 				genresService.save(newGenre, function (response) {
 					nodeData.Children.push(response);
+					notification.success("Genre <b>" + newGenre.Name + "</b> was created");
 				});
 			}
 

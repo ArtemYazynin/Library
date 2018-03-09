@@ -113,10 +113,6 @@
 					
 				}
 
-				function successNotify() {
-					notification.success('Saved');
-				}
-
 				function _activateOrDeactivate(rent) {
 					rent.IsActive = !rent.IsActive;
 					if (rent.IsActive) {
@@ -124,14 +120,14 @@
 							function(response) {
 								var index = self.gridOptions.data.indexOf(response);
 								self.gridOptions.data[index] = response;
-								successNotify();
+								notification.success('Deactivated');
 							});
 					} else {
 						rentsService.activate(rent,
 							function (response) {
 								var index = self.gridOptions.data.indexOf(response);
 								self.gridOptions.data[index] = response;
-								successNotify();
+								notification.success('Activated');
 							});
 					}
 				}
