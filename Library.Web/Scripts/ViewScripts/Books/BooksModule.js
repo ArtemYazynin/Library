@@ -45,7 +45,7 @@
 			bookResource.get({ Id: id }, successCallback);
 		}
 		function _getAll(skip, take, successCallback) {
-			bookResource.query({ skip: skip, take: take }, successCallback);
+			bookResource.query({ Skip: skip, Take: take }, successCallback);
 		}
 		function _getAllPromise() {
 			return bookResource.query().$promise;

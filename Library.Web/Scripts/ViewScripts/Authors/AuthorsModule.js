@@ -11,7 +11,7 @@
 			}
 			var authorsResource = $resource(baseUrl + "/:id", { id: "@Id" }, config);
 			function _getAll(skip, take, successCallback) {
-				authorsResource.query({ skip: skip, take: take }, successCallback);
+				authorsResource.query({ Skip: skip, Take: take }, successCallback);
 			}
 			function _get(id, successCallback) {
 				authorsResource.get({ Id: id }, successCallback);

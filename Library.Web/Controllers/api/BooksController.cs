@@ -5,6 +5,7 @@ using System.Web.Http;
 using Library.Services.DTO;
 using Library.Services.Services;
 using Library.Services.VO;
+using Library.Web.Models;
 
 namespace Library.Web.Controllers.api
 {
@@ -19,9 +20,9 @@ namespace Library.Web.Controllers.api
 		}
 
 		[HttpGet]
-		public async Task<IEnumerable<BookDto>> Get(int skip = 0, int? take = null)
+		public async Task<IEnumerable<BookDto>> Get([FromUri]PagingParameterModel model)
 		{
-			var books = await _booksService.GetAll(skip, take);
+			var books = await _booksService.GetAll(model.Skip, model.Take);
 			await this.AddTotalItemsInHeader(_booksService.Count);
 			return books;
 		}

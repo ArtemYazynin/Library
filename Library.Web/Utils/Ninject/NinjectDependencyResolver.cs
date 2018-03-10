@@ -1,7 +1,7 @@
 ﻿using System.Web.Http.Dependencies;
 using Ninject;
 
-namespace Library.Web.Utils
+namespace Library.Web.Utils.Ninject
 {
 	public class NinjectDependencyResolver: NinjectDependencyScope, IDependencyResolver, System.Web.Mvc.IDependencyResolver
 	{

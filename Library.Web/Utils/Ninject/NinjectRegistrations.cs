@@ -5,7 +5,7 @@ using Library.Services.Impls.Services;
 using Library.Services.Services;
 using Ninject.Modules;
 
-namespace Library.Web.Utils
+namespace Library.Web.Utils.Ninject
 {
 	public class NinjectRegistrations : NinjectModule
 	{

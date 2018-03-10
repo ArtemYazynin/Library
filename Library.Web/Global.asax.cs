@@ -4,7 +4,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Library.Services.Impls;
-using Library.Web.Utils;
+using Library.Web.Utils.EnumsInJavaScript;
+using Library.Web.Utils.Ninject;
 using Ninject;
 using Ninject.Modules;
 
@@ -32,6 +33,7 @@ namespace Library.Web
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+			JavascriptEnabledEnums.LoadTypes();
 		}
 	}
 }
