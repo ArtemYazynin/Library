@@ -25,15 +25,15 @@ namespace Library.Services.Impls.Services
 		public async Task<IEnumerable<AuthorDto>> GetAll(PagingParameterModel pagingParameterModel)
 		{
 			var orderBy = GetOrder(pagingParameterModel);
-			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(orderBy: orderBy, skip: pagingParameterModel.Skip, take: pagingParameterModel.Take);
+			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(orderBy: orderBy, skip: pagingParameterModel?.Skip ?? 0, take: pagingParameterModel?.Take);
 			var result = Mapper.Map<IEnumerable<Author>, Collection<AuthorDto>>(authors);
 			return result;
 		}
 
 		private static Func<IQueryable<Author>, IOrderedQueryable<Author>> GetOrder(PagingParameterModel pagingParameterModel)
 		{
+			if (pagingParameterModel == null) return null;
 			var expr = GetOrderByKeySelector(pagingParameterModel);
-
 			if (expr == null) return null;
 			if (pagingParameterModel.OrderBy == OrderBy.Asc) return x => x.OrderBy(expr);
 			return x => x.OrderByDescending(expr);
@@ -113,9 +113,9 @@ namespace Library.Services.Impls.Services
 		{
 			var filters = new List<Expression<Func<Author, bool>>>()
 			{
-				x => x.Lastname.ToLower() == authorDto.Lastname.ToLower()
-				     && x.Firstname.ToLower() == authorDto.Firstname.ToLower()
-					 && x.Middlename.ToLower() == authorDto.Middlename.ToLower()
+				x=> string.IsNullOrEmpty(x.Middlename)
+					? x.Lastname.ToLower() == authorDto.Lastname.ToLower() && x.Firstname.ToLower() == authorDto.Firstname.ToLower()
+					: x.Lastname.ToLower() == authorDto.Lastname.ToLower() && x.Firstname.ToLower() == authorDto.Firstname.ToLower() && x.Middlename.ToLower() == authorDto.Middlename.ToLower()
 			};
 
 			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(filters);

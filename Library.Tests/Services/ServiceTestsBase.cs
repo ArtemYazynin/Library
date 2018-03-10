@@ -169,7 +169,7 @@ namespace Library.Tests.Services
 										It.IsAny<string>(),0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Rent, bool>>> filters,
 					Func<IQueryable<Rent>, IOrderedQueryable<Rent>> orders
-					, string includeProperties) => GetAllStub(Rents, filters, orders));
+					, string includeProperties, int skip, int? take) => GetAllStub(Rents, filters, orders));
 
 			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
 				.ReturnsAsync((long id, string includeProperties) =>
@@ -234,7 +234,7 @@ namespace Library.Tests.Services
 										It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Invoice, bool>>> filters,
 					Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>> orders
-					, string includeProperties) => GetAllStub(Invoices, filters, orders));
+					, string includeProperties, int skip, int? take) => GetAllStub(Invoices, filters, orders));
 
 			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
 				.ReturnsAsync((long id, string includeProperties) =>
@@ -299,7 +299,7 @@ namespace Library.Tests.Services
 										It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Publisher, bool>>> filters,
 					Func<IQueryable<Publisher>, IOrderedQueryable<Publisher>> orders
-					, string includeProperties) => GetAllStub(Publishers, filters,orders));
+					, string includeProperties, int skip, int? take) => GetAllStub(Publishers, filters,orders));
 
 			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
 				.ReturnsAsync((long id, string includeProperties) =>
@@ -363,7 +363,7 @@ namespace Library.Tests.Services
 					It.IsAny<Func<IQueryable<Genre>, IOrderedQueryable<Genre>>>(),
 					It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Genre, bool>>> filters,
-					Func<IQueryable<Genre>, IOrderedQueryable<Genre>> order, string includeProperties) =>
+					Func<IQueryable<Genre>, IOrderedQueryable<Genre>> order, string includeProperties, int skip, int? take) =>
 				{
 					IEnumerable<Genre> localEntities = Genres;
 					return GetAllStub(localEntities, filters, order);
@@ -412,7 +412,7 @@ namespace Library.Tests.Services
 					It.IsAny<Func<IQueryable<Author>, IOrderedQueryable<Author>>>(),
 					It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Author, bool>>> filters,
-					Func<IQueryable<Author>, IOrderedQueryable<Author>> order, string includeProperties) =>
+					Func<IQueryable<Author>, IOrderedQueryable<Author>> order, string includeProperties, int skip, int? take) =>
 				{
 					IEnumerable<Author> localEntities = Authors;
 					return GetAllStub(localEntities, filters, order);
@@ -461,7 +461,7 @@ namespace Library.Tests.Services
 					It.IsAny<Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>>>(),
 					It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Subscriber, bool>>> filters,
-					Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>> order, string includeProperties) =>
+					Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>> order, string includeProperties, int skip, int? take) =>
 				{
 					IEnumerable<Subscriber> localEntities = Subscribers;
 					return GetAllStub(localEntities, filters, order);
@@ -511,7 +511,7 @@ namespace Library.Tests.Services
 					It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
 					It.IsAny<string>(), 0, null))
 				.ReturnsAsync((IEnumerable<Expression<Func<Book, bool>>> filters,
-					Func<IQueryable<Book>, IOrderedQueryable<Book>> order, string includeProperties) =>
+					Func<IQueryable<Book>, IOrderedQueryable<Book>> order, string includeProperties, int skip, int? take) =>
 				{
 					IEnumerable<Book> books = Books;
 					return GetAllStub(books, filters, order);
