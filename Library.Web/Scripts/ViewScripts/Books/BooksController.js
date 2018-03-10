@@ -1,13 +1,9 @@
 ﻿(function (angular) {
 	"use strict";
 	angular.module("BooksModule")
-	.controller("BooksController", ["$scope", "$location", "booksService", "$ngConfirm", "Notification",
-		function ($scope, $location, booksService, $ngConfirm, notification) {
-			var paginationOptions = {
-				pageNumber: 1,
-				pageSize: 3,
-				sort: null
-			};
+	.controller("BooksController", ["$scope", "$location", "booksService", "$ngConfirm", "Notification","paginationService",
+		function ($scope, $location, booksService, $ngConfirm, notification, paginationService) {
+			var paginationOptions = paginationService.getDefaultOptions();
 			function init() {
 				booksService.count().then(function(response) {
 					$scope.gridOptions.totalItems = response.data;
@@ -36,8 +32,6 @@
 				rowHeight: "40px",
 				paginationPageSizes: [3, 5, 10],
 				paginationPageSize: 3,
-
-
 				useExternalPagination: true,
 				//useExternalSorting: true,
 				onRegisterApi: function (gridApi) {

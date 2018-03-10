@@ -28,9 +28,6 @@ namespace Library.Services.Impls
 		{
 			IQueryable<TEntity> query = DbSet.AsNoTracking();
 
-			//if (skip != 0) query = query.Skip(skip);
-			//if (take.HasValue) query = query.Take(take.Value);
-
 			#region filters
 
 			if (filters != null)

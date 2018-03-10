@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
-using Library.Services.Impls.Exceptions;
 using Library.Services.Impls.Exceptions.Author;
 using Library.Services.Services;
 
@@ -22,9 +21,9 @@ namespace Library.Services.Impls.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<IEnumerable<AuthorDto>> GetAll()
+		public async Task<IEnumerable<AuthorDto>> GetAll(int skip = 0, int? take = null)
 		{
-			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync();
+			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(skip:skip, take: take);
 			var result = Mapper.Map<IEnumerable<Author>, Collection<AuthorDto>>(authors);
 			return result;
 		}
@@ -70,13 +69,19 @@ namespace Library.Services.Impls.Services
 			};
 		}
 
+		public async Task<long> Count()
+		{
+			return await _unitOfWork.AuthorRepository.Count();
+		}
+
 		private void ThrowIfAuthorIncorrect(AuthorDto author)
 		{
+			if (author == null) throw new ArgumentNullException(nameof(author));
 			if (string.IsNullOrEmpty(author.Lastname) || string.IsNullOrEmpty(author.Firstname))
 			{
 				throw new AuthorIncorrectException();
 			}
-		} 
+		}
 
 		private async Task ThrowIfSameAuthorExists(AuthorDto authorDto)
 		{

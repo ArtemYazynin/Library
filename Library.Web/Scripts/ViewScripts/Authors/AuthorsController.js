@@ -2,12 +2,20 @@
 	"use strict";
 
 	angular.module("AuthorsModule")
-		.controller("AuthorsController", ["$location", "authorsService", "$ngConfirm", "Notification", function ($location, authorsService, $ngConfirm,notification) {
+		.controller("AuthorsController", ["$location", "authorsService", "$ngConfirm", "Notification", "paginationService",
+			function ($location, authorsService, $ngConfirm, notification,paginationService) {
 			var self = this;
+			var paginationOptions = paginationService.getDefaultOptions();
 
 			self.actions = (function () {
 				function _init() {
-					authorsService.getAll(function (response) { self.gridOptions.data = response; });
+					authorsService.count().then(function (response) {
+						self.gridOptions.totalItems = response.data;
+					});
+					var skip = paginationOptions.pageNumber - 1;
+					authorsService.getAll(skip, paginationOptions.pageSize, function(response) {
+						 self.gridOptions.data = response;
+					});
 				}
 				function _details(author) {
 					$location.path("/authors/" + author.Id + "/edit");
@@ -78,25 +86,37 @@
 					sort: _sort
 				}
 			})();
-		self.gridOptions = {
-			appScopeProvider: self,
-			rowHeight: "40px",
-			columnDefs: [
-				{ name: "Lastname" },
-				{ name: "Firstname" },
-				{ name: "Middlename" },
-				{
-					name: ' ',
-					enableSorting: false,
-					cellClass: function () { return "operationCell"; },
-					cellTemplate:
-					'<grid-row-operations ' +
-						'details="grid.appScope.actions.details(row.entity)" ' +
-						'remove="grid.appScope.actions.remove(row.entity)">' +
-					'</grid-row-operations>'
-				}
-			]
-		}
-		self.actions.init();
+
+			self.gridOptions = {
+				rowHeight: "40px",
+				paginationPageSizes: [3, 5, 10],
+				paginationPageSize: 3,
+				useExternalPagination: true,
+				onRegisterApi: function (gridApi) {
+					self.gridApi = gridApi;
+					gridApi.pagination.on.paginationChanged(null, function (newPage, pageSize) {
+						paginationOptions.pageNumber = newPage;
+						paginationOptions.pageSize = pageSize;
+						self.actions.init();
+					});
+				},
+				appScopeProvider: self,
+				columnDefs: [
+					{ name: "Lastname" },
+					{ name: "Firstname" },
+					{ name: "Middlename" },
+					{
+						name: ' ',
+						enableSorting: false,
+						cellClass: function () { return "operationCell"; },
+						cellTemplate:
+						'<grid-row-operations ' +
+							'details="grid.appScope.actions.details(row.entity)" ' +
+							'remove="grid.appScope.actions.remove(row.entity)">' +
+						'</grid-row-operations>'
+					}
+				]
+			}
+			self.actions.init();
 	}]);
 })(angular);

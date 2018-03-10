@@ -119,5 +119,17 @@
 				scope.showRemove = !!attrs.remove;
 			}
 		};
+	}])
+	.factory("paginationService", [function () {
+		function _getDefaultOptions() {
+			return {
+				pageNumber: 1,
+				pageSize: 3,
+				sort: null
+			}
+		}
+		return {
+			getDefaultOptions: _getDefaultOptions,
+		}
 	}]);
 })(angular);

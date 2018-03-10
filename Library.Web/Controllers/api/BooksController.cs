@@ -19,7 +19,7 @@ namespace Library.Web.Controllers.api
 		}
 
 		[HttpGet]
-		public async Task<IEnumerable<BookDto>> Get(int skip = 0, int take = 3)
+		public async Task<IEnumerable<BookDto>> Get(int skip = 0, int? take = null)
 		{
 			var books = await _booksService.GetAll(skip, take);
 			return books;
