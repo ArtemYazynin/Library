@@ -22,14 +22,8 @@ namespace Library.Web.Controllers.api
 		public async Task<IEnumerable<BookDto>> Get(int skip = 0, int? take = null)
 		{
 			var books = await _booksService.GetAll(skip, take);
+			await this.AddTotalItemsInHeader(_booksService.Count);
 			return books;
-		}
-
-		[HttpGet]
-		[Route("Count")]
-		public async Task<long> Count()
-		{
-			return await _booksService.Count();
 		}
 
 		[HttpGet]

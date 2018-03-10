@@ -140,6 +140,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\api\ApiControllerExtensions.cs" />
     <Compile Include="Controllers\api\AuthorsController.cs" />
     <Compile Include="Controllers\api\BooksController.cs" />
     <Compile Include="Controllers\api\EditionsController.cs" />

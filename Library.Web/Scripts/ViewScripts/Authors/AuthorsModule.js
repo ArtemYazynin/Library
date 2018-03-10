@@ -13,10 +13,6 @@
 			function _getAll(skip, take, successCallback) {
 				authorsResource.query({ skip: skip, take: take }, successCallback);
 			}
-			function _count() {
-				var url = baseUrl + "/Count";
-				return $http.get(url);
-			}
 			function _get(id, successCallback) {
 				authorsResource.get({ Id: id }, successCallback);
 			}
@@ -59,7 +55,6 @@
 			return {
 				getModel: _getModel,
 				getAll: _getAll,
-				count: _count,
 				get: _get,
 				create: _create,
 				update: _update,

@@ -19,16 +19,10 @@ namespace Library.Web.Controllers.api
 		}
 
 		[HttpGet]
-		[Route("Count")]
-		public async Task<long> Count()
-		{
-			return await _authorsService.Count();
-		}
-
-		[HttpGet]
 		public async Task<IEnumerable<AuthorDto>> Get(int skip = 0, int? take = null)
 		{
 			var authors = await _authorsService.GetAll(skip,take);
+			await this.AddTotalItemsInHeader(_authorsService.Count);
 			return authors;
 		}
 

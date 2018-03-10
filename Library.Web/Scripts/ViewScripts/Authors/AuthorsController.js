@@ -9,12 +9,10 @@
 
 			self.actions = (function () {
 				function _init() {
-					authorsService.count().then(function (response) {
-						self.gridOptions.totalItems = response.data;
-					});
 					var skip = paginationOptions.pageNumber - 1;
-					authorsService.getAll(skip, paginationOptions.pageSize, function(response) {
-						 self.gridOptions.data = response;
+					authorsService.getAll(skip, paginationOptions.pageSize, function(response,getHeaderFn) {
+						self.gridOptions.data = response;
+						self.gridOptions.totalItems = parseInt(getHeaderFn("totalItems"));
 					});
 				}
 				function _details(author) {
@@ -92,11 +90,20 @@
 				paginationPageSizes: [3, 5, 10],
 				paginationPageSize: 3,
 				useExternalPagination: true,
+				useExternalSorting: true,
 				onRegisterApi: function (gridApi) {
 					self.gridApi = gridApi;
 					gridApi.pagination.on.paginationChanged(null, function (newPage, pageSize) {
 						paginationOptions.pageNumber = newPage;
 						paginationOptions.pageSize = pageSize;
+						self.actions.init();
+					});
+					self.gridApi.core.on.sortChanged(null, function (grid, sortColumns) {
+						if (sortColumns.length === 0) {
+							paginationOptions.sort = null;
+						} else {
+							paginationOptions.sort = sortColumns[0].sort.direction;
+						}
 						self.actions.init();
 					});
 				},

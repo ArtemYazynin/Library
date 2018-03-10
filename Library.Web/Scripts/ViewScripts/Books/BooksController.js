@@ -5,12 +5,10 @@
 		function ($scope, $location, booksService, $ngConfirm, notification, paginationService) {
 			var paginationOptions = paginationService.getDefaultOptions();
 			function init() {
-				booksService.count().then(function(response) {
-					$scope.gridOptions.totalItems = response.data;
-				});
 				var skip = paginationOptions.pageNumber - 1;
-				booksService.getAll(skip, paginationOptions.pageSize, function (response) {
+				booksService.getAll(skip, paginationOptions.pageSize, function (response,getHeaderFn) {
 					$scope.gridOptions.data = response;
+					$scope.gridOptions.totalItems = parseInt(getHeaderFn("totalItems"));
 				});
 			}
 			//var getPage = function () {
