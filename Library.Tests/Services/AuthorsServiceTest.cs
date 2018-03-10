@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Library.Common;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Author;
+using Moq;
 using NUnit.Framework;
 
 namespace Library.Tests.Services
@@ -11,7 +13,7 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task GetAll_ShouldReturnValidCount()
 		{
-			var authors = await AuthorsService.GetAll();
+			var authors = await AuthorsService.GetAll(It.IsAny<PagingParameterModel>());
 
 			Assert.That(authors.Count(), Is.EqualTo(Authors.Count));
 		}
@@ -41,7 +43,7 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task Create_ShouldCreated()
 		{
-			Assert.That((await AuthorsService.GetAll()).Count(), Is.EqualTo(Authors.Count));
+			Assert.That((await AuthorsService.GetAll(It.IsAny<PagingParameterModel>())).Count(), Is.EqualTo(Authors.Count));
 			var oldCount = Authors.Count;
 			var id = Random.Next(int.MaxValue);
 			var authorDto = new AuthorDto()
@@ -84,11 +86,11 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task Delete_ShouldDeleted()
 		{
-			var countBefore = (await AuthorsService.GetAll()).Count();
+			var countBefore = (await AuthorsService.GetAll(It.IsAny<PagingParameterModel>())).Count();
 
 			await AuthorsService.Delete(DefaultData.Authors.Rihter.Id);
 
-			var countAfterDelete = (await AuthorsService.GetAll()).Count();
+			var countAfterDelete = (await AuthorsService.GetAll(It.IsAny<PagingParameterModel>())).Count();
 			var deletedAuthor = await AuthorsService.Get(DefaultData.Authors.Rihter.Id);
 			Assert.That(countAfterDelete, Is.EqualTo(countBefore - 1));
 			Assert.That(deletedAuthor, Is.Null);
@@ -97,11 +99,11 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task Delete_NoneExistendAuthor_ShouldReturnNull()
 		{
-			var countBefore = (await AuthorsService.GetAll()).Count();
+			var countBefore = (await AuthorsService.GetAll(It.IsAny<PagingParameterModel>())).Count();
 
 			await AuthorsService.Delete(int.MaxValue);
 
-			var countAfter = (await AuthorsService.GetAll()).Count();
+			var countAfter = (await AuthorsService.GetAll(It.IsAny<PagingParameterModel>())).Count();
 			Assert.That(countAfter, Is.EqualTo(countBefore));
 		}
 

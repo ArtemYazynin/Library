@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Library.Common;
 using Library.Services.DTO;
 
 namespace Library.Services.Services
 {
 	public interface IAuthorsService
 	{
-		Task<IEnumerable<AuthorDto>> GetAll(int skip = 0, int? take = null);
+		Task<IEnumerable<AuthorDto>> GetAll(PagingParameterModel pagingParameterModel);
 		Task<EntityDto> Delete(long id);
 		Task<AuthorDto> Get(long id);
 

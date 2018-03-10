@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Library.Common;
 using Library.Services.DTO;
 using Library.Services.Services;
-using Library.Web.Models;
 
 namespace Library.Web.Controllers.api
 {
@@ -22,7 +22,7 @@ namespace Library.Web.Controllers.api
 		[HttpGet]
 		public async Task<IEnumerable<AuthorDto>> Get([FromUri]PagingParameterModel model)
 		{
-			var authors = await _authorsService.GetAll(model.Skip, model.Take);
+			var authors = await _authorsService.GetAll(model);
 			await this.AddTotalItemsInHeader(_authorsService.Count);
 			return authors;
 		}

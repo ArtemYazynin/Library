@@ -1,4 +1,4 @@
-﻿namespace Library.Web.Utils.EnumsInJavaScript
+﻿namespace Library.Common
 {
 	[JavascriptEnum]
 	public enum OrderBy

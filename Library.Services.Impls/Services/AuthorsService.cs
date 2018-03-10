@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Library.Common;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Author;
@@ -21,11 +22,36 @@ namespace Library.Services.Impls.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<IEnumerable<AuthorDto>> GetAll(int skip = 0, int? take = null)
+		public async Task<IEnumerable<AuthorDto>> GetAll(PagingParameterModel pagingParameterModel)
 		{
-			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(skip:skip, take: take);
+			var orderBy = GetOrder(pagingParameterModel);
+			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(orderBy: orderBy, skip: pagingParameterModel.Skip, take: pagingParameterModel.Take);
 			var result = Mapper.Map<IEnumerable<Author>, Collection<AuthorDto>>(authors);
 			return result;
+		}
+
+		private static Func<IQueryable<Author>, IOrderedQueryable<Author>> GetOrder(PagingParameterModel pagingParameterModel)
+		{
+			var expr = GetOrderByKeySelector(pagingParameterModel);
+
+			if (expr == null) return null;
+			if (pagingParameterModel.OrderBy == OrderBy.Asc) return x => x.OrderBy(expr);
+			return x => x.OrderByDescending(expr);
+		}
+
+		private static Expression<Func<Author, string>> GetOrderByKeySelector(PagingParameterModel pagingParameterModel)
+		{
+			switch (pagingParameterModel.Name)
+			{
+				case nameof(Author.Lastname):
+					return x => x.Lastname;
+				case nameof(Author.Firstname):
+					return x => x.Firstname;
+				case nameof(Author.Middlename):
+					return x => x.Middlename;
+				default:
+					return null;
+			}
 		}
 
 		public async Task<EntityDto> Delete(long id)

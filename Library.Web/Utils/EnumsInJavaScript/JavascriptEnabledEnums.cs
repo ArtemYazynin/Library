@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Library.Common;
 
 namespace Library.Web.Utils.EnumsInJavaScript
 {
@@ -13,8 +14,9 @@ namespace Library.Web.Utils.EnumsInJavaScript
 		{
 			if (_types != null) return;
 			_types = new List<JavascriptEnumTypeInfo>();
+			
 			var typesWithAttribute =
-				from t in Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsEnum)
+				from t in Assembly.Load("Library.Common").GetTypes().Where(x => x.IsEnum)
 				let attributes = t.GetCustomAttributes(typeof(JavascriptEnumAttribute), true)
 				where attributes != null && attributes.Length > 0
 				select new { Type = t, Attributes = attributes.Cast<JavascriptEnumAttribute>() };

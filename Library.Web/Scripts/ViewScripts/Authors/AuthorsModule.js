@@ -10,8 +10,8 @@
 				}
 			}
 			var authorsResource = $resource(baseUrl + "/:id", { id: "@Id" }, config);
-			function _getAll(skip, take, successCallback) {
-				authorsResource.query({ Skip: skip, Take: take }, successCallback);
+			function _getAll(pagingModel, successCallback) {
+				authorsResource.query(pagingModel, successCallback);
 			}
 			function _get(id, successCallback) {
 				authorsResource.get({ Id: id }, successCallback);

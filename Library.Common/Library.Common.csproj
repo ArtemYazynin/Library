@@ -40,6 +40,9 @@
     <Compile Include="IPublisher.cs" />
     <Compile Include="IRent.cs" />
     <Compile Include="ISubscriber.cs" />
+    <Compile Include="JavascriptEnumAttribute.cs" />
+    <Compile Include="OrderBy.cs" />
+    <Compile Include="PagingParameterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

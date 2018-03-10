@@ -9,8 +9,22 @@
 
 			self.actions = (function () {
 				function _init() {
-					var skip = paginationOptions.pageNumber - 1;
-					authorsService.getAll(skip, paginationOptions.pageSize, function(response,getHeaderFn) {
+					var pagingModel = {
+						Skip: paginationOptions.pageNumber - 1,
+						Take: paginationOptions.pageSize,
+						Name: paginationOptions.name,
+						OrderBy: (function () {
+							switch (paginationOptions.sort) {
+								case "asc":
+									return window.Enums.orderBy.asc;
+								case "desc":
+									return window.Enums.orderBy.desc;
+								default:
+									return undefined;
+							}
+						})()
+					};
+					authorsService.getAll(pagingModel, function (response, getHeaderFn) {
 						self.gridOptions.data = response;
 						self.gridOptions.totalItems = parseInt(getHeaderFn("totalItems"));
 					});
@@ -103,6 +117,7 @@
 							paginationOptions.sort = null;
 						} else {
 							paginationOptions.sort = sortColumns[0].sort.direction;
+							paginationOptions.name = sortColumns[0].name;
 						}
 						self.actions.init();
 					});

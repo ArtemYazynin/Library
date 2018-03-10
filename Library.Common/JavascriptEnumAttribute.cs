@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Library.Web.Utils.EnumsInJavaScript
+namespace Library.Common
 {
 	public class JavascriptEnumAttribute : Attribute
 	{
