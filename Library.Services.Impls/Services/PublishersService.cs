@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Library.Common;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Publisher;
@@ -21,9 +22,19 @@ namespace Library.Services.Impls.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<IEnumerable<PublisherDto>> GetAll()
+		public async Task<IEnumerable<PublisherDto>> GetAll(PagingParameterModel pagingParameterModel)
 		{
-			var publishers = await _unitOfWork.PublisherRepository.GetAllAsync();
+			var orderBy = Helper.GetOrder<Publisher>(pagingParameterModel, x =>
+			{
+				switch (x.Name)
+				{
+					case nameof(Publisher):
+						return y => y.Name;
+					default:
+						return null;
+				}
+			});
+			var publishers = await _unitOfWork.PublisherRepository.GetAllAsync(orderBy: orderBy, skip: pagingParameterModel?.Skip ?? 0, take: pagingParameterModel?.Take);
 			var result = Mapper.Map<IEnumerable<Publisher>, Collection<PublisherDto>>(publishers);
 			return result;
 		}
@@ -85,6 +96,11 @@ namespace Library.Services.Impls.Services
 			_unitOfWork.PublisherRepository.Create(publisher);
 			await _unitOfWork.Save();
 			return Mapper.Map<PublisherDto>(publisher);
+		}
+
+		public async Task<long> Count()
+		{
+			return await _unitOfWork.PublisherRepository.Count();
 		}
 	}
 }

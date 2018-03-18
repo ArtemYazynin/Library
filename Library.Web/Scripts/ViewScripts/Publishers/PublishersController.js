@@ -2,40 +2,13 @@
 	"use strict";
 
 	angular.module("PublishersModule")
-		.controller("PublishersController", ["$compile", "$scope", "publishersService", "$ngConfirm", "Notification", function ($compile, $scope, publishersService, $ngConfirm, notification) {
+		.controller("PublishersController", ["$compile", "$scope", "publishersService", "$ngConfirm", "Notification", "paginationService", function ($compile, $scope, publishersService, $ngConfirm, notification,paginationService) {
 			var inputhtml = "<input class='form-control' type='text' ng-model='editingPublisher.beginValue' ng-keypress='editingPublisher.keypress($event)' ng-blur='editingPublisher.blur($event)' />";
-
-			$scope.gridPublishers = {
-				appScopeProvider: $scope,
-				rowHeight: "40px",
-				enableCellEdit: true,
-				columnDefs: [
-					{
-						name: "Publisher",
-						cellClass: function () { return "dataCell"; },
-						width: "90%",
-						field: "Name",
-						cellTemplate:
-						'<div class="ui-grid-cell-contents ng-binding ng-scope" ng-click="grid.appScope.actions.enableEdit($event,row.entity)">' +
-							'<span ng-bind="row.entity.Name"></span>' +
-						'</div>'
-					},
-					{
-						name: ' ',
-						enableSorting: false,
-						cellClass: function () { return "operationCell"; },
-						cellTemplate:
-						'<grid-row-operations remove="grid.appScope.actions.remove(row.entity)">' +
-						'</grid-row-operations>'
-					}
-				]
-			};
 
 			function EditingPublisher(entity) {
 				this.entity = entity;
 				this.beginValue = entity.Name;
 			}
-
 			EditingPublisher.prototype.keypress = function(event) {
 				if (event.which === 13) {
 					var vm = angular.extend(this.entity, {
@@ -115,16 +88,64 @@
 						notification.success("Publisher <strong>" + createdPublisher.Name + "</strong> was created");
 					});
 				}
+				function _init(paginationOptions) {
+					paginationOptions = paginationOptions || paginationService.getDefaultOptions();
+					var pagingModel = {
+						Skip: paginationOptions.pageNumber - 1,
+						Take: paginationOptions.pageSize,
+						Name: paginationOptions.name,
+						OrderBy: (function () {
+							switch (paginationOptions.sort) {
+								case "asc":
+									return window.Enums.orderBy.asc;
+								case "desc":
+									return window.Enums.orderBy.desc;
+								default:
+									return undefined;
+							}
+						})()
+					};
+					publishersService.get(pagingModel,function (response, getHeaderFn) {
+						$scope.gridPublishers.data = response;
+						$scope.gridPublishers.totalItems = parseInt(getHeaderFn("totalItems"));;
+					});
+				}
 				return {
 					remove: _remove,
 					enableEdit: _enableEdit,
 					showAddForm: _showAddForm,
-					save: _save
+					save: _save,
+					init: _init
 				}
 			})();
-
-			publishersService.get(function(response) {
-				$scope.gridPublishers.data = response;
-			});
-	}]);
+			$scope.gridPublishers = (function () {
+				var options = {
+					columnDefs: [
+						{
+							name: "Publisher",
+							cellClass: function () { return "dataCell"; },
+							width: "90%",
+							field: "Name",
+							cellTemplate:
+							'<div class="ui-grid-cell-contents ng-binding ng-scope" ng-click="grid.appScope.actions.enableEdit($event,row.entity)">' +
+								'<span ng-bind="row.entity.Name"></span>' +
+							'</div>'
+						},
+						{
+							name: ' ',
+							enableSorting: false,
+							cellClass: function () { return "operationCell"; },
+							cellTemplate:
+							'<grid-row-operations remove="grid.appScope.actions.remove(row.entity)">' +
+							'</grid-row-operations>'
+						}
+					],
+					appScopeProvider: $scope,
+					enableCellEdit: true
+				}
+				var result = paginationService.getGridOptions(options, $scope.actions.init);
+				return result;
+			})();
+			$scope.actions.init();
+		}]);
 })(angular);

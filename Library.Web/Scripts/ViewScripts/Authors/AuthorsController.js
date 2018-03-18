@@ -5,10 +5,10 @@
 		.controller("AuthorsController", ["$location", "authorsService", "$ngConfirm", "Notification", "paginationService",
 			function ($location, authorsService, $ngConfirm, notification,paginationService) {
 			var self = this;
-			var paginationOptions = paginationService.getDefaultOptions();
 
 			self.actions = (function () {
-				function _init() {
+				function _init(paginationOptions) {
+					paginationOptions = paginationOptions || paginationService.getDefaultOptions();
 					var pagingModel = {
 						Skip: paginationOptions.pageNumber - 1,
 						Take: paginationOptions.pageSize,
@@ -99,46 +99,28 @@
 				}
 			})();
 
-			self.gridOptions = {
-				rowHeight: "40px",
-				paginationPageSizes: [3, 5, 10],
-				paginationPageSize: 3,
-				useExternalPagination: true,
-				useExternalSorting: true,
-				onRegisterApi: function (gridApi) {
-					self.gridApi = gridApi;
-					gridApi.pagination.on.paginationChanged(null, function (newPage, pageSize) {
-						paginationOptions.pageNumber = newPage;
-						paginationOptions.pageSize = pageSize;
-						self.actions.init();
-					});
-					self.gridApi.core.on.sortChanged(null, function (grid, sortColumns) {
-						if (sortColumns.length === 0) {
-							paginationOptions.sort = null;
-						} else {
-							paginationOptions.sort = sortColumns[0].sort.direction;
-							paginationOptions.name = sortColumns[0].name;
+			self.gridOptions = (function() {
+				var options = {
+					columnDefs: [
+						{ name: "Lastname" },
+						{ name: "Firstname" },
+						{ name: "Middlename" },
+						{
+							name: ' ',
+							enableSorting: false,
+							cellClass: function () { return "operationCell"; },
+							cellTemplate:
+								'<grid-row-operations ' +
+								'details="grid.appScope.actions.details(row.entity)" ' +
+								'remove="grid.appScope.actions.remove(row.entity)">' +
+								'</grid-row-operations>'
 						}
-						self.actions.init();
-					});
-				},
-				appScopeProvider: self,
-				columnDefs: [
-					{ name: "Lastname" },
-					{ name: "Firstname" },
-					{ name: "Middlename" },
-					{
-						name: ' ',
-						enableSorting: false,
-						cellClass: function () { return "operationCell"; },
-						cellTemplate:
-						'<grid-row-operations ' +
-							'details="grid.appScope.actions.details(row.entity)" ' +
-							'remove="grid.appScope.actions.remove(row.entity)">' +
-						'</grid-row-operations>'
-					}
-				]
-			}
+					],
+					appScopeProvider: self
+				}
+				var result = paginationService.getGridOptions(options, self.actions.init);
+				return result;
+			})();
 			self.actions.init();
 	}]);
 })(angular);

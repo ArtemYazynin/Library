@@ -103,6 +103,7 @@
     <Compile Include="LibraryContextInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GenresService.cs" />
+    <Compile Include="Services\Helper.cs" />
     <Compile Include="Services\InvoicesService.cs" />
     <Compile Include="Services\PublishersService.cs" />
     <Compile Include="Services\RentsService.cs" />

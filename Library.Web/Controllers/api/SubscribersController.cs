@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Library.Common;
 using Library.Services.DTO;
 using Library.Services.Services;
 
@@ -16,9 +17,10 @@ namespace Library.Web.Controllers.api
 			_subscribersService = subscribersService;
 		}
 
-		public async Task<IEnumerable<SubscriberDto>> Get()
+		public async Task<IEnumerable<SubscriberDto>> Get([FromUri]PagingParameterModel model)
 		{
-			return await _subscribersService.GetAll();
+			await this.AddTotalItemsInHeader(_subscribersService.Count);
+			return await _subscribersService.GetAll(model);
 		}
 
 		public async Task<SubscriberDto> Post(SubscriberDto dto)

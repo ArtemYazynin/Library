@@ -71,9 +71,16 @@
     <Compile Include="Services\BookServiceTest.cs" />
     <Compile Include="Services\InvoicesServiceTest.cs" />
     <Compile Include="Services\PublishersServiceTest.cs" />
+    <Compile Include="Stubs\AuthorRepositoryStub.cs" />
+    <Compile Include="Stubs\BookRepositoryStub.cs" />
+    <Compile Include="Stubs\InvoicesRepositoryStub.cs" />
+    <Compile Include="Stubs\PublishersRepositoryStub.cs" />
+    <Compile Include="Stubs\RentsRepositoryStub.cs" />
     <Compile Include="Services\RentsServiceTest.cs" />
     <Compile Include="Services\ServiceTestsBase.cs" />
+    <Compile Include="Stubs\RepositoryStubBase.cs" />
     <Compile Include="Services\SubscribersServiceTest.cs" />
+    <Compile Include="Stubs\SubscribersRepositoryStub.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -107,9 +114,7 @@
       <Name>Library.Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

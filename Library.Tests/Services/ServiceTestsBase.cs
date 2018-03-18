@@ -8,6 +8,7 @@ using Library.Services;
 using Library.Services.Impls;
 using Library.Services.Impls.Services;
 using Library.Services.Services;
+using Library.Tests.Stubs;
 using Moq;
 using NUnit.Framework;
 
@@ -16,6 +17,8 @@ namespace Library.Tests.Services
 	[TestFixture]
 	abstract class ServiceTestsBase
 	{
+		#region protected services
+
 		protected IBooksService BooksService;
 		protected IAuthorsService AuthorsService;
 		protected IGenresService GenresService;
@@ -23,6 +26,11 @@ namespace Library.Tests.Services
 		protected IInvoicesService InvoicesService;
 		protected ISubscribersService SubscribersService;
 		protected IRentsService RentsService;
+
+		#endregion
+
+
+		#region protected collections
 
 		protected Collection<Book> Books;
 		protected Collection<Author> Authors;
@@ -32,7 +40,11 @@ namespace Library.Tests.Services
 		protected Collection<Subscriber> Subscribers;
 		protected Collection<Rent> Rents;
 
+		#endregion
+
+
 		protected Random Random = new Random();
+		private static volatile bool _alreadyInitialized;
 
 		[SetUp]
 		public void SetUp()
@@ -138,13 +150,13 @@ namespace Library.Tests.Services
 				DefaultData.Rents.RentSidorov
 			};
 
-			var stubBookRepository = GetBookRepositoryStub();
-			var stubAuthorRepository = GetAuthorsRepositoryStub();
+			var stubBookRepository = new BookRepositoryStub(Books).Get();
+			var stubAuthorRepository = new AuthorRepositoryStub(Authors).Get();
 			var stubGenresRepository = GetGenresRepositoryStub();
-			var stubPublishersRepository = GetPublishersRepositoryStub();
-			var stubInvoicesRepository = GetInvoicesRepositoryStub();
-			var stubSubscribersRepository = GetSubscribersRepositoryStub();
-			var stubRentsRepository = GetRentsRepositoryStub();
+			var stubPublishersRepository = new PublishersRepositoryStub(Publishers).Get();
+			var stubInvoicesRepository = new InvoicesRepositoryStub(Invoices).Get();
+			var stubSubscribersRepository = new SubscribersRepositoryStub(Subscribers).Get();
+			var stubRentsRepository = new RentsRepositoryStub(Rents).Get();
 			var unitOfWork = Mock.Of<IUnitOfWork>(x => x.BookRepository == stubBookRepository.Object 
 													&& x.AuthorRepository == stubAuthorRepository.Object
 													&& x.GenreRepository == stubGenresRepository.Object
@@ -160,200 +172,6 @@ namespace Library.Tests.Services
 			InvoicesService = new InvoicesService(unitOfWork);
 			SubscribersService = new SubscribersService(unitOfWork);
 			RentsService = new RentsService(unitOfWork);
-		}
-		private Mock<IGenericRepository<Rent>> GetRentsRepositoryStub()
-		{
-			var stub = new Mock<IGenericRepository<Rent>>();
-			stub.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Rent, bool>>>>(),
-										It.IsAny<Func<IQueryable<Rent>, IOrderedQueryable<Rent>>>(),
-										It.IsAny<string>(),0, null))
-				.ReturnsAsync((IEnumerable<Expression<Func<Rent, bool>>> filters,
-					Func<IQueryable<Rent>, IOrderedQueryable<Rent>> orders
-					, string includeProperties, int skip, int? take) => GetAllStub(Rents, filters, orders));
-
-			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
-				.ReturnsAsync((long id, string includeProperties) =>
-				{
-					return Rents.SingleOrDefault(x => x.Id == id);
-				});
-			stub.Setup(x => x.Create(It.IsAny<Rent>()))
-				.Returns((Rent x) =>
-				{
-					Rents.Add(x);
-					return true;
-				});
-			stub.Setup(x => x.Delete(It.IsAny<long>()))
-				.Returns((long id) =>
-				{
-					var deletedRent = Rents.SingleOrDefault(x => x.Id == id);
-					if (deletedRent == null)
-					{
-						return false;
-					}
-
-					Rents.Remove(deletedRent);
-					return true;
-				});
-			stub.Setup(x => x.Delete(It.IsAny<Rent>()))
-				.Returns((Rent x) =>
-				{
-					try
-					{
-						Rents.Remove(x);
-						return true;
-					}
-					catch (Exception)
-					{
-
-						return false;
-					}
-				});
-			stub.Setup(x => x.Update(It.IsAny<Rent>()))
-				.Returns((Rent x) =>
-				{
-					try
-					{
-						var rent = Rents.Single(n => n.Id == x.Id);
-						rent.IsActive = x.IsActive;
-
-						return true;
-					}
-					catch (Exception)
-					{
-						return false;
-					}
-				});
-			return stub;
-		}
-
-		private Mock<IGenericRepository<Invoice>> GetInvoicesRepositoryStub()
-		{
-			var stub = new Mock<IGenericRepository<Invoice>>();
-			stub.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Invoice, bool>>>>(),
-										It.IsAny<Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>>>(),
-										It.IsAny<string>(), 0, null))
-				.ReturnsAsync((IEnumerable<Expression<Func<Invoice, bool>>> filters,
-					Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>> orders
-					, string includeProperties, int skip, int? take) => GetAllStub(Invoices, filters, orders));
-
-			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
-				.ReturnsAsync((long id, string includeProperties) =>
-				{
-					return Invoices.SingleOrDefault(x => x.Id == id);
-				});
-			stub.Setup(x => x.Create(It.IsAny<Invoice>()))
-				.Returns((Invoice x) =>
-				{
-					Invoices.Add(x);
-					return true;
-				});
-			stub.Setup(x => x.Delete(It.IsAny<long>()))
-				.Returns((long id) =>
-				{
-					var deletedInvoice = Invoices.SingleOrDefault(x => x.Id == id);
-					if (deletedInvoice == null)
-					{
-						return false;
-					}
-
-					Invoices.Remove(deletedInvoice);
-					return true;
-				});
-			stub.Setup(x => x.Delete(It.IsAny<Invoice>()))
-				.Returns((Invoice x) =>
-				{
-					try
-					{
-						Invoices.Remove(x);
-						return true;
-					}
-					catch (Exception)
-					{
-
-						return false;
-					}
-				});
-			stub.Setup(x => x.Update(It.IsAny<Invoice>()))
-				.Returns((Invoice x) =>
-				{
-					try
-					{
-						var invoice = Invoices.Single(n => n.Id == x.Id);
-						invoice.Date = x.Date;
-						invoice.IncomingBooks = x.IncomingBooks;
-						return true;
-					}
-					catch (Exception)
-					{
-						return false;
-					}
-				});
-			return stub;
-		}
-
-		private Mock<IGenericRepository<Publisher>> GetPublishersRepositoryStub()
-		{
-			var stub = new Mock<IGenericRepository<Publisher>>();
-			stub.Setup(x=>x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Publisher, bool>>>>(),
-										It.IsAny<Func<IQueryable<Publisher>, IOrderedQueryable<Publisher>>>(),
-										It.IsAny<string>(), 0, null))
-				.ReturnsAsync((IEnumerable<Expression<Func<Publisher, bool>>> filters,
-					Func<IQueryable<Publisher>, IOrderedQueryable<Publisher>> orders
-					, string includeProperties, int skip, int? take) => GetAllStub(Publishers, filters,orders));
-
-			stub.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
-				.ReturnsAsync((long id, string includeProperties) =>
-				{
-					return Publishers.SingleOrDefault(x => x.Id == id);
-				});
-			stub.Setup(x => x.Create(It.IsAny<Publisher>()))
-				.Returns((Publisher x) =>
-				{
-					Publishers.Add(x);
-					return true;
-				});
-			stub.Setup(x => x.Delete(It.IsAny<long>()))
-				.Returns((long id) =>
-				{
-					var deletedPublisher = Publishers.SingleOrDefault(x => x.Id == id);
-					if (deletedPublisher == null)
-					{
-						return false;
-					}
-
-					Publishers.Remove(deletedPublisher);
-					return true;
-				});
-			stub.Setup(x => x.Delete(It.IsAny<Publisher>()))
-				.Returns((Publisher x) =>
-				{
-					try
-					{
-						Publishers.Remove(x);
-						return true;
-					}
-					catch (Exception)
-					{
-						
-						return false;
-					}
-				});
-			stub.Setup(x => x.Update(It.IsAny<Publisher>()))
-				.Returns((Publisher x) =>
-				{
-					try
-					{
-						var publisher = Publishers.Single(n => n.Id == x.Id);
-						publisher.Name = x.Name;
-
-						return true;
-					}
-					catch (Exception)
-					{
-						return false;
-					}
-				});
-			return stub;
 		}
 
 		private Mock<IGenresRepository> GetGenresRepositoryStub()
@@ -405,150 +223,7 @@ namespace Library.Tests.Services
 			return stub;
 		}
 
-		private Mock<IGenericRepository<Author>> GetAuthorsRepositoryStub()
-		{
-			var stubAuthorRepository = new Mock<IGenericRepository<Author>>();
-			stubAuthorRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Author, bool>>>>(),
-					It.IsAny<Func<IQueryable<Author>, IOrderedQueryable<Author>>>(),
-					It.IsAny<string>(), 0, null))
-				.ReturnsAsync((IEnumerable<Expression<Func<Author, bool>>> filters,
-					Func<IQueryable<Author>, IOrderedQueryable<Author>> order, string includeProperties, int skip, int? take) =>
-				{
-					IEnumerable<Author> localEntities = Authors;
-					return GetAllStub(localEntities, filters, order);
-				});
 
-			stubAuthorRepository.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
-				.ReturnsAsync((long id, string includeProperties) => Authors.SingleOrDefault(x => x.Id == id));
-
-			stubAuthorRepository.Setup(x => x.Create(It.IsAny<Author>()))
-				.Returns((Author x) =>
-				{
-					Authors.Add(x);
-					return true;
-				});
-			stubAuthorRepository.Setup(x => x.Delete(It.IsAny<long>()))
-				.Returns((long id) =>
-				{
-					var author = Authors.SingleOrDefault(x => x.Id == id);
-					if (author == null) return false;
-
-					Authors.Remove(author);
-					return true;
-				});
-			stubAuthorRepository.Setup(x => x.Delete(It.IsAny<Author>()))
-				.Returns<Author>(x =>
-				{
-					Authors.Remove(x);
-					return true;
-				});
-			stubAuthorRepository.Setup(x => x.Update(It.IsAny<Author>())).Returns((Author dbentity) =>
-			{
-				var author = Authors.Single(x => x.Id == dbentity.Id);
-				author.Lastname = dbentity.Lastname;
-				author.Firstname = dbentity.Firstname;
-				author.Middlename = dbentity.Middlename;
-
-				return true;
-			});
-			return stubAuthorRepository;
-		}
-
-		private Mock<IGenericRepository<Subscriber>> GetSubscribersRepositoryStub()
-		{
-			var stubSubscriberRepository = new Mock<IGenericRepository<Subscriber>>();
-			stubSubscriberRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Subscriber, bool>>>>(),
-					It.IsAny<Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>>>(),
-					It.IsAny<string>(), 0, null))
-				.ReturnsAsync((IEnumerable<Expression<Func<Subscriber, bool>>> filters,
-					Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>> order, string includeProperties, int skip, int? take) =>
-				{
-					IEnumerable<Subscriber> localEntities = Subscribers;
-					return GetAllStub(localEntities, filters, order);
-				});
-
-			stubSubscriberRepository.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
-				.ReturnsAsync((long id, string includeProperties) => Subscribers.SingleOrDefault(x => x.Id == id));
-
-			stubSubscriberRepository.Setup(x => x.Create(It.IsAny<Subscriber>()))
-				.Returns((Subscriber x) =>
-				{
-					Subscribers.Add(x);
-					return true;
-				});
-			stubSubscriberRepository.Setup(x => x.Delete(It.IsAny<long>()))
-				.Returns((long id) =>
-				{
-					var subscriber = Subscribers.SingleOrDefault(x => x.Id == id);
-					if (subscriber == null) return false;
-
-					Subscribers.Remove(subscriber);
-					return true;
-				});
-			stubSubscriberRepository.Setup(x => x.Delete(It.IsAny<Subscriber>()))
-				.Returns<Subscriber>(x =>
-				{
-					Subscribers.Remove(x);
-					return true;
-				});
-			stubSubscriberRepository.Setup(x => x.Update(It.IsAny<Subscriber>())).Returns((Subscriber dbentity) =>
-			{
-				var subscriber = Subscribers.Single(x => x.Id == dbentity.Id);
-				subscriber.Lastname = dbentity.Lastname;
-				subscriber.Firstname = dbentity.Firstname;
-				subscriber.Middlename = dbentity.Middlename;
-
-				return true;
-			});
-			return stubSubscriberRepository;
-		}
-
-		private Mock<IGenericRepository<Book>> GetBookRepositoryStub()
-		{
-			var stubBookRepository = new Mock<IGenericRepository<Book>>();
-
-			stubBookRepository.Setup(x => x.GetAllAsync(It.IsAny<IEnumerable<Expression<Func<Book, bool>>>>(),
-					It.IsAny<Func<IQueryable<Book>, IOrderedQueryable<Book>>>(),
-					It.IsAny<string>(), 0, null))
-				.ReturnsAsync((IEnumerable<Expression<Func<Book, bool>>> filters,
-					Func<IQueryable<Book>, IOrderedQueryable<Book>> order, string includeProperties, int skip, int? take) =>
-				{
-					IEnumerable<Book> books = Books;
-					return GetAllStub(books, filters, order);
-				});
-
-			stubBookRepository.Setup(x => x.Get(It.IsAny<long>(), It.IsAny<string>()))
-				.ReturnsAsync((long id, string includeProperties) => Books.SingleOrDefault(x => x.Id == id));
-
-			stubBookRepository.Setup(x => x.Create(It.IsAny<Book>()))
-				.Returns((Book x) =>
-				{
-					Books.Add(x);
-					return true;
-				});
-			stubBookRepository.Setup(x => x.Delete(It.IsAny<long>()))
-				.Returns((long id) =>
-				{
-					var book = Books.SingleOrDefault(x => x.Id == id);
-					if (book == null)
-					{
-						return false;
-					}
-					Books.Remove(book);
-					return true;
-				});
-			stubBookRepository.Setup(x => x.Delete(It.IsAny<Book>()))
-				.Returns<Book>(x =>
-				{
-					Books.Add(x);
-					return true;
-				});
-			stubBookRepository.Setup(x => x.Update(It.IsAny<Book>())).Returns((Book dbentity) => true);
-			stubBookRepository.Setup(x => x.Count()).ReturnsAsync(() => Books.Count);
-			return stubBookRepository;
-		}
-
-		private static volatile bool _alreadyInitialized;
 		[TestFixtureSetUp]
 		public void FixtureSetUp()
 		{

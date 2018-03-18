@@ -128,8 +128,42 @@
 				sort: null
 			}
 		}
-		return {
-			getDefaultOptions: _getDefaultOptions,
+
+		function _getGridOptions(options, loadFn) {
+			var paginationOptions = _getDefaultOptions();
+
+			var gridOptions = {
+				rowHeight: "40px",
+				paginationPageSizes: [paginationOptions.pageSize, paginationOptions.pageSize * 2, paginationOptions.pageSize * 3],
+				paginationPageSize: paginationOptions.pageSize,
+				useExternalPagination: true,
+				useExternalSorting: true,
+				onRegisterApi: function (gridApi) {
+					gridApi.pagination.on.paginationChanged(null, function (newPage, pageSize) {
+						paginationOptions.pageNumber = newPage;
+						paginationOptions.pageSize = pageSize;
+						loadFn(paginationOptions);
+					});
+					gridApi.core.on.sortChanged(null, function (grid, sortColumns) {
+						if (sortColumns.length === 0) {
+							paginationOptions.sort = null;
+						} else {
+							paginationOptions.sort = sortColumns[0].sort.direction;
+							paginationOptions.name = sortColumns[0].name;
+						}
+						loadFn(paginationOptions);
+					});
+				}
+			}
+			if (options) 
+				angular.extend(gridOptions, options);
+			
+			return gridOptions;
 		}
+
+		return {
+		getDefaultOptions: _getDefaultOptions,
+		getGridOptions : _getGridOptions
+	}
 	}]);
 })(angular);

@@ -3,70 +3,53 @@
 	angular.module("BooksModule")
 	.controller("BooksController", ["$scope", "$location", "booksService", "$ngConfirm", "Notification","paginationService",
 		function ($scope, $location, booksService, $ngConfirm, notification, paginationService) {
-			var paginationOptions = paginationService.getDefaultOptions();
-			function init() {
-				var skip = paginationOptions.pageNumber - 1;
-				booksService.getAll(skip, paginationOptions.pageSize, function (response,getHeaderFn) {
+			function init(paginationOptions) {
+				paginationOptions = paginationOptions || paginationService.getDefaultOptions();
+				var pagingModel = {
+					Skip: paginationOptions.pageNumber - 1,
+					Take: paginationOptions.pageSize,
+					Name: paginationOptions.name,
+					OrderBy: (function () {
+						switch (paginationOptions.sort) {
+							case "asc":
+								return window.Enums.orderBy.asc;
+							case "desc":
+								return window.Enums.orderBy.desc;
+							default:
+								return undefined;
+						}
+					})()
+				};
+				booksService.getAll(pagingModel, function (response, getHeaderFn) {
 					$scope.gridOptions.data = response;
 					$scope.gridOptions.totalItems = parseInt(getHeaderFn("totalItems"));
 				});
 			}
-			//var getPage = function () {
-			//	var url;
-			//	switch (paginationOptions.sort) {
-			//		case "ASC":
-			//			url = '/data/100_ASC.json';
-			//			break;
-			//		case "DESC":
-			//			url = '/data/100_DESC.json';
-			//			break;
-			//		default:
-			//			url = '/data/100.json';
-			//			break;
-			//	}
-			//	init();
-			//};
-			$scope.gridOptions = {
-				rowHeight: "40px",
-				paginationPageSizes: [3, 5, 10],
-				paginationPageSize: 3,
-				useExternalPagination: true,
-				//useExternalSorting: true,
-				onRegisterApi: function (gridApi) {
-					$scope.gridApi = gridApi;
-					gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-						paginationOptions.pageNumber = newPage;
-						paginationOptions.pageSize = pageSize;
-						init();
-					});
-					//$scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
-					//	if (sortColumns.length == 0) {
-					//		paginationOptions.sort = null;
-					//	} else {
-					//		paginationOptions.sort = sortColumns[0].sort.direction;
-					//	}
-					//	init();
-					//});
-				},
-				columnDefs: [
-					{ name: "Name" },
-					{ name: 'Genres', field: 'GenresStr' },
-					{ name: 'Authors', field: 'AuthorsStr' },
-					{ name: 'Publisher', field: 'Publisher.Name' },
-					{ name: 'Count' },
-					{
-						name: ' ',
-						enableSorting: false,
-						cellClass: function () { return "operationCell"; },
-						cellTemplate:
-						'<grid-row-operations ' +
-							'details="grid.appScope.actions.details(row.entity)" ' +
-							'remove="grid.appScope.actions.remove(row.entity)">' +
-						'</grid-row-operations>'
-						
-					}
-				]
-			};
+
+			$scope.gridOptions = (function() {
+				var options = {
+					columnDefs: [
+						{ name: "Name" },
+						{ name: 'Genres', field: 'GenresStr', enableSorting: false },
+						{ name: 'Authors', field: 'AuthorsStr', enableSorting: false },
+						{ name: 'Publisher', field: 'Publisher.Name' },
+						{ name: 'Count' },
+						{
+							name: ' ',
+							enableSorting: false,
+							cellClass: function () { return "operationCell"; },
+							cellTemplate:
+							'<grid-row-operations ' +
+								'details="grid.appScope.actions.details(row.entity)" ' +
+								'remove="grid.appScope.actions.remove(row.entity)">' +
+							'</grid-row-operations>'
+
+						}
+					]
+				}
+				var result = paginationService.getGridOptions(options, init);
+				return result;
+			})();
 
 			$scope.actions = (function () {
 				function _search() {

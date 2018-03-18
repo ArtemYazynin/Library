@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Library.Common;
 using Library.Services.DTO;
 using Library.Services.VO;
 
@@ -7,7 +8,7 @@ namespace Library.Services.Services
 {
 	public interface IBooksService
 	{
-		Task<IEnumerable<BookDto>> GetAll(int skip = 0, int? take = null);
+		Task<IEnumerable<BookDto>> GetAll(PagingParameterModel pagingParameterModel);
 
 		Task<IEnumerable<BookDto>> Search(Filters filters);
 		Task<BookDto> Get(long id);

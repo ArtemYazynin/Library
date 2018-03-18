@@ -5,6 +5,8 @@ namespace Library.ObjectModel.Models
 {
 	public class Book: Entity, IBook<Edition,Publisher,Genre,Author,Rent, IncomingBook, File>
 	{
+		#region private fields
+
 		private string _name;
 		private string _isbn;
 		private Edition _edition;
@@ -14,6 +16,11 @@ namespace Library.ObjectModel.Models
 		private readonly ICollection<Rent> _rents;
 		private readonly ICollection<IncomingBook> _incomingBooks;
 
+		#endregion
+
+
+		#region .ctors
+
 		protected Book()
 		{
 			_authors = new List<Author>();
@@ -21,6 +28,7 @@ namespace Library.ObjectModel.Models
 			_genres = new List<Genre>();
 			_incomingBooks = new List<IncomingBook>();
 		}
+
 		public Book(string name, string isbn, Edition edition, Publisher publisher, int count)
 		{
 			_name = name;
@@ -34,6 +42,10 @@ namespace Library.ObjectModel.Models
 			_genres = new List<Genre>();
 			_incomingBooks = new List<IncomingBook>();
 		}
+
+		#endregion
+
+
 		public string Name
 		{
 			get { return _name; }

@@ -22,7 +22,7 @@ namespace Library.Web.Controllers.api
 		[HttpGet]
 		public async Task<IEnumerable<BookDto>> Get([FromUri]PagingParameterModel model)
 		{
-			var books = await _booksService.GetAll(model.Skip, model.Take);
+			var books = await _booksService.GetAll(model);
 			await this.AddTotalItemsInHeader(_booksService.Count);
 			return books;
 		}

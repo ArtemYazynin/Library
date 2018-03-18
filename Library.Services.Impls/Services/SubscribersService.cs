@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Library.Common;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Subscriber;
@@ -18,12 +19,32 @@ namespace Library.Services.Impls.Services
 		{
 			_unitOfWork = unitOfWork;
 		}
-		public async Task<IEnumerable<SubscriberDto>> GetAll()
+		public async Task<IEnumerable<SubscriberDto>> GetAll(PagingParameterModel pagingParameterModel)
 		{
-			var orderBy = new Func<IQueryable<Subscriber>, IOrderedQueryable<Subscriber>>(x=>x.OrderBy(y=>y.Lastname));
-			var subscribers = await _unitOfWork.SubscriberRepository.GetAllAsync(null, orderBy);
+			var orderBy = Helper.GetOrder<Subscriber>(pagingParameterModel, x =>
+			{
+				switch (x.Name)
+				{
+					case nameof(Subscriber.Lastname):
+						return s => s.Lastname;
+					case nameof(Subscriber.Firstname):
+						return s => s.Firstname;
+					case nameof(Subscriber.Middlename):
+						return s => s.Middlename;
+					case "Deleted":
+						return s => s.IsDeleted.ToString();
+					default:
+						return null;
+				}
+			});
+			var subscribers = await _unitOfWork.SubscriberRepository.GetAllAsync(null, orderBy, skip: pagingParameterModel?.Skip ?? 0, take: pagingParameterModel?.Take);
 			var result = Mapper.Map<IEnumerable<SubscriberDto>>(subscribers);
 			return result;
+		}
+
+		public async Task<long> Count()
+		{
+			return await _unitOfWork.SubscriberRepository.Count();
 		}
 
 		public async Task<SubscriberDto> GetById(long id)

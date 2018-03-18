@@ -9,8 +9,8 @@
 			}
 		}
 		var resource = $resource(baseUrl + "/:id", { id: "@Id" }, config);
-		function _get(successCallback) {
-			resource.query(successCallback);
+		function _get(pagingModel,successCallback) {
+			resource.query(pagingModel,successCallback);
 		}
 
 		function _update(vm, successCallback) {

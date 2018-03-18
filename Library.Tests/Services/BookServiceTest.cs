@@ -180,7 +180,7 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task Get_ShouldReturnValidCount()
 		{
-			var books = await BooksService.GetAll();
+			var books = await BooksService.GetAll(null);
 
 			Assert.That(books, Is.Not.Null);
 			Assert.That(books.Count(), Is.EqualTo(Books.Count));
@@ -197,7 +197,7 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task Create_ShouldCreated()
 		{
-			Assert.That((await BooksService.GetAll()).Count(), Is.EqualTo(Books.Count));
+			Assert.That((await BooksService.GetAll(null)).Count(), Is.EqualTo(Books.Count));
 
 			var oldCount = Books.Count;
 			var bookDto = new BookDto
@@ -208,7 +208,7 @@ namespace Library.Tests.Services
 			};
 			await BooksService.Create(bookDto);
 
-			var booksAfter = await BooksService.GetAll();
+			var booksAfter = await BooksService.GetAll(null);
 			Assert.That(booksAfter.Count(), Is.EqualTo(oldCount + 1));
 			Assert.That(await BooksService.Get(bookDto.Id), Is.Not.Null);
 		}
@@ -216,13 +216,13 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task DeleteByid_ShouldDeleted()
 		{
-			var booksBefore = await BooksService.GetAll();
+			var booksBefore = await BooksService.GetAll(null);
 			Assert.That(booksBefore.Count(), Is.EqualTo(Books.Count));
 
 			int oldCount = Books.Count;
 			await BooksService.Delete(DefaultData.Books.ClrVia.Id);
 
-			var booksAfter = await BooksService.GetAll();
+			var booksAfter = await BooksService.GetAll(null);
 			Assert.That(booksAfter.Count(), Is.EqualTo(oldCount - 1));
 			Assert.That(await BooksService.Get(DefaultData.Books.ClrVia.Id), Is.Null);
 		}

@@ -16,7 +16,7 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task GetAll_ShouldReturnValidCount()
 		{
-			var subscribers = await SubscribersService.GetAll();
+			var subscribers = await SubscribersService.GetAll(null);
 			Assert.That(subscribers.Count(), Is.EqualTo(Subscribers.Count));
 			foreach (var subscriber in Subscribers)
 			{

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using AutoMapper;
+using Library.Common;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Comparers;
@@ -23,9 +23,25 @@ namespace Library.Services.Impls.Services
 			_unitOfWork = unitOfWork;
 		}
 
-		public async Task<IEnumerable<BookDto>> GetAll(int skip = 0, int? take = null)
+		public async Task<IEnumerable<BookDto>> GetAll(PagingParameterModel pagingParameterModel)
 		{
-			var books = await _unitOfWork.BookRepository.GetAllAsync(null, includeProperties: _allIncludes,orderBy: null, skip: skip, take: take);
+			var orderBy = Helper.GetOrder<Book>(pagingParameterModel, x =>
+			{
+				switch (x.Name)
+				{
+					case nameof(Book.Name):
+						return b => b.Name;
+					case nameof(Book.Isbn):
+						return b => b.Isbn;
+					case nameof(Book.Publisher):
+						return b => b.Publisher.Name;
+					case nameof(Book.Count):
+						return b => b.Count.ToString();
+					default:
+						return null;
+				}
+			});
+			var books = await _unitOfWork.BookRepository.GetAllAsync(null, includeProperties: _allIncludes,orderBy: orderBy, skip: pagingParameterModel?.Skip ?? 0, take: pagingParameterModel?.Take);
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;
 		}

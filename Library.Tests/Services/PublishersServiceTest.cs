@@ -14,7 +14,7 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task GetAll_ShouldReturnValid()
 		{
-			var publishers = await PublishersService.GetAll();
+			var publishers = await PublishersService.GetAll(null);
 
 			Assert.That(publishers.Count(), Is.EqualTo(Publishers.Count));
 		}

@@ -24,22 +24,13 @@ namespace Library.Services.Impls.Services
 
 		public async Task<IEnumerable<AuthorDto>> GetAll(PagingParameterModel pagingParameterModel)
 		{
-			var orderBy = GetOrder(pagingParameterModel);
+			var orderBy = Helper.GetOrder(pagingParameterModel, GetOrderedAuthorField);
 			IEnumerable<Author> authors = await _unitOfWork.AuthorRepository.GetAllAsync(orderBy: orderBy, skip: pagingParameterModel?.Skip ?? 0, take: pagingParameterModel?.Take);
 			var result = Mapper.Map<IEnumerable<Author>, Collection<AuthorDto>>(authors);
 			return result;
 		}
 
-		private static Func<IQueryable<Author>, IOrderedQueryable<Author>> GetOrder(PagingParameterModel pagingParameterModel)
-		{
-			if (pagingParameterModel == null) return null;
-			var expr = GetOrderByKeySelector(pagingParameterModel);
-			if (expr == null) return null;
-			if (pagingParameterModel.OrderBy == OrderBy.Asc) return x => x.OrderBy(expr);
-			return x => x.OrderByDescending(expr);
-		}
-
-		private static Expression<Func<Author, string>> GetOrderByKeySelector(PagingParameterModel pagingParameterModel)
+		private static Expression<Func<Author, string>> GetOrderedAuthorField(PagingParameterModel pagingParameterModel)
 		{
 			switch (pagingParameterModel.Name)
 			{

@@ -360,6 +360,10 @@
       <Project>{647C22B5-E119-492E-B725-4C1149D93971}</Project>
       <Name>Library.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Library.ObjectModel\Library.ObjectModel.csproj">
+      <Project>{7F35242B-FE3E-4C92-A08E-770A2523ACFF}</Project>
+      <Name>Library.ObjectModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library.Services.Impls\Library.Services.Impls.csproj">
       <Project>{337647FC-32A5-44C9-9DE2-EAEAF107D02A}</Project>
       <Name>Library.Services.Impls</Name>
