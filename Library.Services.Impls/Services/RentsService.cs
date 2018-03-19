@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Library.Common;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Exceptions.Rent;
@@ -19,11 +21,31 @@ namespace Library.Services.Impls.Services
 		{
 			_unitOfWork = unitOfWork;
 		}
-
-		public async Task<IEnumerable<RentDto>> GetAll()
+		public async Task<long> Count()
 		{
-			var orderBy = new Func<IQueryable<Rent>, IOrderedQueryable<Rent>>(x => x.OrderBy(y => y.Date));
-			var rents = await _unitOfWork.RentRepository.GetAllAsync(null, orderBy, IncludeProps);
+			return await _unitOfWork.RentRepository.Count();
+		}
+		public async Task<IEnumerable<RentDto>> GetAll(PagingParameterModel pagingParameterModel)
+		{
+			var orderBy = Helper.GetOrder<Rent>(pagingParameterModel, x =>
+			{
+				switch (x.Name)
+				{
+					case nameof(Rent.Date):
+						return r => r.Date.ToString();
+					case nameof(Rent.Count):
+						return r => r.Count.ToString();
+					case "Active":
+						return r => r.IsActive.ToString();
+					case nameof(Book):
+						return r => r.Book.Name;
+					case nameof(Subscriber):
+						return r => r.Subscriber.Lastname;
+					default:
+						return null;
+				}
+			});
+			var rents = await _unitOfWork.RentRepository.GetAllAsync(null, orderBy, IncludeProps, pagingParameterModel?.Skip ?? 0, pagingParameterModel?.Take);
 			return Mapper.Map<IEnumerable<RentDto>>(rents);
 		}
 

@@ -161,9 +161,30 @@
 			return gridOptions;
 		}
 
+		function _getPagingModel(paginationOptions) {
+			paginationOptions = paginationOptions || _getDefaultOptions();
+			var pagingModel = {
+				Skip: paginationOptions.pageNumber - 1,
+				Take: paginationOptions.pageSize,
+				Name: paginationOptions.name,
+				OrderBy: (function () {
+					switch (paginationOptions.sort) {
+						case "asc":
+							return window.Enums.orderBy.asc;
+						case "desc":
+							return window.Enums.orderBy.desc;
+						default:
+							return undefined;
+					}
+				})()
+			};
+			return pagingModel;
+		}
+
 		return {
-		getDefaultOptions: _getDefaultOptions,
-		getGridOptions : _getGridOptions
-	}
+			getDefaultOptions: _getDefaultOptions,
+			getGridOptions : _getGridOptions,
+			getPagingModel: _getPagingModel
+		}
 	}]);
 })(angular);

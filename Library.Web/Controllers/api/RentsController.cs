@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Library.Common;
 using Library.Services.DTO;
 using Library.Services.Services;
 
@@ -17,9 +18,10 @@ namespace Library.Web.Controllers.api
 			_rentsService = rentsService;
 		}
 
-		public async Task<IEnumerable<RentDto>> Get()
+		public async Task<IEnumerable<RentDto>> Get([FromUri]PagingParameterModel model)
 		{
-			var rents = await _rentsService.GetAll();
+			var rents = await _rentsService.GetAll(model);
+			await this.AddTotalItemsInHeader(_rentsService.Count);
 			return rents;
 		}
 

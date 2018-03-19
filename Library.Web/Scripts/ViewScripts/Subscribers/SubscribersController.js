@@ -59,22 +59,7 @@
 					});
 				}
 				function _init(paginationOptions) {
-					paginationOptions = paginationOptions || paginationService.getDefaultOptions();
-					var pagingModel = {
-						Skip: paginationOptions.pageNumber - 1,
-						Take: paginationOptions.pageSize,
-						Name: paginationOptions.name,
-						OrderBy: (function () {
-							switch (paginationOptions.sort) {
-								case "asc":
-									return window.Enums.orderBy.asc;
-								case "desc":
-									return window.Enums.orderBy.desc;
-								default:
-									return undefined;
-							}
-						})()
-					};
+					var pagingModel = paginationService.getPagingModel(paginationOptions);
 					subscribersService.get(pagingModel, function (response,getHeaderFn) {
 						self.gridOptions.data = response;
 						self.gridOptions.totalItems = parseInt(getHeaderFn("totalItems"));

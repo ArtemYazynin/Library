@@ -4,22 +4,7 @@
 	.controller("BooksController", ["$scope", "$location", "booksService", "$ngConfirm", "Notification","paginationService",
 		function ($scope, $location, booksService, $ngConfirm, notification, paginationService) {
 			function init(paginationOptions) {
-				paginationOptions = paginationOptions || paginationService.getDefaultOptions();
-				var pagingModel = {
-					Skip: paginationOptions.pageNumber - 1,
-					Take: paginationOptions.pageSize,
-					Name: paginationOptions.name,
-					OrderBy: (function () {
-						switch (paginationOptions.sort) {
-							case "asc":
-								return window.Enums.orderBy.asc;
-							case "desc":
-								return window.Enums.orderBy.desc;
-							default:
-								return undefined;
-						}
-					})()
-				};
+				var pagingModel = paginationService.getPagingModel(paginationOptions);
 				booksService.getAll(pagingModel, function (response, getHeaderFn) {
 					$scope.gridOptions.data = response;
 					$scope.gridOptions.totalItems = parseInt(getHeaderFn("totalItems"));

@@ -5,15 +5,22 @@ namespace Library.ObjectModel.Models
 {
 	public class Rent:Entity, IRent<Book, Subscriber>
 	{
+		#region private fields
+
 		private Book _book;
 		private Subscriber _subscriber;
+
+		#endregion
+
+
+		#region .ctors
 
 		protected Rent()
 		{
 			Date = DateTime.Now;
 		}
 
-		public Rent(Book book, Subscriber subscriber, int count=0, bool isActive=false)
+		public Rent(Book book, Subscriber subscriber, int count = 0, bool isActive = false)
 		{
 			_book = book;
 			_subscriber = subscriber;
@@ -21,6 +28,18 @@ namespace Library.ObjectModel.Models
 			IsActive = isActive;
 			Date = DateTime.Now;
 		}
+
+		public Rent(DateTime date, Book book, Subscriber subscriber, int count = 0, bool isActive = false)
+		{
+			_book = book;
+			_subscriber = subscriber;
+			Count = count;
+			IsActive = isActive;
+			Date = date;
+		}
+
+		#endregion
+
 
 		public Book Book
 		{

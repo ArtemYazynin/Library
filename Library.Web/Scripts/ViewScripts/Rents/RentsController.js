@@ -2,59 +2,9 @@
 	"use strict";
 
 	angular.module("RentsModule")
-		.controller("RentsController", ["$q", "rentsService", "subscribersService", "booksService", "$ngConfirm", "Notification", function ($q, rentsService, subscribersService, booksService, $ngConfirm, notification) {
+		.controller("RentsController", ["$q", "rentsService", "subscribersService", "booksService", "$ngConfirm", "Notification", "paginationService", function ($q, rentsService, subscribersService, booksService, $ngConfirm, notification,paginationService) {
 			var self = this;
 			self.dateOptions = { changeYear: true, changeMonth: true, dateFormat: 'dd.mm.yy' };
-			self.gridOptions = {
-				appScopeProvider: self,
-				rowHeight: "40",
-				enableColumnResizing: true,
-				columnDefs: [
-					{
-						name: "Date",
-						cellClass: function () { return "dataCell"; },
-						cellFilter: 'date:"dd.MM.yyyy"', 
-						filterCellFiltered: 'true',
-						type: 'date',
-						width: "10%"
-					},
-					{
-						name: "Book",
-						field: "Book.Name",
-						width: "39%",
-						cellClass: function () { return "dataCell"; },
-						cellTooltip: function(row,col) {
-							return row.entity.Book.Name;
-						}
-					},
-					{
-						 name: "Subscriber", 
-						 field: "Subscriber.Fio",
-						 width: "25%", 
-						 cellClass: function () { return "dataCell"; },
-						 cellTooltip: function (row, col) {
-						 	return row.entity.Subscriber.Fio;
-						 }
-					},
-					{ name: "Count", field: "Count", width: "7%" ,cellClass: function () { return "dataCell"; }},
-					{ name: "Active", field: "IsActive", width: "7%" ,cellClass: function () { return "dataCell"; }},
-					{
-						name: " ",
-						width: "12%",
-						enableSorting: false,
-						cellClass: function () { return "operationCell"; },
-						cellTemplate:
-						'<button type="button" class="btn btn-primary" ng-click="grid.appScope.actions.activateOrDeactivate(row.entity)">' +
-							'<span>{{row.entity.IsActive ? "Deactivate": "Activate"}}</span>' +
-						'</button>'
-					}
-				]
-			};
-			
-			rentsService.get(function(response) {
-				self.gridOptions.data = response;
-			});
-
 			self.actions = (function () {
 				function _save() {
 					function clear() {
@@ -82,7 +32,6 @@
 					}
 				
 				}
-
 				function _details(rent) {
 					self.selectedRent = rent || {};
 
@@ -112,7 +61,6 @@
 
 					
 				}
-
 				function _activateOrDeactivate(rent) {
 					rent.IsActive = !rent.IsActive;
 					if (rent.IsActive) {
@@ -131,11 +79,71 @@
 							});
 					}
 				}
+
+				function _init(paginationOptions) {
+					var pagingModel = paginationService.getPagingModel(paginationOptions);
+					rentsService.get(pagingModel, function (response, getHeaderFn) {
+						self.gridOptions.data = response;
+						self.gridOptions.totalItems = parseInt(getHeaderFn("totalItems"));
+					});
+				}
+
 				return {
 					save: _save,
 					details: _details,
-					activateOrDeactivate: _activateOrDeactivate
+					activateOrDeactivate: _activateOrDeactivate,
+					init: _init
 				}
 			})();
-	}]);
+
+			self.gridOptions = (function () {
+				var options = {
+					appScopeProvider: self,
+					enableColumnResizing: true,
+					columnDefs: [
+					{
+						name: "Date",
+						cellClass: function () { return "dataCell"; },
+						cellFilter: 'date:"dd.MM.yyyy"',
+						filterCellFiltered: 'true',
+						type: 'date',
+						width: "10%"
+					},
+					{
+						name: "Book",
+						field: "Book.Name",
+						width: "39%",
+						cellClass: function () { return "dataCell"; },
+						cellTooltip: function (row, col) {
+							return row.entity.Book.Name;
+						}
+					},
+					{
+						name: "Subscriber",
+						field: "Subscriber.Fio",
+						width: "25%",
+						cellClass: function () { return "dataCell"; },
+						cellTooltip: function (row, col) {
+							return row.entity.Subscriber.Fio;
+						}
+					},
+					{ name: "Count", field: "Count", width: "7%", cellClass: function () { return "dataCell"; } },
+					{ name: "Active", field: "IsActive", width: "7%", cellClass: function () { return "dataCell"; } },
+					{
+						name: " ",
+						width: "12%",
+						enableSorting: false,
+						cellClass: function () { return "operationCell"; },
+						cellTemplate:
+						'<button type="button" class="btn btn-primary" ng-click="grid.appScope.actions.activateOrDeactivate(row.entity)">' +
+							'<span>{{row.entity.IsActive ? "Deactivate": "Activate"}}</span>' +
+						'</button>'
+					}
+					]
+				}
+				var result = paginationService.getGridOptions(options, self.actions.init);
+				return result;
+			})();
+			self.actions.init();
+		}]);
 })(angular);

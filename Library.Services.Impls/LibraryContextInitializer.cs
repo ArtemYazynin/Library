@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -55,14 +56,14 @@ namespace Library.Services.Impls
 		{
 			List<Rent> rents = new List<Rent>()
 			{
-				new Rent( DefaultData.Books.JsPocketGuide, DefaultData.Subscribers.Ivanov,1,true),
-				new Rent(DefaultData.Books.JsOptimizingPerfomance,DefaultData.Subscribers.Ivanov,1,true),
-				new Rent(DefaultData.Books.CSharp6AndNetPlatform,DefaultData.Subscribers.Petrov,2,true),
-				new Rent(DefaultData.Books.AsyncProgrammingCSharp5, DefaultData.Subscribers.Petrov,1,true),
-				new Rent(DefaultData.Books.ClrVia,DefaultData.Subscribers.Sidorov,1),
-				new Rent(DefaultData.Books.CSharpCompleteGuide,DefaultData.Subscribers.Maslov,1),
-				new Rent(DefaultData.Books.AsyncProgrammingCSharp5,DefaultData.Subscribers.Maslov,1),
-				new Rent( DefaultData.Books.CSharp6AndNetPlatform, DefaultData.Subscribers.Maslov,1)
+				new Rent(new DateTime(2018,1,12), DefaultData.Books.JsPocketGuide, DefaultData.Subscribers.Ivanov,1,true),
+				new Rent(new DateTime(2018,1,18), DefaultData.Books.JsOptimizingPerfomance,DefaultData.Subscribers.Ivanov,1,true),
+				new Rent(new DateTime(2018,1,25), DefaultData.Books.CSharp6AndNetPlatform,DefaultData.Subscribers.Petrov,2,true),
+				new Rent(new DateTime(2018,2,01), DefaultData.Books.AsyncProgrammingCSharp5, DefaultData.Subscribers.Petrov,1,true),
+				new Rent(new DateTime(2018,2,10), DefaultData.Books.ClrVia,DefaultData.Subscribers.Sidorov,1),
+				new Rent(new DateTime(2018,2,20), DefaultData.Books.CSharpCompleteGuide,DefaultData.Subscribers.Maslov,1),
+				new Rent(new DateTime(2018,3,1), DefaultData.Books.AsyncProgrammingCSharp5,DefaultData.Subscribers.Maslov,1),
+				new Rent(new DateTime(2018,3,9), DefaultData.Books.CSharp6AndNetPlatform, DefaultData.Subscribers.Maslov,1)
 			};
 			rents.ForEach(x => context.Rents.Add(x));
 		}
