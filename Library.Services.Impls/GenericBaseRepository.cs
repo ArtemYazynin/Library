@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Library.ObjectModel.Models;
+using LinqKit;
 
 namespace Library.Services.Impls
 {
@@ -32,8 +33,10 @@ namespace Library.Services.Impls
 
 			if (filters != null)
 			{
+				query = query.AsExpandable();
 				foreach (Expression<Func<TEntity, bool>> expression in filters)
 				{
+					
 					query = query.Where(expression);
 				}
 			}
