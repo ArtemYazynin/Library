@@ -5,10 +5,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Library.Common;
 using Library.ObjectModel.Models;
 using Library.Services.DTO;
 using Library.Services.Impls.Comparers;
+using Library.Services.Impls.Services.Builders;
 using Library.Services.Services;
 using Library.Services.VO;
 using LinqKit;
@@ -49,75 +51,14 @@ namespace Library.Services.Impls.Services
 
 		public async Task<IEnumerable<BookDto>> Search(Filters filters)
 		{
-			var expressions = BuildExpressions(filters);
+			var exprBuilder = new Builders.ExpressionBuilder(filters);
+			new ExpressionBuilderDirector().Construct(exprBuilder);
+			var expressions = exprBuilder.GetResult();
+
+
 			var books = await _unitOfWork.BookRepository.GetAllAsync(expressions, includeProperties: _allIncludes);
 			var booksDto = Mapper.Map<IEnumerable<Book>, Collection<BookDto>>(books);
 			return booksDto;
-		}
-
-		private List<Expression<Func<Book, bool>>> BuildExpressions(Filters filters)
-		{
-			List<Expression<Func<Book, bool>>> expressions = new List<Expression<Func<Book, bool>>>();
-			if (!string.IsNullOrEmpty(filters.ByName))
-			{
-				expressions.Add(x => x.Name.ToLower().Contains(filters.ByName.ToLower()));
-			}
-			if (!string.IsNullOrEmpty(filters.ByAuthor))
-			{
-				var lastFirstMiddlenameSegments = filters.ByAuthor.ToLower().Split(' ');
-				foreach (var segment in lastFirstMiddlenameSegments)
-				{
-					var authorSegment = segment.Replace(" ", "");
-					expressions.Add(GetExpr(authorSegment));
-				}
-				
-			}
-			if (filters.WithoutAuthors)
-			{
-				expressions.Add(x=>!x.Authors.Any());
-			}
-			if (!string.IsNullOrEmpty(filters.ByMultipleAuthors))
-			{
-				var groupOfCriteria = filters.ByMultipleAuthors.ToLower().Split(new [] {','}, StringSplitOptions.RemoveEmptyEntries).Select(x=>x.Trim());
-				Expression<Func<Book, bool>> predicate = c => false;
-				foreach (var criterion in groupOfCriteria)
-				{
-					predicate = predicate.Or(GetExpr(criterion));
-				}
-				expressions.Add(predicate);
-			}
-			if (!string.IsNullOrEmpty(filters.ByAll))
-			{
-				Expression<Func<Book, bool>> predicate = c => false;
-				var groupOfCriteria = filters.ByAll.ToLower().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
-				foreach (var criterion in groupOfCriteria)
-				{
-					predicate = predicate.Or(x => x.Name.ToLower().Contains(criterion)
-									  || !string.IsNullOrEmpty(x.Description) && x.Description.ToLower().Contains(criterion)
-									  || x.Authors.Any(a => string.IsNullOrEmpty(a.Middlename)
-														? a.Lastname.ToLower().Contains(criterion) || a.Firstname.ToLower().Contains(criterion)
-														: a.Lastname.ToLower().Contains(criterion) || a.Firstname.ToLower().Contains(criterion)
-														  || a.Middlename.ToLower().Contains(criterion)));
-				}
-				expressions.Add(predicate);
-			}
-			return expressions;
-		}
-
-		private Expression<Func<Book, bool>> GetExpr(string criterion)
-		{
-			return x => x.Authors.Any(a => string.IsNullOrEmpty(a.Middlename)
-				? a.Lastname.ToLower().Contains(criterion) || a.Firstname.ToLower().Contains(criterion)
-				: a.Lastname.ToLower().Contains(criterion) || a.Firstname.ToLower().Contains(criterion)
-				  || a.Middlename.ToLower().Contains(criterion));
-		}
-
-		private Func<Author, bool> GetByAuthorFunc(string criterion)
-		{
-			return a => string.IsNullOrEmpty(a.Middlename)
-				? a.Lastname.ToLower().Contains(criterion) || a.Firstname.ToLower().Contains(criterion)
-				: a.Lastname.ToLower().Contains(criterion) || a.Firstname.ToLower().Contains(criterion)
-				  || a.Middlename.ToLower().Contains(criterion);
 		}
 
 		public async Task<BookDto> Get(long id)

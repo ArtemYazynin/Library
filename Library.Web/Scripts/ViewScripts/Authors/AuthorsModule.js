@@ -11,7 +11,13 @@
 			}
 			var authorsResource = $resource(baseUrl + "/:id", { id: "@Id" }, config);
 			function _getAll(pagingModel, successCallback) {
-				authorsResource.query(pagingModel, successCallback);
+				if (!pagingModel && !successCallback) return;
+				if ((typeof pagingModel) === "function") {
+					successCallback = pagingModel;
+					authorsResource.query(successCallback);
+				} else {
+					authorsResource.query(pagingModel, successCallback);
+				}
 			}
 			function _get(id, successCallback) {
 				authorsResource.get({ Id: id }, successCallback);

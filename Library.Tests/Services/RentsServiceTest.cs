@@ -17,7 +17,7 @@ namespace Library.Tests.Services
 		[Test]
 		public async Task GetAll_ShouldReturnValidCount()
 		{
-			var rents = await RentsService.GetAll();
+			var rents = await RentsService.GetAll(null);
 			Assert.That(rents.Count(), Is.EqualTo(Rents.Count));
 			foreach (var rent in Rents)
 			{

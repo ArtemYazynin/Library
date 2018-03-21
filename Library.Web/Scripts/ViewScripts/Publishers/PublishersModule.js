@@ -9,8 +9,15 @@
 			}
 		}
 		var resource = $resource(baseUrl + "/:id", { id: "@Id" }, config);
-		function _get(pagingModel,successCallback) {
-			resource.query(pagingModel,successCallback);
+		function _get(pagingModel, successCallback) {
+			if (!pagingModel && !successCallback) return;
+
+			if ((typeof pagingModel) === "function") {
+				successCallback = pagingModel;
+				resource.query(successCallback);
+			} else {
+				resource.query(pagingModel, successCallback);
+			}
 		}
 
 		function _update(vm, successCallback) {

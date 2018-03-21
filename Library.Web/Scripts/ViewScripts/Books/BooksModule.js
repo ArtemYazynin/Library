@@ -45,7 +45,15 @@
 			bookResource.get({ Id: id }, successCallback);
 		}
 		function _getAll(pagingModel, successCallback) {
-			bookResource.query(pagingModel, successCallback);
+			if (!pagingModel && !successCallback) return;
+
+			if ((typeof pagingModel) === "function") {
+				successCallback = pagingModel;
+				bookResource.query(successCallback);
+			} else {
+				bookResource.query(pagingModel, successCallback);
+			}
+			
 		}
 		function _getAllPromise() {
 			return bookResource.query().$promise;
