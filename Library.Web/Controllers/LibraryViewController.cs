@@ -52,5 +52,15 @@ namespace Library.Web.Controllers
 		{
 			return PartialView("..//Rents");
 		}
+
+		public ActionResult MostPopular()
+		{
+			return PartialView("..//MostPopular");
+		}
+
+		public ActionResult Statistics()
+		{
+			return PartialView("..//Statistics");
+		}
 	}
 }

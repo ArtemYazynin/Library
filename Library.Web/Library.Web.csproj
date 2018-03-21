@@ -315,6 +315,10 @@
     <Content Include="Scripts\ViewScripts\Publishers\PublishersModule.js" />
     <Content Include="Scripts\ViewScripts\Rents\RentsController.js" />
     <Content Include="Scripts\ViewScripts\Rents\RentsModule.js" />
+    <Content Include="Scripts\ViewScripts\Reports\MostPopular\MostPopularReportController.js" />
+    <Content Include="Scripts\ViewScripts\Reports\MostPopular\MostPopularReportModule.js" />
+    <Content Include="Scripts\ViewScripts\Reports\Statistics\StatisticsReportControllerr.js" />
+    <Content Include="Scripts\ViewScripts\Reports\Statistics\StatisticsReportModule.js" />
     <Content Include="Scripts\ViewScripts\Root\RootController.js" />
     <Content Include="Scripts\ViewScripts\Root\RootModule.js" />
     <Content Include="Scripts\ViewScripts\Subscribers\SubscribersController.js" />
@@ -351,6 +355,8 @@
     <Content Include="Views\Subscribers.cshtml" />
     <Content Include="Views\Rents.cshtml" />
     <Content Include="Scripts\oi.date\date.js.map" />
+    <Content Include="Views\MostPopular.cshtml" />
+    <Content Include="Views\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

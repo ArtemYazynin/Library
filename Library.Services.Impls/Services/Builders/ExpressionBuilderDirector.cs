@@ -8,6 +8,7 @@ namespace Library.Services.Impls.Services.Builders
 			builder.FilterByAuthor();
 			builder.FilterByAuthors();
 			builder.FilterByAll();
+			builder.FilterByWithoutAuthors();
 		}
 	}
 }

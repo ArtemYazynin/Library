@@ -1,6 +1,6 @@
 ﻿(function (angular) {
 	"use strict";
-	angular.module("RootModule", ["ngRoute", "BooksModule", "AuthorsModule", "GenresModule", "PublishersModule", "InvoicesModule", "SubscribersModule", "RentsModule", "oi.select", "cp.ngConfirm", "ui.tree", "ui-notification"])
+	angular.module("RootModule", ["ngRoute", "BooksModule", "AuthorsModule", "GenresModule", "PublishersModule", "InvoicesModule", "SubscribersModule", "RentsModule", "MostPopularReportModule", "StatisticsReportModule", "oi.select", "cp.ngConfirm", "ui.tree", "ui-notification"])
 	.config(["$routeProvider", "$locationProvider", "$httpProvider", "$ngConfirmProvider", "NotificationProvider", function ($routeProvider, $locationProvider, $httpProvider, $ngConfirmProvider, notificationProvider) {
 		notificationProvider.setOptions({
 			delay: 2000,
@@ -100,6 +100,20 @@
 			controller: "AuthorDetailsController",
 			controllerAs: "authorDetails"
 		});
+
+		$routeProvider.when("/mostPopular", {
+			templateUrl: "/LibraryView/MostPopular",
+			controller: "MostPopularReportController",
+			controllerAs: "mostPopular"
+		});
+
+		$routeProvider.when("/statistics", {
+			templateUrl: "/LibraryView/Statistics",
+			controller: "StatisticsReportController",
+			controllerAs: "statistics"
+		});
+
+
 		$routeProvider.otherwise({
 			redirectTo: function () {
 				window.location = "#/books";
@@ -124,7 +138,7 @@
 		function _getDefaultOptions() {
 			return {
 				pageNumber: 1,
-				pageSize: 3,
+				pageSize: 10,
 				sort: null
 			}
 		}
@@ -182,7 +196,6 @@
 		}
 
 		return {
-			getDefaultOptions: _getDefaultOptions,
 			getGridOptions : _getGridOptions,
 			getPagingModel: _getPagingModel
 		}
