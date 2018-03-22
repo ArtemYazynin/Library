@@ -21,6 +21,7 @@ namespace Library.Web.Utils.Ninject
 			Bind<IInvoicesService>().To<InvoicesService>();
 			Bind<ISubscribersService>().To<SubscribersService>();
 			Bind<IRentsService>().To<RentsService>();
+			Bind<IReportsService>().To<ReportsService>();
 		}
 	}
 }

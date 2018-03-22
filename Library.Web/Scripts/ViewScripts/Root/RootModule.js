@@ -101,16 +101,16 @@
 			controllerAs: "authorDetails"
 		});
 
-		$routeProvider.when("/mostPopular", {
+		$routeProvider.when("/top10", {
 			templateUrl: "/LibraryView/MostPopular",
 			controller: "MostPopularReportController",
-			controllerAs: "mostPopular"
+			controllerAs: "ctrl"
 		});
 
 		$routeProvider.when("/statistics", {
 			templateUrl: "/LibraryView/Statistics",
 			controller: "StatisticsReportController",
-			controllerAs: "statistics"
+			controllerAs: "ctrl"
 		});
 
 

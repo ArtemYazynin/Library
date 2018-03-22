@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DTO\AuthorDto.cs" />
     <Compile Include="Services\IRentsService.cs" />
+    <Compile Include="Services\IReportsService.cs" />
     <Compile Include="Services\ISubscribersService.cs" />
     <Compile Include="VO\Filters.cs" />
   </ItemGroup>

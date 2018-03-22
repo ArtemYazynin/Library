@@ -36,7 +36,7 @@
 					self.selectedRent = rent || {};
 
 					$q.all([
-						subscribersService.get(),
+						subscribersService.getPromise(),
 						booksService.getAllPromise()
 					]).then(function (results) {
 						self.Subscribers = results[0];

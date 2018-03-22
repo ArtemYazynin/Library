@@ -11,9 +11,20 @@
 		}
 		var resource = $resource(baseUrl + "/:id", { id: "@Id" }, config);
 		function _get(pagingModel, successCallback) {
-			resource.query(pagingModel,successCallback);
+			if (!pagingModel && !successCallback) return;
+			if ((typeof pagingModel) === "function") {
+				successCallback = pagingModel;
+				resource.query(successCallback);
+			} else {
+				resource.query(pagingModel, successCallback);
+			}
 		}
-		function _update(vm, successCallback) {
+
+			function _getPromise() {
+				return resource.query().$promise;
+			}
+
+			function _update(vm, successCallback) {
 			if (!vm.$update) {
 				vm = new resource(vm);
 			}
@@ -33,6 +44,7 @@
 		}
 		return {
 			get: _get,
+			getPromise:_getPromise,
 			update: _update,
 			remove: _remove,
 			create: _create

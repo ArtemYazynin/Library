@@ -1,13 +1,32 @@
-﻿@*<div class="panel panel-default">
-	<div class="panel-heading">Rents</div>
+﻿<div class="panel panel-default">
+	<div class="panel-heading">Top 10 popular books</div>
 	<div class="panel-body">
-		<div>
-			<button type="button" class="btn btn-default glyphicon glyphicon-plus" ng-click="ctrl.actions.details()"></button>
+		<div class="col-lg-12 col-lg-offset-4">
+			<form name="mostPopularReportForm" ng-submit="ctrl.load()" ng-init="ctrl.filters = {}">
+				<div class="input-group">
+					<span class="input-group-addon filter">From</span>
+					<input name="from" type="text" class="form-control" ng-model="ctrl.filters.from" ui-date="ctrl.dateOptions" required />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon filter">To</span>
+					<input name="to" type="text" class="form-control" ng-model="ctrl.filters.to" ui-date="ctrl.dateOptions" required />
+				</div>
+				<br />
+				<div class="form-group">
+					<button class="btn btn-default" type="submit" ng-disabled="!ctrl.filters.from || !ctrl.filters.to" ng-click="ctrl.load()">Load</button>
+				</div>
+			</form>		</div>
+		<br />
+		<br />
+		<div style="visibility: hidden;">
+			<div class="tooltip-common">
+				<a href="#/books/new" class="btn btn-default glyphicon glyphicon-plus"></a>
+				<span class="tooltiptext">Create new book</span>
+			</div>
 		</div>
 		<br />
 		<div>
-			<div id="gridRents" ui-grid="ctrl.gridOptions" ui-grid-pagination class="myGrid"></div>
+			<div class="myGrid" id="grid1" ui-grid="ctrl.gridOptions"></div>
 		</div>
 	</div>
-</div>*@
-<h1>Most popular page!</h1>
+</div>

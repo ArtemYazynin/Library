@@ -56,14 +56,35 @@ namespace Library.Services.Impls
 		{
 			List<Rent> rents = new List<Rent>()
 			{
-				new Rent(new DateTime(2018,1,12), DefaultData.Books.JsPocketGuide, DefaultData.Subscribers.Ivanov,1,true),
-				new Rent(new DateTime(2018,1,18), DefaultData.Books.JsOptimizingPerfomance,DefaultData.Subscribers.Ivanov,1,true),
-				new Rent(new DateTime(2018,1,25), DefaultData.Books.CSharp6AndNetPlatform,DefaultData.Subscribers.Petrov,2,true),
-				new Rent(new DateTime(2018,2,01), DefaultData.Books.AsyncProgrammingCSharp5, DefaultData.Subscribers.Petrov,1,true),
-				new Rent(new DateTime(2018,2,10), DefaultData.Books.ClrVia,DefaultData.Subscribers.Sidorov,1),
-				new Rent(new DateTime(2018,2,20), DefaultData.Books.CSharpCompleteGuide,DefaultData.Subscribers.Maslov,1),
-				new Rent(new DateTime(2018,3,1), DefaultData.Books.AsyncProgrammingCSharp5,DefaultData.Subscribers.Maslov,1),
-				new Rent(new DateTime(2018,3,9), DefaultData.Books.CSharp6AndNetPlatform, DefaultData.Subscribers.Maslov,1)
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.JsPocketGuide, DefaultData.Subscribers.Ivanov,1,true),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.JsPocketGuide, DefaultData.Subscribers.Ivanov,1,true),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.JsOptimizingPerfomance,DefaultData.Subscribers.Ivanov,2,true),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.JsOptimizingPerfomance,DefaultData.Subscribers.Ivanov,2,true),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.CSharp6AndNetPlatform,DefaultData.Subscribers.Petrov,3,true),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.CSharp6AndNetPlatform,DefaultData.Subscribers.Petrov,3,true),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.AsyncProgrammingCSharp5, DefaultData.Subscribers.Petrov,4,true),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.AsyncProgrammingCSharp5, DefaultData.Subscribers.Petrov,4,true),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.ClrVia,DefaultData.Subscribers.Sidorov,5),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.ClrVia,DefaultData.Subscribers.Sidorov,5),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.CSharpCompleteGuide,DefaultData.Subscribers.Maslov,6),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.CSharpCompleteGuide,DefaultData.Subscribers.Maslov,6),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.MyEvernoteNotes, DefaultData.Subscribers.Maslov,7),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.MyEvernoteNotes, DefaultData.Subscribers.Maslov,7),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.WithoutAuthorsBook, DefaultData.Subscribers.Maslov,8),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.WithoutAuthorsBook, DefaultData.Subscribers.Maslov,8),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.Es6AndNotOnly, DefaultData.Subscribers.Sidorov,9),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.Es6AndNotOnly, DefaultData.Subscribers.Sidorov,9),
+
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.JsForProfessionals, DefaultData.Subscribers.Sidorov,10),
+				new Rent(new DateTime(2018,2,12), DefaultData.Books.JsForProfessionals, DefaultData.Subscribers.Sidorov,10),
 			};
 			rents.ForEach(x => context.Rents.Add(x));
 		}

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.ObjectModel.Models;
@@ -8,6 +9,20 @@ using NUnit.Framework;
 
 namespace Library.Tests.Services
 {
+	//[TestFixture]
+	//internal sealed class ReportsServiceTest : ServiceTestsBase
+	//{
+	//	[Test]
+	//	public async Task MostPopular_ShouldReturnData()
+	//	{
+	//		var from = new DateTime(2017, 12, 15);
+	//		var to = new DateTime(2017, 12, 18);
+	//		var result = ReportsService.MostPopular(from, to);
+	//		var rents = Rents.Where(x => x.Date >= from && x.Date <= to).GroupBy(x=>x.);
+	//		var rents2 = rents.GroupBy(x => x.Book.Name, x => x.Count).ToList();
+	//	}
+	//}
+
 	[TestFixture]
 	internal sealed class SubscribersServiceTest: ServiceTestsBase
 	{

@@ -21,4 +21,13 @@ namespace Library.Services.DTO
 		[DataMember]
 		public DateTime Date { get; set; }
 	}
+
+	public class MostPopularReportRow
+	{
+		[DataMember]
+		public string BookName { get; set; }
+
+		[DataMember]
+		public int Count { get; set; }
+	}
 }

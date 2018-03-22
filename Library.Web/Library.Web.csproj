@@ -148,6 +148,7 @@
     <Compile Include="Controllers\api\InvoicesController.cs" />
     <Compile Include="Controllers\api\PublishersController.cs" />
     <Compile Include="Controllers\api\RentsController.cs" />
+    <Compile Include="Controllers\api\ReportsController.cs" />
     <Compile Include="Controllers\api\SubscribersController.cs" />
     <Compile Include="Controllers\EnumsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

@@ -26,7 +26,7 @@ namespace Library.Tests.Services
 		protected IInvoicesService InvoicesService;
 		protected ISubscribersService SubscribersService;
 		protected IRentsService RentsService;
-
+		protected IReportsService ReportsService;
 		#endregion
 
 
@@ -146,8 +146,16 @@ namespace Library.Tests.Services
 				DefaultData.Rents.RentIvanov2,
 				DefaultData.Rents.RentIvanov3,
 				DefaultData.Rents.RentMaslov,
+				DefaultData.Rents.RentMaslov2,
+				DefaultData.Rents.RentMaslov3,
+				DefaultData.Rents.RentMaslov4,
+				DefaultData.Rents.RentMaslov5,
 				DefaultData.Rents.RentPetrov,
-				DefaultData.Rents.RentSidorov
+				DefaultData.Rents.RentSidorov,
+				DefaultData.Rents.RentSidorov2,
+				DefaultData.Rents.RentSidorov3,
+				DefaultData.Rents.RentSidorov4,
+				DefaultData.Rents.RentSidorov5,
 			};
 
 			var stubBookRepository = new BookRepositoryStub(Books).Get();
@@ -172,6 +180,7 @@ namespace Library.Tests.Services
 			InvoicesService = new InvoicesService(unitOfWork);
 			SubscribersService = new SubscribersService(unitOfWork);
 			RentsService = new RentsService(unitOfWork);
+			ReportsService = new ReportsService(unitOfWork);
 		}
 
 		private Mock<IGenresRepository> GetGenresRepositoryStub()
