@@ -1,23 +1,64 @@
-﻿using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
-using Library.Services;
+using Library.Common;
+using Library.Services.DTO;
+using Library.Services.Services;
 
 namespace Library.Web.Controllers.api
 {
-	public class AuthorsController:ApiController
+	[RoutePrefix("api/Authors")]
+	public class AuthorsController: ApiController
 	{
 		private readonly IAuthorsService _authorsService;
+		private readonly IBooksService _booksService;
 
-		public AuthorsController(IAuthorsService authorsService)
+		public AuthorsController(IAuthorsService authorsService, IBooksService booksService)
 		{
 			_authorsService = authorsService;
+			_booksService = booksService;
 		}
 
 		[HttpGet]
-		public async Task<IHttpActionResult> Get()
+		public async Task<IEnumerable<AuthorDto>> Get([FromUri]PagingParameterModel model)
 		{
-			var authors = await _authorsService.Get();
-			return Ok(authors);
+			var authors = await _authorsService.GetAll(model);
+			await this.AddTotalItemsInHeader(_authorsService.Count);
+			return authors;
+		}
+
+		[HttpGet]
+		public async Task<AuthorDto> Get(long id)
+		{
+			var author = await _authorsService.Get(id);
+			return author;
+		}
+
+		[HttpDelete]
+		public async Task<EntityDto> Delete(long id)
+		{
+			var deletedBook = await _authorsService.Delete(id);
+			return deletedBook;
+		}
+
+		public async Task<EntityDto> Put(long id, AuthorDto authorDto)
+		{
+			var author = await _authorsService.Update(id, authorDto);
+			return author;
+		}
+
+		public async Task<EntityDto> Post(AuthorDto authorDto)
+		{
+			var author = await _authorsService.Create(authorDto);
+			return author;
+		}
+
+		[HttpGet]
+		[Route("RelatedBooks/{id}")]
+		public async Task<IEnumerable<string>> RelatedBooks(long id)
+		{
+			var result = await _booksService.BooksByAuthor(id);
+			return result;
 		}
 	}
 }

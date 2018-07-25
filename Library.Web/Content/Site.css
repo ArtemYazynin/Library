@@ -1,4 +1,15 @@
-﻿body {
+﻿.myGrid {
+    width: 1100px;
+	height: 600px;
+  }
+.dataCell {
+	padding: 3px;
+}
+.operationCell {
+	text-align: center !important;
+	padding: 3px;
+}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -13,5 +24,104 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+	max-width: 280px;
+}
+
+.input-group-addon.filter  {
+	-moz-min-width: 100px;
+	-ms-min-width: 100px;
+	-o-min-width: 100px;
+	-webkit-min-width: 100px;
+	min-width: 100px;
+}
+
+.tooltip-common {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip-common .tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+}
+
+.tooltip-common:hover .tooltiptext {
+	visibility: visible;
+}
+
+
+.btn {
+    margin-right: 8px;
+}
+
+.angular-ui-tree-handle {
+    background: #f8faff;
+    border: 1px solid #dae2ea;
+    color: #7c9eb2;
+    padding: 10px 10px;
+}
+
+.angular-ui-tree-handle:hover {
+    color: #438eb9;
+    background: #f4f6f7;
+    border-color: #dce2e8;
+}
+
+.angular-ui-tree-placeholder {
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+tr.angular-ui-tree-empty {
+    height:100px
+}
+
+.group-title {
+    background-color: #687074 !important;
+    color: #FFF !important;
+}
+
+
+/* --- Tree --- */
+.tree-node {
+    border: 1px solid #dae2ea;
+    background: #f8faff;
+    color: #7c9eb2;
+}
+
+.nodrop {
+    background-color: #f2dede;
+}
+
+.tree-node-content {
+    margin: 10px;
+}
+.tree-handle {
+    padding: 10px;
+    background: #428bca;
+    color: #FFF;
+    margin-right: 10px;
+}
+
+.angular-ui-tree-handle:hover {
+}
+
+.angular-ui-tree-placeholder {
+    background: #f0f9ff;
+    border: 2px dashed #bed2db;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }

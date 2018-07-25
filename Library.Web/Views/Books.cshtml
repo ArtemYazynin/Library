@@ -1,0 +1,45 @@
+﻿<div class="panel panel-default">
+	<div class="panel-heading">Books</div>
+	<div class="panel-body">
+		<div class="col-lg-12 col-lg-offset-4">
+			<form name="searchForm" ng-submit="actions.search()" ng-init="filters = {}">
+				<div class="input-group">
+					<span class="input-group-addon filter">Title</span>
+					<input name="byName" type="text" class="form-control" ng-model="filters.byName" placeholder="JavaScript для профессионалов" />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon filter">Author</span>
+					<input name="byAuthor" type="text" class="form-control" ng-model="filters.byAuthor" placeholder="Джон Резиг..." />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon filter">Authors</span>
+					<input name="byMultipleAuthors" type="text" class="form-control" ng-model="filters.byMultipleAuthors" placeholder="Резиг, Фергюсон" />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon filter">Full search</span>
+					<input name="byAll" type="text" class="form-control" ng-model="filters.byAll" placeholder="Search by title, authors and descriptions" />
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<label><input type="checkbox" ng-model="filters.withoutAuthors" value="false">Without authors</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-default" type="submit">Search</button>
+				</div>
+			</form>
+		</div>
+		<br />
+		<br />
+		<div>
+			<div class="tooltip-common">
+				<a href="#/books/new" class="btn btn-default glyphicon glyphicon-plus"></a>
+				<span class="tooltiptext">Create new book</span>
+			</div>
+		</div>
+		<br />
+		<div>
+			<div class="myGrid" id="grid1" ui-grid="gridOptions" ui-grid-pagination></div>
+		</div>
+	</div>
+</div>

@@ -1,23 +1,28 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="RootModule">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+	<base href="/">
 </head>
 <body>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p></p>
         </footer>
     </div>
-
+	<script type="text/javascript" src="/enums/get"></script>
     @Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/jqueryui")
+	@Scripts.Render("~/bundles/angular")
+	@Scripts.Render("~/bundles/viewScripts")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+	
 </body>
 </html>

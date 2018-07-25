@@ -1,12 +1,18 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Library.Services;
+using Library.Services.Services;
 
 namespace Library.Web.Controllers
 {
 	public class HomeController : Controller
 	{
-		public async Task<ActionResult> Index()
+		private readonly IBooksService _booksService;
+		public HomeController(IBooksService booksService)
+		{
+			_booksService = booksService;
+		}
+
+		public ActionResult Index()
 		{
 			return View();
 		}

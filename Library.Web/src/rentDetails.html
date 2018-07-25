@@ -1,0 +1,40 @@
+﻿<div style="height: 400px;">
+	<form name="RentDetails" ng-submit="actions.save()" novalidate>
+		<div class="form-group">
+			<label for="rentDate">Date</label>
+			<input id="rentDate" class="form-control" name="rentDate" ui-date="dateOptions" ng-model="selectedRent.Date" required/>
+			<span style="color: red;" ng-show="RentDetails.Date.$error.required">Date is required</span>
+		</div>
+		<div class="form-group">
+			<label for="Book">Book</label>
+			<oi-select id="Book" name="Book"
+					   oi-options="book.Name for book in Books"
+					   ng-model="selectedRent.Book"
+					   placeholder="Select Book..."
+					   required>
+			</oi-select>
+		</div>
+		<div class="form-group">
+			<label for="Subscriber">Subscriber</label>
+			<oi-select id="Subscriber" name="Subscriber"
+					   oi-options="subscriber.Lastname +' '+ subscriber.Firstname + ' ' + (subscriber.Middlename || '') for subscriber in Subscribers"
+					   ng-model="selectedRent.Subscriber"
+					   placeholder="Select Subscriber..."
+					   required>
+			</oi-select>
+		</div>
+		<div class="form-group">
+			<label for="Count">Count</label>
+			<input type="number" class="form-control" name="Count" id="Count" ng-model="selectedRent.Count" min="1" required />
+			<span style="color: red;" ng-show="BookCreateFrom.Count.$error.required">Count is required</span>
+		</div>
+		<div class="form-group">
+			<div class="checkbox">
+				<label><input type="checkbox" ng-model="selectedRent.IsActive" value="false">IsActive</label>
+			</div>
+		</div>
+		<div style="text-align: center;">
+			<button type="submit" class="btn btn-primary" ng-disabled="RentDetails.$pristine || RentDetails.$invalid">Save</button>
+		</div>
+	</form>
+</div>

@@ -31,31 +31,102 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="LinqKit, Version=1.1.15.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.1.1.15\lib\net45\LinqKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorsService.cs" />
+    <Compile Include="Comparers\AuthorComparer.cs" />
+    <Compile Include="AutoMapperConfig.cs" />
+    <Compile Include="BooksRepository.cs" />
+    <Compile Include="Exceptions\Author\AuthorIncorrectException.cs" />
+    <Compile Include="Exceptions\Genre\GenreIsUsedException.cs" />
+    <Compile Include="Exceptions\Invoice\InvoiceCountException.cs" />
+    <Compile Include="Exceptions\Rent\NotHasAvailableBooksCountException.cs" />
+    <Compile Include="Exceptions\Rent\RentCountMoreCountOfBookException.cs" />
+    <Compile Include="Exceptions\Rent\RentNotHasBookOrSubscriberException.cs" />
+    <Compile Include="Exceptions\Rent\RentNotHasZeroCountException.cs" />
+    <Compile Include="Exceptions\Subscriber\SubscriberHasIncorrectIdException.cs" />
+    <Compile Include="Exceptions\Subscriber\SubscriberHasActiveRentsException.cs" />
+    <Compile Include="Exceptions\Subscriber\SubscriberIncorrectException.cs" />
+    <Compile Include="Exceptions\Subscriber\SubscriberDublicateException.cs" />
+    <Compile Include="Exceptions\Genre\GenreDublicateException.cs" />
+    <Compile Include="Exceptions\Genre\GenreIncorrectException.cs" />
+    <Compile Include="Exceptions\Publisher\PublisherDublicateException.cs" />
+    <Compile Include="Exceptions\Publisher\PublisherHasBooksException.cs" />
+    <Compile Include="Exceptions\Publisher\PublisherIncorrectException.cs" />
+    <Compile Include="GenericBaseRepository.cs" />
+    <Compile Include="Exceptions\Author\AuthorDublicateException.cs" />
+    <Compile Include="GenresRepository.cs" />
+    <Compile Include="InvoicesRepository.cs" />
+    <Compile Include="Migrations\201712041358420_InitialCreate.cs" />
+    <Compile Include="Migrations\201712041358420_InitialCreate.Designer.cs">
+      <DependentUpon>201712041358420_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712041521098_V20171203183722IncomingBooks.cs" />
+    <Compile Include="Migrations\201712041521098_V20171203183722IncomingBooks.Designer.cs">
+      <DependentUpon>201712041521098_V20171203183722IncomingBooks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712061432262_RemoveCountAvailableInBook.cs" />
+    <Compile Include="Migrations\201712061432262_RemoveCountAvailableInBook.Designer.cs">
+      <DependentUpon>201712061432262_RemoveCountAvailableInBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712161058110_BookEdition.cs" />
+    <Compile Include="Migrations\201712161058110_BookEdition.Designer.cs">
+      <DependentUpon>201712161058110_BookEdition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712171035509_AddIsDeletedPropertyInSubscriber.cs" />
+    <Compile Include="Migrations\201712171035509_AddIsDeletedPropertyInSubscriber.Designer.cs">
+      <DependentUpon>201712171035509_AddIsDeletedPropertyInSubscriber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="RentsRepository.cs" />
+    <Compile Include="Services\Builders\AbstractExpressionBuilder.cs" />
+    <Compile Include="Services\AuthorsService.cs" />
+    <Compile Include="Services\BooksService.cs" />
+    <Compile Include="Services\Builders\ExpressionBuilder.cs" />
+    <Compile Include="Services\Builders\ExpressionBuilderDirector.cs" />
+    <Compile Include="Services\EditionsService.cs" />
+    <Compile Include="GenericRepository.cs" />
     <Compile Include="LibraryContext.cs" />
     <Compile Include="LibraryContextInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GenresService.cs" />
+    <Compile Include="Services\Helper.cs" />
+    <Compile Include="Services\InvoicesService.cs" />
+    <Compile Include="Services\PublishersService.cs" />
+    <Compile Include="Services\RentsService.cs" />
+    <Compile Include="Services\ReportsService.cs" />
+    <Compile Include="Services\SubscribersService.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Library.Common\Library.Common.csproj">
+      <Project>{647C22B5-E119-492E-B725-4C1149D93971}</Project>
+      <Name>Library.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.DefaultData\Library.DefaultData.csproj">
+      <Project>{48de35b0-22e0-4151-ba12-cd6f7954a1a3}</Project>
+      <Name>Library.DefaultData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library.ObjectModel\Library.ObjectModel.csproj">
       <Project>{7f35242b-fe3e-4c92-a08e-770a2523acff}</Project>
       <Name>Library.ObjectModel</Name>
@@ -69,6 +140,24 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201712041358420_InitialCreate.resx">
+      <DependentUpon>201712041358420_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712041521098_V20171203183722IncomingBooks.resx">
+      <DependentUpon>201712041521098_V20171203183722IncomingBooks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712061432262_RemoveCountAvailableInBook.resx">
+      <DependentUpon>201712061432262_RemoveCountAvailableInBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712161058110_BookEdition.resx">
+      <DependentUpon>201712161058110_BookEdition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712171035509_AddIsDeletedPropertyInSubscriber.resx">
+      <DependentUpon>201712171035509_AddIsDeletedPropertyInSubscriber.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

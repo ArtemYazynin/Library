@@ -3,7 +3,11 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Library.Web.Utils;
+using Library.Services.Impls;
+using Library.Web.Utils.EnumsInJavaScript;
+using Library.Web.Utils.Ninject;
+using Ninject;
+using Ninject.Modules;
 
 namespace Library.Web
 {
@@ -11,12 +15,25 @@ namespace Library.Web
 	{
 		protected void Application_Start()
 		{
+			AutoMapperConfig.Initialize();
+
 			AreaRegistration.RegisterAllAreas();
-			DependencyResolver.SetResolver(new NinjectDependencyResolver());
+
+			#region ninject registration
+
+			NinjectModule registrations = new NinjectRegistrations();
+			var kernel = new StandardKernel(registrations);
+			var ninjectResolver = new NinjectDependencyResolver(kernel);
+			DependencyResolver.SetResolver(ninjectResolver); // MVC
+			GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver; // Web API
+
+			#endregion
+
 			GlobalConfiguration.Configure(WebApiConfig.Register);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+			JavascriptEnabledEnums.LoadTypes();
 		}
 	}
 }

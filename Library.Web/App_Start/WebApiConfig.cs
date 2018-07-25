@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using Library.Web.Controllers.api;
+using Newtonsoft.Json;
 
 namespace Library.Web
 {
@@ -9,11 +8,8 @@ namespace Library.Web
 	{
 		public static void Register(HttpConfiguration config)
 		{
-			// Web API configuration and services
-
-			// Web API routes
 			config.MapHttpAttributeRoutes();
-
+			config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling= ReferenceLoopHandling.Ignore;
 			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
 				routeTemplate: "api/{controller}/{id}",

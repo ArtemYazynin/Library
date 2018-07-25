@@ -1,20 +1,34 @@
-﻿<div>
-	<h1>HOME PAGE</h1>
-</div>
+﻿<div class="container" ng-controller="RootController">
+	<div>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Library</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a ng-href="/#books">Books</a></li>
+						<li><a ng-href="/#authors">Authors</a></li>
+						<li><a ng-href="/#genres">Genres</a></li>
+						<li><a ng-href="/#publishers">Publishers</a></li>
+						<li><a ng-href="/#invoices">Invoices</a></li>
+						<li><a ng-href="/#rents">Rents</a></li>
+						<li><a ng-href="/#subscribers">Subscribers</a></li>
+						<li>
+							<a class="btn dropdown-toggle" data-toggle="dropdown">
+								Reports
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a ng-href="/#top10">Top 10 popular books</a></li>
+								<li><a ng-href="/#statistics">Statistics</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div ng-view></div>
 
-<div>
-	<table class="table table-bordered table-hover">
-		<thead>
-		<tr>
-			<th>Фамилия</th>
-			<th>Имя</th>
-			<th>Отчество</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr>
-			<td></td>
-		</tr>
-		</tbody>
-	</table>
 </div>
